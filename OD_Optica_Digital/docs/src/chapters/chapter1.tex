@@ -1,0 +1,175 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\section{Diffraction grading}
+
+\begin{itemize}
+	\item Splits lights
+	\item Some are continuous, other are discrete 
+	\item Thin element approximation
+	\item Some just reflect light (In reflextion, index of refraction, $n$, is equivalent to $-1$)
+	\item $t(\eta)$
+	\item $t(\eta) = \sum_{n=-\infty}^{\infty} a_{n}e^{\frac{2\pi i n \eta}{p}}$
+	$a_{n}$ are the fourier coefficients. $a_{n} = \frac{1}{p}\int_{-p/2}^{p/2} t(\eta)e^{\frac{2\pi i n \eta}{p}}$
+	\item \emph{Red de amplitud (transmisión)} $a_{n} =  \frac{1}{p}\int_{-p/4}^{p/4} t(\eta)e^{\frac{2\pi i n \eta}{p}}$
+	\begin{equation}
+	a_{n} = 1/2 for n = 0
+	0 for n even
+	\frac{1}{\pi n} n = 1, 5, 9, 
+	\frac{-1}{\pi n} n = 3, 7, 11, 
+	\end{equation}
+	
+	\begin{equation}
+	\implies a_{n} = \frac{1}{2} sinc()   where sinc(x) = \frac{sin(x)}{x}
+	\end{equation}
+	
+	\item \emph{Red de fase}, $\alpha$ fill factor, which will affect the width, $h$ heights.
+	
+	Transmission $\delta =  \frac{2 \pi }{\lambda} (N-1)h$ 
+	Reflexion $\delta =  \frac{4 \pi }{\lambda} (N-1)h$ 
+	\item Blazed network, slanted by an angle $\alpha$
+	$t(\eta) = e^{i k (N-1) tan (\alpha \eta)}$
+	
+	$a_{n} = sinc\left[\pi \left(p (N-1) \frac{tan (\alpha)}{\lambda} - n\right)\right]$
+	
+	if $p(N-1) tan(\alpha) = \lambda$ then $a_{n} = \frac{•}{•}$
+	
+	Which makes it useful for the 
+	
+\end{itemize}
+
+\subsection{Far field propagation}
+
+\begin{equation}
+E(\theta) = K E_{0}\sum_{-\infty}^{\infty} a_{n} \int_{-\infty}^{\infty} rect(\eta/2w) e^{2\pi i n \eta / p}e^{-2 \pi i (sin \theta - sin \theta') \eta/\lambda}
+\end{equation}
+
+Somethign something, $K' = Kw$
+
+Monocromatica, seems simple, 
+
+Net equation $p (sin \theta_{n}' - sin(\theta)) = \lambda somethig$
+
+\subsubsection{Order strentgh}
+
+Efficacy is proportional to $|a_{n}|^{2}$ therefore intensito $I \approx \sum_{n=N_{min}}^{N_{max}} something$
+
+
+\subsubsection{Comparison blazed binary}
+
+Blazed has more intensity in one direction, the binary has more symmetry and therefore reduced strength
+
+\subsubsection{Discretization}
+
+This is the goal of digital optic, discretizing. 
+
+A step-ladder diffraction grading
+
+Depends onn number of ladder steps, diffraction order (remember order is the $n$ in $a_{n}$),  
+
+Efficiencyn of order 1, fraction of energy. 16 steps has a 98\% (look at example on slides)
+
+2 steps on a ladder is like a binary one. Therefore we can see the 2 step one as an inefficient one.
+
+
+Efficiency graph depends on wavelength. Diffraction depends strongly on wavelength. Therefore they are usually designed for one wavelength
+
+
+\subsection{Prisms vs diffraction gradings}
+
+Refractivo vs difractivo
+
+ 
+Efficacy is maximal when deviation due to diffraction equates that of the refraction
+
+\begin{equation}
+p (N-1) \tan \alpha = \lambda \iff p (\sin \theta' -\sin \theta) = n \lambda
+\end{equation}
+
+Note how that equation is kind of like Snell's law $n sin \theta = n' \sin \theta ' $
+
+
+\subsection{Elementos opticos binarios}
+
+\begin{itemize}
+	\item Refractive prism kind of like diffraction grading
+	\item Can we create a lens based on diffraction patterns?
+	
+\end{itemize}
+
+\subsubsection{What is a lens?}
+
+It is an optical element that focuses light.
+
+\subsubsection{Fresnel lens}
+
+We segment that one piece parabolic lense in multiple segments, each of which can be similar to a prism, all of them focusing on the same place.
+
+We can focus with straight lines rather than creating curves.
+
+\subsubsection{Diffractive lens}
+
+\begin{itemize}
+	\item Cutting pieces that are phase differences of $2\pi$ dont produce variations
+	\item $h = \frac{\lambda_{0}}{2\pi (n_{0} - 1)} (\phi\, mod \,2\pi)$
+	\item Diffractive lenses are used for monochromatic light, it depends strongly on wave length
+	\item They are not arbitrary, wavelengths are predetermined
+	\item Hard to manufacture
+	\item Diffractive elements can correct aberration from refractive elements.
+	
+\end{itemize}
+
+\subsubsection{\emph{Lentes difractivas de amplitud}}
+
+\emph{Placas zonales de Fresnel}
+
+\begin{equation}
+R = \sqrt{(x-ee)^{2} + (y-\eta)^{2} + x^{2}}
+\end{equation}
+
+Removing all the negative parts we can create a point in which intensity is larger. We modify the lense to remove the parts that have a negative phase contribution by removing that part of the lense, that creates a higher intensity focusing areas.
+
+Calculating it: Principio de Huygens 
+
+Number of rings, $F= \frac{D^{2}}{8 \lambda f}$
+
+\subsubsection*{Binary lens of amplitude}
+
+Slide 28
+
+Near the field it behaves geometrically. As the field gets close to the focal point it changes.
+
+It works differently far away. 
+
+(looking at simulation). Everything focuses there on order 1, order 3, order 5, etc focus on different focal points.  (Higher order, closer but much fainter). Note how even orders disappear due to construction of the lens
+
+Transversally, It does not create airy rings around the focal point, it just creates a baseline background. It creates that baseline background from the peaks of different orders that are in front 
+
+\subsubsection*{Phase lense}
+
+We create a wave phase mask. We remove those with phase = $\pi$, with a ``espesor''$h =\frac{(2m + 1)\lambda}{2n -2}$
+
+Blocked light contributes to the electric field, therefore it creates a higher efficiency. A bit of material can change the mask a bit
+
+\subsubsection*{Lente binaria de fase}
+
+Slide 31--32
+
+Campo cercano, produce focalizacion algo algo
+
+Focal distance changes with wavelength. Abbe number and diffractive lense. . Refractive lenses have a varying number while reffractive lenses have a fixed number, something something
+
+
+\subsubsection*{Process of binarization}
+
+Slide 33
+
+Create a step ladder on those lenses.  95\% with 8 steps, 80\%, etc... A binary one (2 levels) is 40\% (maybe, he is not sure about that.)
+
+
+
+
+\end{document}

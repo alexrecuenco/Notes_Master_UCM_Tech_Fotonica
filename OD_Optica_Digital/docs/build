@@ -1,0 +1,18 @@
+MAIN_FILE="src/main/main.tex"
+MAIN="$(dirname "$MAIN_FILE")"
+
+
+
+# Make directory target if it doesn't exist
+mkdir -p target/
+
+
+
+
+(
+	cd "$MAIN" &&
+	latexmk -C -pdf && latexmk -pdf
+) && 
+mv "${MAIN_FILE%.*}.pdf" target/main.pdf && 
+find "$MAIN" -type f -name "main*" -and -not -name "*.tex"  -maxdepth 1 -delete
+

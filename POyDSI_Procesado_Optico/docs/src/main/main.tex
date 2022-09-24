@@ -1,0 +1,204 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+\documentclass{book}
+
+\usepackage[a4paper]{geometry}
+
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage{minitoc}
+\usepackage{subfiles}
+
+\usepackage{tcolorbox}
+	\tcbuselibrary{most}
+	\tcbuselibrary{minted}
+
+
+\usetikzlibrary{shapes.symbols} % For the cloud symbol
+\usetikzlibrary{calc} % To calculate coordinates
+
+
+\graphicspath{{../images}{../tikzfigures}}
+
+% To use externalize:
+%\usetikzlibrary{external}
+%\tikzexternalize
+%\tikzsetexternalprefix{tikzfigures/}
+%\tcbset{shield externalize}
+
+\newtcblisting{javacode}[1][]{%
+	listing engine=minted,minted style=trac,
+	minted language=java, 
+	breakable, enhanced jigsaw,
+	colback=blue!5!white,
+	colframe=blue!75!black,
+	title = {#1},
+	listing only
+	}
+\newtcblisting{htmlcode}[1][]{%
+	listing engine=minted,
+	minted language=html, 
+	breakable, enhanced jigsaw,
+	colback=green!5!white,
+	colframe=green!75!black,
+	title = {#1},
+	listing only
+	}
+\newtcblisting{bashcode}{% 
+	listing engine=minted, 
+	 breakable, enhanced jigsaw,
+	listing options = {
+		extendedchars=true,  
+		basicstyle=\ttfamily\bfseries, 
+		nolol},
+	minted language=bash, 
+	breakable,
+	colback=black, colupper = white,
+	colframe=white!75!black, 
+	listing only
+	}
+
+
+\newtcblisting{xmlcode}[1][]{%
+	colback=yellow!5,
+	colframe=yellow!50!black,
+	listing only,
+	listing engine=minted,
+	minted language=xml,
+	title={#1}, fonttitle=\bfseries
+}	
+	
+\tcbset{
+bashcode/.style={
+	listing and comment,comment={#1}, 
+	skin=bicolor,
+	boxrule=1mm,
+	fonttitle=\bfseries,
+	coltitle=black,
+	frame style={
+		draw=black,
+		left color=Gold,
+		right color=Goldenrod!50!Gold
+	}, 
+	colback=black,
+	colbacklower=Goldenrod!75!Gold, 
+	colupper=white,
+	collower=black,
+	listing options={l
+		anguage={bash},
+		aboveskip=0pt,
+		belowskip=0pt,
+		nolol, 
+		basicstyle=\ttfamily\bfseries,
+		extendedchars=true
+	}
+}
+}
+%These commands shold ALWAYS be inside a math environment.
+\newcommand\Course{Procesado Óptico y Digital de Señales e Imágenes}
+\newcommand\CourseShortName{POyDSI}
+
+\newtcbox{\keyword}{
+	enhanced,
+	nobeforeafter,
+	tcbox raise base,
+	boxrule=0.4pt,
+	top=0mm,
+	bottom=0mm,
+	right=0mm,
+	left=4mm,
+	arc=1pt,
+	boxsep=2pt,
+	before upper={\vphantom{dlg}},
+	colframe=blue!50!black,
+	coltext=blue!25!black, %defaulted to green!25!black
+	colback=blue!10!white, % defaulted to green!10!white
+	overlay={
+		\begin{tcbclipinterior}
+			\fill[blue!75!blue!50!white] %defaulted togreen!75!blue!50!white
+			(frame.south west) rectangle 
+			node[
+				text=white,
+				font=\sffamily\bfseries\tiny,
+				rotate=90
+				] {key} 
+				([xshift=4mm]frame.north west);\end{tcbclipinterior}
+	}
+}
+
+\robustify{\keyword}
+
+\pdfstringdefDisableCommands{%
+  \def\keyword#1{'#1'}%
+}
+
+\newtcbox{\tags}{
+	enhanced,
+	nobeforeafter,
+	tcbox raise base,
+	boxrule=0.4pt,
+	top=0mm,
+	bottom=0mm,
+	right=0mm,
+	left=4mm,
+	arc=1pt,
+	boxsep=2pt,
+	before upper={\vphantom{tag}},
+	colframe=blue!50!black,
+	coltext=blue!25!black, %defaulted to green!25!black
+	colback=blue!10!white, % defaulted to green!10!white
+	overlay={
+		\begin{tcbclipinterior}
+			\fill[blue!50!white] %defaulted togreen!75!blue!50!white
+			(frame.south west) rectangle 
+			node[
+				text=white,
+				font=\sffamily\bfseries\tiny,
+				rotate=90
+				] {key} 
+				([xshift=4mm]frame.north west);\end{tcbclipinterior}
+	}
+}
+
+\robustify{\tags}
+
+\pdfstringdefDisableCommands{%
+  \def\tags#1{'#1'}%
+}
+
+
+
+\newcommand{\inlinecode}[1]{\texttt{\detokenize{#1}}}
+
+
+% Commands for physics in optics
+
+\newcommand\comb{\textrm{comb}}
+\newcommand\qed{\hfill\blacksquare}
+
+
+
+\begin{document}
+
+\title{Notes \Course (\CourseShortName)}
+
+\maketitle
+
+
+\dominitoc %Initializing minitoc
+\tableofcontents
+
+
+\chapter{Signals and Fourier analysis}
+\minitoc
+\subfile{../chapters/chapter1.tex}
+\subfile{../chapters/chapter1-homework.tex}
+
+
+\end{document}

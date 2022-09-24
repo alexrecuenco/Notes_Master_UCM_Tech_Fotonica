@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "path": ".."
+    },
+    {
+      "path": "../OD_Optica_Digital"
+    },
+    {
+      "path": "../POyDSI_Procesado_Optico"
+    },
+    {
+      "path": "../workspace"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/env": true
+    }
+  }
+}

@@ -1,0 +1,59 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+% TODO: Put this in main
+\newcommand{\conv}{*}
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\section{Domain transformation}
+
+\subsection{Fourier}
+
+\subsection{Convolution}
+
+\subsubsection{Properties}
+
+\subsection{Signal sampling}
+
+We can reconstruct a  signal based on sampling
+
+\begin{align}
+f(x) \implies& F(u)\\
+f_{sample} \implies& F_{sample}
+\end{align}
+
+\subsection{Fresnel transformation}
+
+\begin{itemize}
+	\item 
+	
+\end{itemize}
+
+\subsection{Hilbert transform}
+
+\begin{itemize}
+	\item \begin{equation}
+	TH[f(x)]](u) = H(u) = \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{f(x)}{u-x} dx = f(u)\conv \frac{1}{\pi u}
+	\end{equation}
+	\item $H(x) = f(x) \conv \frac{1}{\pi u}$
+	\item Fourier transform, something something something
+	
+		
+\end{itemize}
+
+\subsection{Analytical signal}
+
+\begin{itemize}
+	\item Negatvie frequencies are redundant. The fourier transform of a real signal is hermitic. (Real part is  even and imaginary part is odd) $F(-u)= F^{*}(u)$
+	\item Analytical signal
+	\begin{equation}
+	a(x) = f(x) + i \, TH[f](x)
+	\end{equation}
+	\item Fourier transform of an analytical signal only has twice the positive frequencies
+	
+\end{itemize}
+
+
+\end{document}

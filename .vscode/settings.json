@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "OD_Optica_Digital": true,
+    "POyDSI_Procesado_Optico": true
+  },
+  "files.exclude": {
+    "OD_Optica_Digital": true,
+    "POyDSI_Procesado_Optico": true
+  },
+  "files.watcherExclude": {
+    "OD_Optica_Digital": true,
+    "POyDSI_Procesado_Optico": true
+  }
+}
