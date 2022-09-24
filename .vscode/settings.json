@@ -1,4 +1,5 @@
 {
+  # These settings are just for the overall project settings, they don't apply for each of the workspaces
   "search.exclude": {
     "OD_Optica_Digital": true,
     "POyDSI_Procesado_Optico": true
