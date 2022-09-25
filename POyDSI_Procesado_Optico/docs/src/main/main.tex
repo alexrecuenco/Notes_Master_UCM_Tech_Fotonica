@@ -5,9 +5,13 @@
 \usepackage[a4paper]{geometry}
 
 \usepackage{microtype}
-\usepackage{amsmath}
-\usepackage{amssymb}
 
+\usepackage{xparse}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% Cancel command \cancel{x}
+\usepackage{cancel}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -15,12 +19,11 @@
 \usepackage{minitoc}
 \usepackage{subfiles}
 
+
 \usepackage{tcolorbox}
 	\tcbuselibrary{most}
 	\tcbuselibrary{minted}
 
-
-\usetikzlibrary{shapes.symbols} % For the cloud symbol
 \usetikzlibrary{calc} % To calculate coordinates
 
 
@@ -71,6 +74,15 @@
 	listing only,
 	listing engine=minted,
 	minted language=xml,
+	title={#1}, fonttitle=\bfseries
+}	
+
+\newtcblisting{rcode}[1][]{%
+	colback=white,
+	colframe=yellow!50!black,
+	listing only,
+	listing engine=minted,
+	minted language=R,
 	title={#1}, fonttitle=\bfseries
 }	
 	
@@ -176,12 +188,19 @@ bashcode/.style={
 
 \newcommand{\inlinecode}[1]{\texttt{\detokenize{#1}}}
 
+\NewDocumentCommand{\fourier}{ O{0} O{\pi} m}{\int_{#1}^{#2}{#3\dx}}
+\newcommand\fourierint[1]{\fourier[-\pi][\pi]{#1}}
+
+
 
 % Commands for physics in optics
 
 \newcommand\comb{\textrm{comb}}
 \newcommand\qed{\hfill\blacksquare}
 
+\newcommand\R{\mathbb{R}}
+\newcommand\N{\mathbb{N}}
+\newcommand\dx{\mathop{dx}}
 
 
 \begin{document}
