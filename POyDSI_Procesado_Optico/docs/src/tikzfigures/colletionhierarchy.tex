@@ -26,10 +26,10 @@
 	interface/.style = {concept, concept color = blue!90!black},
 	comment/.style  = {
 		label = {
-			[text = red, 
+			[text = red,
 			inner sep = 0,
-			rectangle, 
-			font=\tiny, 
+			rectangle,
+			font=\tiny,
 			above = -0.45]
 			above:#1}},
 	add/.style 		= { comment = {Add}},
@@ -44,26 +44,26 @@
 		child[interface] {
 			node[concept] {List}
 			[clockwise from=90]
-			child[class] { 
-				node[concept] {LinkedList} 
+			child[class] {
+				node[concept] {LinkedList}
 				child[property] { node[concept] {Not synchronized}}
 				child[property] { node[concept, add] {
 					Amortized constant time}}
 				child[property] { node[concept, other] {
 					$O(N)$}}
 				}
-			child[class] { 
-				node[concept] {Vector} 
+			child[class] {
+				node[concept] {Vector}
 				[clockwise from=45]
 				child[property] { node[concept] {Sequential access}}
 				child[property] { node[concept] {Computational Complexity}}
-				child[class] { 
+				child[class] {
 					node[class] {Stack}
 					child[property]{ node[concept] {FIFO}}
 					}
 				}
-			child[class] { 
-				node[concept] {ArrayList} 
+			child[class] {
+				node[concept] {ArrayList}
 				[clockwise from=0]
 				child { node[property] {Sequential access}}
 				child { node[property] {Computational Complexity}}
@@ -72,20 +72,20 @@
 		child[concept color=blue] {
 			node[concept] {Queue}
 			[clockwise from=-30]
-			child { node[concept] {Priority Queue} } 
+			child { node[concept] {Priority Queue} }
 			child { node[concept] {Treemap} }
 		}
 		child[concept color=orange] {
 			node[concept] {Set}
 			[clockwise from=-30]
-			child { node[concept] {HashSet} } 
+			child { node[concept] {HashSet} }
 			child { node[concept] {SortedSet} }
 		}
-%		child[concept color=red] { 
-%			node[concept] {technical} 
-%		} 
-%		child[concept color=orange] { 
-%			node[concept] {theoretical} 
+%		child[concept color=red] {
+%			node[concept] {technical}
+%		}
+%		child[concept color=orange] {
+%			node[concept] {theoretical}
 %		}
 		;
 \end{tikzpicture}

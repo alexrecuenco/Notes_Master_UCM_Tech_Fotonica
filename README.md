@@ -12,12 +12,16 @@ All external resources can't be uploaded here, when possible there will be a ref
 
 ## Start
 
-This project is meant to be carried out within VS Code. It should start by getting `workspace/workspace.code-workspace` opened on vscode
+Install [pre-commit](https://pre-commit.com), then run `pre-commit install` on the base of this project. Then, run `pre-commit run --all-files` to make sure it is not throwing errors. (We are using [pre-commit.ci](https://pre-commit.ci) to run these checks when you create a PR)
+
+This project is meant to be carried out within VS Code. It should start by getting `workspace/workspace.code-workspace` opened on vscode.
+
+
 
 
 ## Build
 
-The goal is to have some automations run on *individual courses* . For that purpose we will hope to use github actions that only apply when changes are made on a certain folder.` 
+The goal is to have some automations run on *individual courses* . For that purpose we will hope to use github actions that only apply when changes are made on a certain folder.`
 
 
 ## Working with LaTeX on VS Code
@@ -27,8 +31,8 @@ Latex Workshop uses the latexindent script for formatting. That is a perl script
 You need to install the dependecies it is missing. For that, I am running:
 
 ```
- perl -MCPAN -e 'install "File::HomeDir"' 
- perl -MCPAN -e 'install "Unicode:GCString"' 
+ perl -MCPAN -e 'install "File::HomeDir"'
+ perl -MCPAN -e 'install "Unicode:GCString"'
 ```
 But on your system it might be different, understand what it is missing by looking at the error through by `latexindent`, which will most likely include something like "Can't locate File/HomeDir.pm in @INC" but, inste
 

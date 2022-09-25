@@ -26,7 +26,7 @@ a_{n} = \frac{\langle f,\! v_{n}\rangle}{\langle v_{n},\! v_{n} = \frac{\langle 
 \end{equation}
 
 
-	
+
 
 \subsection{Fourier}
 
@@ -40,57 +40,57 @@ Fouriere series are the separation of periodic functions based on the complete s
 	\begin{align}
 	\fourierint{\sin^{2}(nx)} &=\fourierint{\frac{1-\cos(2nx)}{2}}  &=\pi  \\
 	\fourierint{\cos^{2}(nx)} &=\fourierint{\frac{1+\sin(2nx)}{2}}  &=\pi  \\
-	\fourierint{1} &&=2\pi  
+	\fourierint{1} &&=2\pi
 	\end{align}
-	
-	
+
+
 	Remember that in this base $\langle v_{i},v_{j}\!\rangle \propto \delta_{ij}$, they are not unitary vectors
-	
-	Then, if we associate the following parameters 
-	
+
+	Then, if we associate the following parameters
+
 	\begin{align*}
 	a_{0} \iff {1}\\
 	a_{n} \iff {\cos nx},\, n \in \N\\
 	b_{n} \iff {\sin nx} ,\,n \in \N\\
 	\end{align*}
-	
-	Any period function with period $2\pi$ that is normed under our basis can therefore be expressed as 
-	
+
+	Any period function with period $2\pi$ that is normed under our basis can therefore be expressed as
+
 	\begin{equation}
 	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos (nx) + b_{n} \sin(nx)\right)
 	\end{equation}
-	
-	
+
+
 	Where
 	\begin{align}
 	a_{0} &= \frac{1}{2\pi} \fourierint{f(x)} \\
 	a_{n} &= \frac{1}{\pi} \fourierint{f(x) \cos(nx)} \\
-	b_{n} &= \frac{1}{\pi} \fourierint{f(x) \sin(nx)} 
+	b_{n} &= \frac{1}{\pi} \fourierint{f(x) \sin(nx)}
 	\end{align}
-	
+
 	Then, we can do a change of variable to change from period $2\pi$ to any other period $T$. If we do the transformation $\frac{x}{2\pi} = \frac{y}{T}$.
-	
+
 	With the transformation, we can finally describe
-	
-		
+
+
 	\begin{align*}
 	a_{0} \iff {1}\\
 	a_{n} \iff {\cos 2\pi \nu n y},\, n \in \N\\
 	b_{n} \iff {\sin 2\pi \nu n y} ,\,n \in \N\\
 	\end{align*}
-	
-	And renaming $y$ to $x$ again --- because we won't be using the $x$ variable anymore --- any period function with period $T$ that is normed under our basis can therefore be expressed as 
-	
+
+	And renaming $y$ to $x$ again --- because we won't be using the $x$ variable anymore --- any period function with period $T$ that is normed under our basis can therefore be expressed as
+
 	\begin{equation}
 	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos ( 2\pi \nu n x) + b_{n} \sin( 2\pi \nu n x)\right)
 	\end{equation}
-	
-	
-	Where, 
+
+
+	Where,
 	\begin{align}
 	a_{0} &= \frac{1}{T} \fourier[-T/2][T/2]{f(x)} \\
 	a_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \cos(2\pi \nu n y)} \\
-	b_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \sin(2\pi \nu n y)} 
+	b_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \sin(2\pi \nu n y)}
 	\end{align}
 
 
@@ -115,8 +115,8 @@ f_{sample} \implies& F_{sample}
 \subsection{Fresnel transformation}
 
 \begin{itemize}
-	\item 
-	
+	\item
+
 \end{itemize}
 
 \subsection{Hilbert transform}
@@ -127,8 +127,8 @@ f_{sample} \implies& F_{sample}
 	\end{equation}
 	\item $H(x) = f(x) \conv \frac{1}{\pi u}$
 	\item Fourier transform, something something something
-	
-		
+
+
 \end{itemize}
 
 \subsection{Analytical signal}
@@ -140,7 +140,7 @@ f_{sample} \implies& F_{sample}
 	a(x) = f(x) + i \, TH[f](x)
 	\end{equation}
 	\item Fourier transform of an analytical signal only has twice the positive frequencies
-	
+
 \end{itemize}
 
 

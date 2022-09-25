@@ -32,7 +32,7 @@
 
 \newtcblisting{javacode}[1][]{%
 	listing engine=minted,minted style=trac,
-	minted language=java, 
+	minted language=java,
 	breakable, enhanced jigsaw,
 	colback=blue!5!white,
 	colframe=blue!75!black,
@@ -41,24 +41,24 @@
 	}
 \newtcblisting{htmlcode}[1][]{%
 	listing engine=minted,
-	minted language=html, 
+	minted language=html,
 	breakable, enhanced jigsaw,
 	colback=green!5!white,
 	colframe=green!75!black,
 	title = {#1},
 	listing only
 	}
-\newtcblisting{bashcode}{% 
-	listing engine=minted, 
+\newtcblisting{bashcode}{%
+	listing engine=minted,
 	 breakable, enhanced jigsaw,
 	listing options = {
-		extendedchars=true,  
-		basicstyle=\ttfamily\bfseries, 
+		extendedchars=true,
+		basicstyle=\ttfamily\bfseries,
 		nolol},
-	minted language=bash, 
+	minted language=bash,
 	breakable,
 	colback=black, colupper = white,
-	colframe=white!75!black, 
+	colframe=white!75!black,
 	listing only
 	}
 
@@ -70,11 +70,11 @@
 	listing engine=minted,
 	minted language=xml,
 	title={#1}, fonttitle=\bfseries
-}	
-	
+}
+
 \tcbset{
 bashcode/.style={
-	listing and comment,comment={#1}, 
+	listing and comment,comment={#1},
 	skin=bicolor,
 	boxrule=1mm,
 	fonttitle=\bfseries,
@@ -83,16 +83,16 @@ bashcode/.style={
 		draw=black,
 		left color=Gold,
 		right color=Goldenrod!50!Gold
-	}, 
+	},
 	colback=black,
-	colbacklower=Goldenrod!75!Gold, 
+	colbacklower=Goldenrod!75!Gold,
 	colupper=white,
 	collower=black,
 	listing options={l
 		anguage={bash},
 		aboveskip=0pt,
 		belowskip=0pt,
-		nolol, 
+		nolol,
 		basicstyle=\ttfamily\bfseries,
 		extendedchars=true
 	}
@@ -120,12 +120,12 @@ bashcode/.style={
 	overlay={
 		\begin{tcbclipinterior}
 			\fill[blue!75!blue!50!white] %defaulted togreen!75!blue!50!white
-			(frame.south west) rectangle 
+			(frame.south west) rectangle
 			node[
 				text=white,
 				font=\sffamily\bfseries\tiny,
 				rotate=90
-				] {key} 
+				] {key}
 				([xshift=4mm]frame.north west);\end{tcbclipinterior}
 	}
 }
@@ -154,12 +154,12 @@ bashcode/.style={
 	overlay={
 		\begin{tcbclipinterior}
 			\fill[blue!50!white] %defaulted togreen!75!blue!50!white
-			(frame.south west) rectangle 
+			(frame.south west) rectangle
 			node[
 				text=white,
 				font=\sffamily\bfseries\tiny,
 				rotate=90
-				] {key} 
+				] {key}
 				([xshift=4mm]frame.north west);\end{tcbclipinterior}
 	}
 }
