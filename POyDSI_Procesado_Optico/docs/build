@@ -12,7 +12,6 @@ mkdir -p target/
 (
 	cd "$MAIN" &&
 	latexmk -C -pdf && latexmk -pdf
-) && 
-mv "${MAIN_FILE%.*}.pdf" target/main.pdf && 
+) &&
+mv "${MAIN_FILE%.*}.pdf" target/main.pdf &&
 find "$MAIN" -type f -name "main*" -and -not -name "*.tex"  -maxdepth 1 -delete
-

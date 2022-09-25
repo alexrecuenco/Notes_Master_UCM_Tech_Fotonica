@@ -8,7 +8,7 @@
 
 \begin{itemize}
 	\item Splits lights
-	\item Some are continuous, other are discrete 
+	\item Some are continuous, other are discrete
 	\item Thin element approximation
 	\item Some just reflect light (In reflextion, index of refraction, $n$, is equivalent to $-1$)
 	\item $t(\eta)$
@@ -18,27 +18,27 @@
 	\begin{equation}
 	a_{n} = 1/2 for n = 0
 	0 for n even
-	\frac{1}{\pi n} n = 1, 5, 9, 
-	\frac{-1}{\pi n} n = 3, 7, 11, 
+	\frac{1}{\pi n} n = 1, 5, 9,
+	\frac{-1}{\pi n} n = 3, 7, 11,
 	\end{equation}
-	
+
 	\begin{equation}
 	\implies a_{n} = \frac{1}{2} sinc()   where sinc(x) = \frac{sin(x)}{x}
 	\end{equation}
-	
+
 	\item \emph{Red de fase}, $\alpha$ fill factor, which will affect the width, $h$ heights.
-	
-	Transmission $\delta =  \frac{2 \pi }{\lambda} (N-1)h$ 
-	Reflexion $\delta =  \frac{4 \pi }{\lambda} (N-1)h$ 
+
+	Transmission $\delta =  \frac{2 \pi }{\lambda} (N-1)h$
+	Reflexion $\delta =  \frac{4 \pi }{\lambda} (N-1)h$
 	\item Blazed network, slanted by an angle $\alpha$
 	$t(\eta) = e^{i k (N-1) tan (\alpha \eta)}$
-	
+
 	$a_{n} = sinc\left[\pi \left(p (N-1) \frac{tan (\alpha)}{\lambda} - n\right)\right]$
-	
+
 	if $p(N-1) tan(\alpha) = \lambda$ then $a_{n} = \frac{•}{•}$
-	
-	Which makes it useful for the 
-	
+
+	Which makes it useful for the
+
 \end{itemize}
 
 \subsection{Far field propagation}
@@ -49,7 +49,7 @@ E(\theta) = K E_{0}\sum_{-\infty}^{\infty} a_{n} \int_{-\infty}^{\infty} rect(\e
 
 Somethign something, $K' = Kw$
 
-Monocromatica, seems simple, 
+Monocromatica, seems simple,
 
 Net equation $p (sin \theta_{n}' - sin(\theta)) = \lambda somethig$
 
@@ -64,11 +64,11 @@ Blazed has more intensity in one direction, the binary has more symmetry and the
 
 \subsubsection{Discretization}
 
-This is the goal of digital optic, discretizing. 
+This is the goal of digital optic, discretizing.
 
 A step-ladder diffraction grading
 
-Depends onn number of ladder steps, diffraction order (remember order is the $n$ in $a_{n}$),  
+Depends onn number of ladder steps, diffraction order (remember order is the $n$ in $a_{n}$),
 
 Efficiencyn of order 1, fraction of energy. 16 steps has a 98\% (look at example on slides)
 
@@ -82,7 +82,7 @@ Efficiency graph depends on wavelength. Diffraction depends strongly on waveleng
 
 Refractivo vs difractivo
 
- 
+
 Efficacy is maximal when deviation due to diffraction equates that of the refraction
 
 \begin{equation}
@@ -97,7 +97,7 @@ Note how that equation is kind of like Snell's law $n sin \theta = n' \sin \thet
 \begin{itemize}
 	\item Refractive prism kind of like diffraction grading
 	\item Can we create a lens based on diffraction patterns?
-	
+
 \end{itemize}
 
 \subsubsection{What is a lens?}
@@ -119,7 +119,7 @@ We can focus with straight lines rather than creating curves.
 	\item They are not arbitrary, wavelengths are predetermined
 	\item Hard to manufacture
 	\item Diffractive elements can correct aberration from refractive elements.
-	
+
 \end{itemize}
 
 \subsubsection{\emph{Lentes difractivas de amplitud}}
@@ -132,7 +132,7 @@ R = \sqrt{(x-ee)^{2} + (y-\eta)^{2} + x^{2}}
 
 Removing all the negative parts we can create a point in which intensity is larger. We modify the lense to remove the parts that have a negative phase contribution by removing that part of the lense, that creates a higher intensity focusing areas.
 
-Calculating it: Principio de Huygens 
+Calculating it: Principio de Huygens
 
 Number of rings, $F= \frac{D^{2}}{8 \lambda f}$
 
@@ -142,11 +142,11 @@ Slide 28
 
 Near the field it behaves geometrically. As the field gets close to the focal point it changes.
 
-It works differently far away. 
+It works differently far away.
 
 (looking at simulation). Everything focuses there on order 1, order 3, order 5, etc focus on different focal points.  (Higher order, closer but much fainter). Note how even orders disappear due to construction of the lens
 
-Transversally, It does not create airy rings around the focal point, it just creates a baseline background. It creates that baseline background from the peaks of different orders that are in front 
+Transversally, It does not create airy rings around the focal point, it just creates a baseline background. It creates that baseline background from the peaks of different orders that are in front
 
 \subsubsection*{Phase lense}
 

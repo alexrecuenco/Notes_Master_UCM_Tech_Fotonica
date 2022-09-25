@@ -1,4 +1,4 @@
-# Notes 
+# Notes
 
 - Note Author: Alejandro Gonzalez Recuenco
 
@@ -22,10 +22,8 @@ For that, install python3 and run:
 
 Building the document is achieved by going to the folder where build is and running:
 
-    $	./build 
-    
-In mac you can then open the file with 
+    $	./build
+
+In mac you can then open the file with
 
     $	open main.pdf
-
-
