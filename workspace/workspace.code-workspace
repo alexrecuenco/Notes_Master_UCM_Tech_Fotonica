@@ -15,7 +15,16 @@
   ],
   "settings": {
     "files.exclude": {
-      "**/env": true
+      "**/env": true,
+      "**/*.aux": true,
+      "**/*.fls": true,
+      "**/*.listing": true,
+      "**/*.fdb_latexmk": true,
+      "**/*.synctex*": true,
+      "**/*.maf": true,
+      "**/_minted*": true,
+      "**/*.toc": true,
+      "**/*.mtc*": true
     }
   }
 }

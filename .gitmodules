@@ -1,0 +1,3 @@
+[submodule "OD_Optica_Digital/programming/diffractio-dev"]
+	path = OD_Optica_Digital/programming/diffractio-dev
+	url = git@bitbucket.org:alex-recuenco/diffractio.git
