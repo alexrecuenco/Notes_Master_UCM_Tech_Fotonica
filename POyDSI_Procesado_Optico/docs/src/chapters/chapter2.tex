@@ -1,0 +1,147 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+% TODO: Put this in main
+\newcommand{\conv}{*}
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\section{Fourier analysis}
+
+\subsection{Bases of vector spaces}
+
+Given a dot product, and a complete set of functions ${v_{n}}$ --- for a certain definition of complete --- we can describe any function within that.
+
+Assuming our base is orthogonal under a certain dot product, $\langle v_{i},v_{j}\!\rangle = \delta_{ij}$, When that is possible, each vector will be able to be described,
+
+\begin{equation}
+f(x) = \sum_{n}a_{n} v_{n}
+\end{equation}
+
+And you can find each parameter using the linearity of the dot product,  because $\langle f,\! v_{n}\rangle = \langle v_{n},\! v_{n}\rangle a_{n}$, therefore
+
+\begin{equation}
+a_{n} = \frac{\langle f,\! v_{n}\rangle}{\langle v_{n},\! v_{n} = \frac{\langle f,\! v_{n}\rangle}\rangle}
+\end{equation}
+
+
+
+
+\subsection{Fourier}
+
+
+\subsubsection{Fourier series}
+
+Fouriere series are the separation of periodic functions based on the complete sets  of periodic functions with period $2\pi$, together with the \emph{complete set} $\left\{\sin (nx), \cos(nx), 1 | \,n \in \N\right\}$.
+
+	In this case, if we look at the range  $[-\pi,\, \pi]$, we get with our complete set. We can first normalize the vectors finding the square norm of each of the base items
+
+	\begin{align}
+	\fourierint{\sin^{2}(nx)} &=\fourierint{\frac{1-\cos(2nx)}{2}}  &=\pi  \\
+	\fourierint{\cos^{2}(nx)} &=\fourierint{\frac{1+\sin(2nx)}{2}}  &=\pi  \\
+	\fourierint{1} &&=2\pi
+	\end{align}
+
+
+	Remember that in this base $\langle v_{i},v_{j}\!\rangle \propto \delta_{ij}$, they are not unitary vectors
+
+	Then, if we associate the following parameters
+
+	\begin{align*}
+	a_{0} \iff {1}\\
+	a_{n} \iff {\cos nx},\, n \in \N\\
+	b_{n} \iff {\sin nx} ,\,n \in \N\\
+	\end{align*}
+
+	Any period function with period $2\pi$ that is normed under our basis can therefore be expressed as
+
+	\begin{equation}
+	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos (nx) + b_{n} \sin(nx)\right)
+	\end{equation}
+
+
+	Where
+	\begin{align}
+	a_{0} &= \frac{1}{2\pi} \fourierint{f(x)} \\
+	a_{n} &= \frac{1}{\pi} \fourierint{f(x) \cos(nx)} \\
+	b_{n} &= \frac{1}{\pi} \fourierint{f(x) \sin(nx)}
+	\end{align}
+
+	Then, we can do a change of variable to change from period $2\pi$ to any other period $T$. If we do the transformation $\frac{x}{2\pi} = \frac{y}{T}$.
+
+	With the transformation, we can finally describe
+
+
+	\begin{align*}
+	a_{0} \iff {1}\\
+	a_{n} \iff {\cos 2\pi \nu n y},\, n \in \N\\
+	b_{n} \iff {\sin 2\pi \nu n y} ,\,n \in \N\\
+	\end{align*}
+
+	And renaming $y$ to $x$ again --- because we won't be using the $x$ variable anymore --- any period function with period $T$ that is normed under our basis can therefore be expressed as
+
+	\begin{equation}
+	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos ( 2\pi \nu n x) + b_{n} \sin( 2\pi \nu n x)\right)
+	\end{equation}
+
+
+	Where,
+	\begin{align}
+	a_{0} &= \frac{1}{T} \fourier[-T/2][T/2]{f(x)} \\
+	a_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \cos(2\pi \nu n y)} \\
+	b_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \sin(2\pi \nu n y)}
+	\end{align}
+
+
+\subsubsection{Fourier transformation}
+
+
+Continuous form of the fourier series, in which the bases is the vectors $e^{i\nu x}$ and the integration is over $\R$, under a distribution definition of integration that allows improper integrals (It can be understood more precisely with lebresgue integration if needed)
+
+\subsection{Convolution}
+
+\subsubsection{Properties}
+
+\subsection{Signal sampling}
+
+We can reconstruct a  signal based on sampling
+
+\begin{align}
+f(x) \implies& F(u)\\
+f_{sample} \implies& F_{sample}
+\end{align}
+
+\subsection{Fresnel transformation}
+
+\begin{itemize}
+	\item
+
+\end{itemize}
+
+\subsection{Hilbert transform}
+
+\begin{itemize}
+	\item \begin{equation}
+	TH[f(x)]](u) = H(u) = \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{f(x)}{u-x} dx = f(u)\conv \frac{1}{\pi u}
+	\end{equation}
+	\item $H(x) = f(x) \conv \frac{1}{\pi u}$
+	\item Fourier transform, something something something
+
+
+\end{itemize}
+
+\subsection{Analytical signal}
+
+\begin{itemize}
+	\item Negatvie frequencies are redundant. The fourier transform of a real signal is hermitic. (Real part is  even and imaginary part is odd) $F(-u)= F^{*}(u)$
+	\item Analytical signal
+	\begin{equation}
+	a(x) = f(x) + i \, TH[f](x)
+	\end{equation}
+	\item Fourier transform of an analytical signal only has twice the positive frequencies
+
+\end{itemize}
+
+
+\end{document}

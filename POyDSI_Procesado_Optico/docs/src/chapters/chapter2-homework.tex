@@ -1,0 +1,52 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\section{Homework}
+
+30 de septiembre: entrega de problemas 1.10, 1.12, 2.3
+
+Fourier transform definition
+
+\begin{equation}
+•
+\end{equation}•
+
+\subsection*{Problem 1.10}
+
+Calculate the Fourier transform of $f(x) \sin (2\pi a x)$ given $F(t)$ as the Fourier transform of f(x)
+\subsection*{Problem 1.12}
+
+True or false? (Note that FT denotes Fourier Transform)
+
+\begin{enumerate}
+	\item
+	\begin{equation*}
+	\int f(x)H(x)\dx = \int h(x)F(x)\dx,\,\textrm{where,}
+	\begin{cases}
+	H(x) = FT\{h\}(x)\\
+	F(x) = FT\{f\}(x)
+	\end{cases}
+	\end{equation*}
+	\item The fourier transform of a real function is real
+	\item If $f(x)$ is real, then $\int F(x)\dx$ is real as well (Where $F = FT(f)$)
+\end{enumerate}
+
+\subsection*{Problem 2.3}
+
+Draw
+\begin{enumerate}
+	\item $f(x) = rect(x/a) \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]$
+	\item $g(x) = rect(x/a)\conv \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]$
+\end{enumerate}
+
+\begin{align*}
+g(x)
+&= \int_{\R}rect(t/a)\left[\delta(x-t) + 2\delta(x+a/4-t) - \delta(x-a/4-t)\right]\dd{t}\\
+&= \rect(x/a) + 2 rect(x/a+1/4) - rect(x/a-1/4)
+\end{align*}
+
+
+\end{document}
