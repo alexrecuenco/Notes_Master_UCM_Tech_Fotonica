@@ -10,23 +10,36 @@ library(reticulate)
 use_python("./env/bin/python")
 ```
 
-## R Markdown
+## Exercise zero
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+The following should run
 
 ```{python cars}
-print(1+2**3)
+import numpy as np
+import scipy as sp
+import matplotlib.pyplot as plt
+
+
+x = 1
+y = 1
+
+z = x + y
+
+print("{} + {} = {}".format(x, y, z))
+
+datos1 = np.linspace(0, 10, 21)
+print(datos1)
+
+# Cuidado, con np.arange() falta el último punto:
+datos2 = np.arange(0, 10, 0.5)
+print(datos2)
+
+x = np.linspace(-2, 2, 21)
+y = x**2
+print(y)
+
+plt.figure()
+plt.plot(x, y)
+plt.show()
 
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

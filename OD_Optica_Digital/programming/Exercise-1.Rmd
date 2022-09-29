@@ -1,0 +1,65 @@
+---
+title: Ejercicio 01 Check diffractio
+output: html_document
+---
+
+![](http://www.ucm.es/logo/ucm.png "ucm logo")
+<div align="center"> Máster en Nuevas Tecnologías Electrónicas y Fotónicas </div>
+<div align="center"> Óptica Digital, curso 2022--2023 </div>
+<div align="center"> Ejercicio 01 — Diffractio </div>
+
+<style>
+.alert {
+  color: rgb(60,118,61) !important;
+}
+</style>
+
+<div class="alert alert-block alert-info">
+
+**Datos**
+
+- **Apellidos, Nombre**: Recuenco, Alejandro
+
+- **Fecha**: `r Sys.Date()`
+
+</div>
+
+# Introducción
+En primer ejercicio con diffractio, utilizaremos el marco X para conocer la distribución de intensidad después de una rendija. Utilizaremos la función RS (Rayleigh-Sommerfeld).
+
+Como base, podeís ver el ejemplo https://diffractio.readthedocs.io/en/latest/source/examples/optics/diffraction_slit.html que está en Readthedocs.
+
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python("./env/bin/python")
+```
+
+## Preguntas
+
+1. **Determine el campo producido por una rendija cerca de la máscara (campo cercano).**
+   - Cargar módulos diffractio
+
+```{python}
+import diffractio
+```
+   - Generar una fuente de luz en forma de onda plana u otro tipo de onda
+   - Generar una máscara en forma de rendija, de un cierto tamaño a elegir.
+   - Obtener el campo luminoso a una cierta distancia z, a una cierta distancia a elegir
+   - Representar el campo difractado (intensidad y fase)
+   - El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer).
+2. **Determine el campo producido por una rendija en el plano de Fourier (plano focal) de una lente.**
+   - Generar una fuente de luz en forma de onda plana u otro tipo de onda
+   - Generar una máscara en forma de rendija, de un cierto tamaño a elegir.
+   - Hacer pasar la luz por una lente de una cierta focal $f'$
+   - Obtener el campo luminoso en el plano focal de una lente.
+   - Representar la intensidad luminosa.
+   - El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer).
+
+### Resolución Parte 1
+
+**El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**
+
+### Resolución Parte 2
+
+**El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**

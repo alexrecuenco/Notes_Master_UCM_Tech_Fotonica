@@ -1,1 +1,15 @@
-difracctio
+# diffractio
+
+-e ./diffractio
+## Difractio peer dependencies
+psutil
+
+numpy
+scipy
+matplotlib
+
+
+#Jupyter notebook
+
+jupyter
+rsconnect_jupyter
