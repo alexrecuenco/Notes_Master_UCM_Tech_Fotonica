@@ -1,0 +1,65 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\section{Problems done in class}
+
+
+\subsection{Problema 2.2}
+
+
+Represent $rect(x/a) \conv rect(x/a)$
+
+We calculate it through the Fourier transform, $TF^{-1}(TF(f\conv g)) = TF^{-1}(F \times G)$
+\begin{align*}
+c_{a}(x) = TF-1[asinc(au)\times asinc(au)](x) = a \triangle(a)
+\end{align*}•
+
+
+\subsection{Problema 2.5}
+
+Convolution is non-commutative
+
+Represent
+
+\begin{itemize}
+	\item $rect(x/a) \conv rect((x-b)/a)$
+
+
+	\begin{align*}
+		c_{1}(x) = TF^{-1}\left(asinc(au) asinc^{*}(au) (e^{-i2\pi bu})^{*}\right) \\
+		c_{1}(x) = a \textrm{Triangle}((x+b)/a)
+	\end{align*}
+	\item $rect((x-b)/a) \conv rect(x/a)$
+	\begin{align*}
+		c_{1}(x) = TF^{-1}\left(asinc(au) e^{-i2\pi bu} asinc^{*}(au) \right) \\
+		c_{1}(x) = a \textrm{Triangle}((x-b)/a)
+	\end{align*}
+
+
+\end{itemize}
+
+\subsection{Problem 2.17}
+
+\begin{equation}
+g(t) = 10 \cos (\pi t) \cos (20 \pi t) = 5 \cos 19\pi t + 5\cos 21\pi t
+\end{equation}
+
+
+\subsection{Demodulación de señal}
+
+slide 64
+
+If signal $F(u)$ only has $[u_{0}, u_{1}]$  then sampling period is $x_{0}\leq \frac 1 {2 (u_{1}-u_{0})}= \frac 1 {2 \delta u}$
+
+
+\subsection{Filtring through ImageJ/Fiji}
+
+2D and 3D image analysis. \verb| https://imagej.net/Fiji/Downloads|
+
+We will practice image filtring
+
+Not all filters can be written in convolution form, even though Gaussian Blur, Median, Mean can.
+\end{document}

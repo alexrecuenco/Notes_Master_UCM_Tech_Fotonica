@@ -1,9 +1,6 @@
 % !TEX encoding = UTF-8 Unicode
 % !TEX TS-program = pdflatexshell
 
-% TODO: Put this in main
-\newcommand{\conv}{*}
-
 \documentclass[../main/main.tex]{subfiles}
 
 \begin{document}
@@ -143,5 +140,369 @@ f_{sample} \implies& F_{sample}
 
 \end{itemize}
 
+\section{Missed 20 minutes}
+
+\emph{Densidad espectral de potencia}
+
+\section{Wiener-Khinchin theorem}
+
+slide 56 ()
+
+If it is time independent $F^{*}(v_{1})F(v_{2}) = A(v_{2} \delta(v_{1}, v_{2}))$
+
+slide 57
+
+white noise, pink noise, brown noise (brownian)
+
+
+slide 58
+
+In signal processing Wiener-Khinchi theorem.
+
+Michelson detector.  Signal received $\implies$ Spectrum (through FFT). Find movement.
+
+
+\subsection{Summary}
+
+\begin{enumerate}
+	\item Convulucion operacion filtrado invariante espacialmente.
+
+\end{enumerate}
+
+
+
+
+
+
+\section{Linear system characterization}
+
+Slides ``Caracterizacion de sistemas etc''
+
+
+
+slide 3
+
+Linear system have signal that, given arbitrary blu blu
+
+slide 5 non-linear systems
+
+\begin{itemize}
+	\item $P=V^{2}/R$
+	\item Fidelidad sinusoidal (peak detection and other thinguies )
+
+\end{itemize}
+
+
+slide 6 (2,4,5 are linear)
+
+slide 7 (casual system.)
+
+If response depends only on $f(t)$ for values of $t<\leq t_{0}$
+
+(1,3) casual system
+
+(2,4) not (2 is an average, 4 is time reversed)
+
+
+\subsection{Characterize}
+
+Expand signal, (Hermite, Laguerre, Zernike, etc) polynomials.
+
+\begin{equation}
+f(x,y) = \sum_{n=1}\sum_{m=1} a_{nm} \phi_{nm}(x,y)
+\end{equation}
+
+Since it is linear, characterization is linear, and we can base response based on the sum
+
+\begin{equation}
+g(x,y) = S\left\{f(x,y)\right\} = \sum_{n=1}\sum_{m=1} a_{nm} S\left\{f\phi_{nm}(x,y)\right\}
+\end{equation}
+
+\subsubsection{Impulse response}
+
+% TODO put it in main,
+\newcommand{\hh}{h(x,y,\eta,\phi)}
+
+slide 9
+
+Due to linearity we can divide every function in terms of each individual impulse..
+
+PSF is Point Spread Function
+
+
+\begin{equation}
+h(x,y,\eta,\phi) =  S\left\{\delta(x-\eta,y-\phi)\right\}
+\end{equation}
+
+Response of system in $(x,y)$ when an impulso occured in $(\eta,\phi)$
+
+\subsubsection{Image flood}
+
+slide 10
+
+\begin{equation}
+g_{\textrm{flood}}(x,y) = \iint h(x-\eta,y-\phi) \dd{\eta}\dd{\phi}
+\end{equation}
+
+if $g_{flood}$ depends on $x,y$ it is non linear posterior to g
+
+Sensitivity $S_{pi}$
+
+\begin{equation}
+S_{pi} = \iint h(x-\eta,y-\phi) \dd{x}\dd{y}
+\end{equation}
+
+slide 11,12 graphic example
+
+
+slide 13
+
+Linear shift-invariant systems, (LSI system)
+
+if $\hh = h(x-\eta, y-\phi)$
+
+Output signal is the convolution of h with the input signal. Not all linear systems are spacially invariant
+
+slide 14
+
+description throgh a matrix
+
+\begin{equation}
+g = M\times f
+\end{equation}
+
+Toeplitz matric,
+
+
+
+slide 15
+
+Problem 2.10
+
+TODO: Move to problems
+
+NOTE: To calculate the PSF we change f for delta and calculate
+\begin{enumerate}
+	\item it is linear, since the question is linear with respect to f.
+
+	Is it invariant with respect to shift? No, it can't be expressed in a convolution form
+
+	\item Non-linear, it does not have PSF because that is only for linear systems
+
+	\item It is linear, what is the PSF? the exponential
+
+	It is LSI
+
+	\item Fourier transform,
+
+	PSF is the exponent squared,
+
+	non lsi
+
+\end{enumerate}
+
+slide 17, example
+
+LSI have constant flood
+
+
+slide 18
+
+LSI system con aumento 1
+
+
+
+$f(r) = m^{-2}f_{e}(r/m) \implies h(r, r') = m^{-2}f_{e}((r-r')/m) $
+
+
+PSF $g = \int \dd{r'} f(r') h(r-r')$
+
+
+slide 19 funcion de transferencia de LSI
+
+
+\begin{itemize}
+	\item Systems with in/out relationsihp that relte through a convolution are linear and LSI
+	\item Their ext
+	\item In fourier domain it is simply a product
+	\item The transfer function $H$ of the system is the fourier transform of the PSF
+
+	$H(p) = TF\{h(r)\}(p);\ p=(u,v)$
+
+\end{itemize}
+
+
+slide 20
+
+If PSF is real, then $H(p) = H^{*}(-p)$ can be expressed in terms of positive frequencies. IF PSF is even and real, PSF is also real and even
+
+
+NEXT DAY
+
+slide 22
+
+Normalized transfer function $OTF = \frac{H(p)}{H(0)} = MTF(p) e^{i\,\textrm{PTF(o)}}$
+
+
+slide 23
+
+contraste, Michelson
+
+\begin{equation}
+M_{f} = \frac{f_{max} - f_{min}}{f_{max} + f_{min}}
+\end{equation}
+
+Out signal of LSI
+
+\begin{equation}
+g(x_{0})
+\end{equation}
+Note $a$ will be transfer at point $0$, $b$ will be transfer point at $u$,
+
+slide 24
+
+Entry signal
+
+
+Exit signal
+
+If $\phi\neq0$ then there will be a de-phasing, not just an attenuation . Remember that a phase shift is a shift on their harmonics.
+
+slide 25
+
+When MTF characterizes contrast, when there is a phase thingy then it becomes more grey and harder to see
+
+
+slide 26
+
+Linear spread function. Based on how the system reacts to a line of delta density
+
+If the excitement axis is $y$ $f(x, y) = \delta(x)$. Its LSF($l$) is related to its PSF($h$)
+
+
+
+slide 27 (you go so fast I have to say)
+
+Response to a perfect edge
+
+Step function $s(x)$
+
+The LSF is the derivative of the convolution of the spread function and stimulus (the response to the edge).
+
+slide 28
+
+slide 29
+
+Measures of MTF
+
+Direct (patterns inusoidal, barrs, chirp cos)
+
+Indirect measures
+
+Por PSF, LSF or SR
+
+slide 30
+
+drawing of stimulus versus luminance of image. and a bunch of explanations and some expansino in term of harmonic (only odd ones, even cancel for the step function)
+
+
+slide 31
+
+I dont know
+
+slide 32
+
+PSF provides more information from the system than the img resolution.
+
+The limit can be calculated empirically. Half width, Rayleigh criteria, etc
+
+slide 33
+
+Resolution, width at half the PSF
+
+Simple moethod but faluable
+
+slide 34
+
+Rayleigh
+
+slide 35
+
+Sparrow
+
+Note how the calculation on the slide relies on both being same hegihts, the real resolution of the system will be lower than this limit, since in general both delta sources will have different heights
+
+Note how all these are just criteria, it doesnt change our image
+
+
+slide 36
+
+Superresolution
+
+Resolution better than on the classical limit.
+
+\begin{itemize}
+	\item Extrapolation based on sampling theorem
+	\item Iterative extrapolation (Gerchberg)
+	\item
+	\item Engineering of PSG
+
+\end{itemize}•
+
+
+slide 37
+
+If a signal is compact (bound), we can describe it by a sampling based on the interpolation theorem. We can therefore describe F based on samples (see slide for eq)
+
+Presumably, once we know H, the signal spectrum something something.
+
+We can only know frequencies on a range
+
+
+slide 38
+
+Noise
+
+Additive noise (gaussian, thermic)
+
+Signal dependent noise (Poisson/shot noise, )
+
+slide 39
+
+Contrast to noise ratio, CNR
+
+slide 40
+
+Deconvolution, debluring
+
+Deconvolution is a computational technique to partially compensate with the distortion.
+
+Picture is ncie on the slide
+
+``Inverse convolution''
+
+slide 41
+
+Inverse filter (naive filter)
+
+Use deblurring with  h a 2-pixel gaussian
+
+slide 42
+
+In fuirier doman
+
+\begin{align}
+G = FH + N\\
+
+f(r)? = TF^{-1}\left(\frac{G(u)- N(u)}{H(r)}\right)
+\end{align}
+
+Non unique solution
+
+Unstable
+
+slide 43
+
+something fun, deregularized
 
 \end{document}

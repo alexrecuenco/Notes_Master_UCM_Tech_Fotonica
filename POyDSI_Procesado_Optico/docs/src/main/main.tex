@@ -191,8 +191,9 @@ bashcode/.style={
 
 \newcommand{\inlinecode}[1]{\texttt{\detokenize{#1}}}
 
-\NewDocumentCommand{\fourier}{ O{0} O{\pi} m}{\int_{#1}^{#2}{#3\dx}}
+\NewDocumentCommand{\fourier}{ O{0} O{\pi} m O{\dx}}{\int_{#1}^{#2}{#3 #4}}
 \newcommand\fourierint[1]{\fourier[-\pi][\pi]{#1}}
+\newcommand\fourierfull[1]{\fourier[\R][]{#1}}
 
 
 
