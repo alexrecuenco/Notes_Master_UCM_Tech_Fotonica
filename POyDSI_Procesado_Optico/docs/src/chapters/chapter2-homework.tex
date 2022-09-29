@@ -4,49 +4,167 @@
 \documentclass[../main/main.tex]{subfiles}
 
 \begin{document}
+%\setcounter{chapter}{1}
+%\setcounter{section}{1}
 \section{Homework}
 
 30 de septiembre: entrega de problemas 1.10, 1.12, 2.3
 
 Fourier transform definition
 
-\begin{equation}
-•
-\end{equation}•
+\begin{align}
+	F(p)\equiv & \int_{\R}f(x)e^{-i\, 2\pi pt} \dx \\
+	F^{-1}(p)= & \int_{\R}f(x)e^{i\, 2\pi pt} \dx
+\end{align}
 
 \subsection*{Problem 1.10}
 
 Calculate the Fourier transform of $f(x) \sin (2\pi a x)$ given $F(t)$ as the Fourier transform of f(x)
+
+\begin{align*}
+	\fourierfull{ f(x) \sin (2\pi a x) e^{-i\, 2\pi px}} & =
+	\fourierfull{\frac{f(x)}{2i} \left[e^{2\pi i ax}-e^{-2\pi i ax}\right] e^{-i\, 2\pi px}}                     \\
+	                                                     & = 	\fourierfull{\frac{f(x)}{2i} e^{-2\pi i x (p-a)}} -
+	\fourierfull{\frac{f(x)}{2i} e^{-2\pi i x(a+p)}}                                                             \\&=
+	\frac{F(p-a)}{2i}  -
+	\frac{F(p+a)}{2i}                                                                                            \\
+	                                                     & \qed
+\end{align*}
+
 \subsection*{Problem 1.12}
 
 True or false? (Note that FT denotes Fourier Transform)
 
 \begin{enumerate}
 	\item
-	\begin{equation*}
-	\int f(x)H(x)\dx = \int h(x)F(x)\dx,\,\textrm{where,}
-	\begin{cases}
-	H(x) = FT\{h\}(x)\\
-	F(x) = FT\{f\}(x)
-	\end{cases}
-	\end{equation*}
+	      \begin{equation*}
+		      \int f(x)H(x)\dx = \int h(x)F(x)\dx,\,\textrm{where,}
+		      \begin{cases}
+			      H(x) = FT\{h\}(x) \\
+			      F(x) = FT\{f\}(x)
+		      \end{cases}
+	      \end{equation*}
 	\item The fourier transform of a real function is real
-	\item If $f(x)$ is real, then $\int F(x)\dx$ is real as well (Where $F = FT(f)$)
+	\item If $f(x)$ is real, then $\int F(t)\dd t$ is real as well (Where $F = FT\{f\}$)
 \end{enumerate}
+
+\subsubsection{Solution}
+
+\begin{enumerate}
+	\item Assuming the appropriate Lebesgue integration measure condition, we can commute integration order. Under that assumption:
+
+	      \begin{align*}
+		      \int_{\R} f(x)H(x)\dx
+		       & =  \int_{\R} f(x) \dx \fourierfull{h(t) e^{-i 2 \pi  t x}}[\dd t] \\
+		       & =  \int_{\R}\int_{\R} f(x) h(t) e^{-i 2 \pi  t x} \dd x \dd t     \\
+		       & =  \int_{\R} h(t) F(t) \dd t
+	      \end{align*}
+
+	      Note how this is \textbf{TRUE when the outer integration covers the real numbers}. It is not true in general for a generic integration.
+
+
+
+	\item We can compare the integration with its conjugate, if their difference is zero,  they are both real
+
+	      \begin{align*}
+		      F(x)                    & =\fourierfull{f(t) e^{-i 2 \pi  t x}}[\dd t]                               \\
+		      F^{*}(x)                & =\fourierfull{f(t) e^{i 2 \pi  t x}}[\dd t]                                \\
+		      \implies F(x)- F^{*}(x) & = \fourierfull{f(t)\left(e^{-i 2 \pi  t x}-e^{i 2 \pi  t x}\right)}[\dd t] \\
+		      F(x)- F^{*}(x)          & = -2i\fourierfull{ f(t)\sin(2\pi tx)}[\dd t]
+	      \end{align*}
+
+	      The result of that integral is zero if and only if the real function has a real fourier transform. That is true under some conditions, but it is certainly not true for all real functions (See, for example, an odd function).
+
+	      \textbf{NOT TRUE in general}
+
+	\item Continuing from the previous problem solution
+
+	      \begin{align*}
+		      \fourierfull{(F(x)- F^{*}(x))}
+		       & = -2i\fourierfull{\fourierfull{ f(t)\sin(2\pi tx)}[\dd t]}             \\
+		      \fourierfull{F(x)}- \left(\fourierfull{F(x)}\right)^{*}
+		       & = -2i\fourierfull{\left(f(t)\fourierfull{\sin(2\pi tx)}\right)}[\dd t] \\
+		       & \propto \fourierfull{f(t)\left(\delta(x) - \delta(-x)\right)}[\dd t]   \\
+		       & = 0
+	      \end{align*}
+
+	      Where we have used the fact that $\fourierfull{e^{i2\pi xt}} = \delta(t)$
+
+	      Therefore, if this calculation is correct, which I am not very confident, it is \textbf{TRUE}
+
+\end{enumerate}
+
 
 \subsection*{Problem 2.3}
 
 Draw
 \begin{enumerate}
 	\item $f(x) = rect(x/a) \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]$
-	\item $g(x) = rect(x/a)\conv \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]$
+
+	      \begin{align*}
+		      f(x) & =  rect(x/a) \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]     \\
+		           & = rect(0) \delta(x) + 2rect(- 1/4)\delta(x+a/4) - rect(1/4)\delta(x-a/4) \\
+		           & \textrm{(\small because $rect(0)=rect(\pm 1/4) = 1$, then)}              \\
+		           & =  \delta(x) + 2\delta(x+a/4) - \delta(x-a/4)                            \\
+	      \end{align*}
+	      NOTE: To more formally understand this, you would use $f$ as a density on a generic function $g$ and realize that its effect is identical to this
+
+
+	      The abstract drawing interprets the density poles based on the height of the arrow
+	      \begin{center}
+		      \pgfmathsetmacro{\h}{1.5}
+
+		      \begin{tikzpicture}[x=2cm, y=1cm]
+			      % grid
+			      \draw[help lines, dotted] (-2.5,-1) grid (2.5, 3);
+			      \draw[thin, dotted](-2.5,0)--(2.5,0) node[anchor=south east]{$x$};
+			      \draw[thin, dotted](0,-1)--(0,3) node[anchor=north west]{$f(x) = \delta(x) + 2\delta(x+a/4) - \delta(x-a/4)$};
+
+			      \draw[->, very thick] (0, 0)  node[anchor=east, rotate=90] {$x=0$}--+(0, \h) ;
+			      \draw[->, very thick] (-1/4, 0)  node[anchor= east, rotate=90] {$x=-a/4$} --+(0, 2*\h) ;
+			      \draw[->, very thick] (1/4, 0)  node[anchor= west, rotate=90] {$x=a/4$}--+(0, -\h) ;
+
+		      \end{tikzpicture}
+	      \end{center}
+
+
+
+	\item $g(x) = \rect(x/a)\conv \left[\delta(x) + 2\delta(x+a/4) - \delta(x-a/4)\right]$
 \end{enumerate}
 
 \begin{align*}
-g(x)
-&= \int_{\R}rect(t/a)\left[\delta(x-t) + 2\delta(x+a/4-t) - \delta(x-a/4-t)\right]\dd{t}\\
-&= \rect(x/a) + 2 rect(x/a+1/4) - rect(x/a-1/4)
+	g(x)
+	 & = \int_{\R}\rect(t/a)\left[\delta(x-t) + 2\delta(x+a/4-t) - \delta(x-a/4-t)\right]\dd{t} \\
+	 & = \rect(x/a) + 2\rect(x/a+1/4) - \rect(x/a-1/4)
 \end{align*}
+
+\begin{center}
+
+	\begin{tikzpicture}
+		% grid
+		\draw[help lines, dotted] (-3,-1) grid (3, 3);
+		\draw[thin, dotted](-3,0)--(3,0) node[anchor=south east]{$x$};
+		\draw[thin, dotted](0,-1)--(0,3) node[anchor=north west]{$f(x) = \rect(x/a) + 2 \rect(x/a+1/4) - \rect(x/a-1/4)$};
+
+		\draw[red] (-1/2, 0) --++(0,1) --++(1,0) node[anchor=west]{\small $ \rect(x/a)$}--++(0,-1);
+		\draw[green] (-3/4, 0) --++(0,2)  node[anchor=east]{\small $ 2 \rect(x/a+1/4)$}--++(1,0) --++(0, -2);
+		\draw[blue] (-1/4, 0)--++(0,-1) node[anchor=north]{\small $- \rect(x/a-1/4)$} --++(1,0) --++(0, 1);
+
+		\draw(-3,0) --
+		(-3/4,0) --++(0, 2)
+		--++(1/4, 0)--++(0,1)
+		--++(1/4,0)--++(0,-1)
+		--++(1/2,0)--++(0,-2)
+		--++(1/4,0)--++(0,-1)
+		--++(1/4,0)--++(0,+1)
+		--++(2, 0)
+		;
+
+	\end{tikzpicture}
+
+	\emph{The three superposing rectangular waves are drawn in red, green, and blue and labeled respectively. The full function is drawn in black}
+
+\end{center}
 
 
 \end{document}
