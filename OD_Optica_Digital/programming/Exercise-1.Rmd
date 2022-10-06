@@ -48,6 +48,7 @@ import diffractio
    - Obtener el campo luminoso a una cierta distancia z, a una cierta distancia a elegir
    - Representar el campo difractado (intensidad y fase)
    - El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer).
+
 2. **Determine el campo producido por una rendija en el plano de Fourier (plano focal) de una lente.**
    - Generar una fuente de luz en forma de onda plana u otro tipo de onda
    - Generar una máscara en forma de rendija, de un cierto tamaño a elegir.
@@ -57,6 +58,64 @@ import diffractio
    - El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer).
 
 ### Resolución Parte 1
+
+```{python}
+from diffractio import degrees, mm, plt, np, um
+from diffractio.scalar_sources_X import Scalar_source_X
+from diffractio.scalar_masks_X import Scalar_mask_X
+from diffractio.utils_drawing import draw_several_fields
+
+from matplotlib import rcParams, get_backend, pyplot as plt
+
+plt.close()
+
+def plot(field, title, **kwargs):
+  field.draw(**kwargs)
+  plt.title(title)
+  plt.show()
+
+get_backend()
+
+rcParams['figure.dpi']=125
+rcParams['figure.figsize']=(5,4)
+
+x0 = np.linspace(-50*um, 50*um, 1024*32)
+wavelength = 5 * um
+
+# plane wave
+u0 = Scalar_source_X(x=x0, wavelength=wavelength)
+u0.plane_wave(A=1, theta=0)
+plot(u0, 'Initial field')
+
+
+plot(u0.RS(z=25 * um, new_field=True, verbose=True), "RS propagated 25um")
+
+# slit
+t0 = Scalar_mask_X(x=x0,  wavelength=wavelength)
+t0.slit(x0=0, size=25 * um)
+plot(t0, "Mask")
+
+u1 = u0 * t0
+
+
+
+# Propagation a certain distance and draw
+plot(u1.RS(z=25 * um, new_field=True), "field masked RS propagated 25 um")
+
+plot(u1.RS(z=250 * um, new_field=True), "field masked RS propagated 250 um")
+
+
+plot(u1.RS(z=5 * mm, amplification=8, new_field=True), "field amplifiedx8  propagated 5 mm")
+
+
+u1.fft(z=1*mm, remove0=False, new_field=True).draw(kind='fft',logarithm=False, normalize=True)
+plt.xlim(-40000,40000)
+plt.ylim(bottom=0);
+plt.title("Field FFT  (after 1mm)")
+plt.show()
+
+```
+
 
 **El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**
 

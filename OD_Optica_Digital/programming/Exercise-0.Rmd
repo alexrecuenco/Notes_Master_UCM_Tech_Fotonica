@@ -17,7 +17,10 @@ The following should run
 ```{python cars}
 import numpy as np
 import scipy as sp
+import matplotlib
 import matplotlib.pyplot as plt
+
+matplotlib.get_backend()
 
 
 x = 1
