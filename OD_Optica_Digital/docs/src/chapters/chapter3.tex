@@ -1,0 +1,220 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\chapter{Diffractive optical elements (DOEs)}
+
+Sketch from slides  `` Elementos Ópticos Difractivos (DOEs)'' until fixed
+
+
+Slide 7
+
+Gray level, phase difference map of the DOE that creates the pattern. In a far field
+
+Sometimes you can remove the lens and focus on close field rather than far field
+
+Slide 8
+
+Second image is multiple lenses
+
+Slide 9
+
+Link to webpage
+
+Note efficiency depends on levels like we have seen, discretized.
+
+
+Slide 11
+
+
+Mutiplexado de fase
+
+Focaliza inclinado, circulos sesgados como un triangle (blazed net) combinado con un circulo
+
+Right image is 3 of these circular segments (not centered at the center) combined together.
+
+Note that because we are grabbing a part of the lens and using it, not from the center. Therefore we can choose a much larger diameter of lense, and the focus depth increases. (See slide 10)
+
+
+Slide 12
+
+How are these structures created? Using the local net approximation.
+
+These are some prism,  blazed net
+
+Remember blazed lens : Exit angle determined by $\theta = arcsen (\frac \lambda p)$ p is the period, so more deflection if there are more pediors
+
+(Looking at slide 8, top right image. We see higher period at the edges, because it causes more deflection, we can understand lenses as objects with larger periods as we get away from the local point)
+
+Slide 13
+
+multiplexado espacial o de fase?
+
+Es espacial. Each region of the lens has a certain pecific structure. And each of the pieces of the lens has a different use. (Each of those regions )
+
+Slide 14
+
+The first one is espacial, each region creates a certain part of the image. Top left to the top left line of the A, top right to the top right and bottom to the straight line.
+
+The second one is phase. Which means that all the different parts are added together and created into one region. All parts of the lense contribute to the full object
+redirects the light on a certain way, such that each of the branches. You cant clearly define regions that create certain things
+
+Slide 15
+
+Fresnel lense has a focal.
+
+To create a longer focus, to enhance the depth of the image, we can't do it with a normal lens
+
+Instead, we  can segment  the lens into two different regions with two focal lengths. A greater focal length and a shorter focal length one (second picture) Note how the second focus is larger because it is further away
+
+Slide 16
+
+Artifacts on Fresnel lenses with two sectors.
+
+The edges of each focal creates artifacts on the image from each of the cats
+
+If we create enough sectors we can erase these artifacts. (These images are the cross section on the direction of the beam)
+
+
+Slide 17
+
+Lense with variable focal.
+
+Normal lens is (equation top right) without the phase $P$.
+
+If we create the design of the lense doing the binarization based on that top one, since focal depends on r we can create a range (see two eqquations bottom)
+
+Slide 18
+
+
+Daisy lens. Variable phase.
+
+Didn't really understand this. moving on
+
+Slide 19
+
+Photon sieve lenses
+
+(Note image has the opposite convention than us with positive/negative phase regions)
+
+
+This comes from x-ray lenses. We can't create lenses with mirrors, and this milimiter structures can't be created. Instead we do these structures with holes, the holes can create a phrase thing.
+
+After studying that, we can see an additional benefit (look at graph bottom right) For a certain ``placa'' the focal has a certain width, but the width of the focal is smaller with a photon sieve.
+
+
+Slide 20--21
+
+Axicons
+
+Rotate the diffractive pattersn. Look at the pattern, that is not the forward section, the circles, it is the side section.
+
+These then create destructive except on the axis... creating a superfine structure.
+
+Creates a very long focal, instead of diffractive like the other lenses, it is a phase construction. The biggest downside is that the focal point will be much closer to the optical element, while the modified fresnel lenses will have a much further focal
+
+(See slide 21, picture on the left, shows how it looks far away)
+
+We can modify the overlap region by rotation (? don't understand) or with a larger lense.
+
+Slide 22
+``Conformadores''
+
+Vortices, generate a circular ring on propagation, and it helps with trapping paarticles, since it will make it rotate around the light ring.
+
+Beam-shaper creates a line, and it has those lobes to make sure the energy will be higher at the edges by redirecting the lgiht. makeng it
+
+Abberration removal:
+
+A plane wave is $E = E_{0}e^{i(kr-wt)}$. If we have a wave coming with a certain phase $E = E_{0}e^{i(\phi(x,t)-wt)}$, we can put them through an aberrator that does a phase change for each $x$, $y$ such that it cancels them and creates an outgoing plane wave
+
+
+\section{How to generate them}
+
+Slide 23
+
+I start with a dot source.
+
+When I add a prism it deflects it.
+
+If I add two blazed net systems together, when we multiplex it, we get two points
+
+As we add more points we keep adding them, and we can create lines (see slide 24, last image)
+
+% See https://www.edmundoptics.com/knowledge-center/application-notes/lasers/an-in-depth-look-at-axicons/
+
+\section{Modulation techniques}
+
+Oct 4th
+
+
+Slide 26
+
+when phase changes are too small for the process we have defined before, we add a linear phase term $\phi_{c}(x,y) = \fratfrac{2\pi}{d_{c}}x$
+
+We can then simulate this structure. If we do it blazed we have a certain non-repeating period, but we will have many jumps, that will help create more transitions that models the transition better
+
+If, on the other hand, we do it as binary, we can pick something like $(0, \pi)$ being down and $(\pi, 2\pi)$ being high.
+
+Not how $\phi_{c}$ will create a twist. Order zero would be the difference, order 1 would be the graph,
+
+
+\subsection{Lohmann displacement}
+
+Slide 27
+
+Motivation: when we displace a function, it is a phase change.
+
+When we get our structure and we displace it it gets a phase change. Therefore, if we create our structure, and then we displace this period structure
+
+All the displacements have different phases
+
+
+\section{Order 0 methods}
+
+Slide 28
+
+System 4f
+
+\begin{itemize}
+	\item 2 lenses with same focal
+	\item Set observation object, then lense at distance f, then second lens at 2f, and observation point at 1f again.
+
+	Therefore, if we have an object in the observation point, it creates an image on the screen, some kind of image on the other side
+	\item If I have instead a plane wave coming in, it will come in, converge on the focal point between them, go through the second lense and come out as a plane wabe again
+	\item If we add a slit around the central focal, we are removing all noise and only leaving the incident plane wave
+
+
+
+\end{itemize}
+
+Back to our drawing.
+
+The first order goes to either direction, not through the center. therefore we are obscuring everything but the zero level.
+
+Because of that, we are able to accomplish gray levels from the diffraction nets (Some gray values on our order zero)
+
+For example, in a binary net I can change the fill factor, and based on that I will get different values of grey.
+
+The parts placed as ``bright pixels'' are places where no diff pattern is at the beginning
+
+Slide 29
+
+Modifying widths and heights of the net
+
+Phase is established in terms of heights, remember the phase change over a height $h$ is $k (n-1)h$.
+
+Slide 30
+
+Modulation of complex phase based on width and depth of the \emph{red portadora}
+
+
+Slide 31
+
+If $p \sin \theta = \lambda$, then if we make $\lambda/p$ we only get evanescent orders transferring. We get the order zero and evanescent. Modulating like this we simulate different $n$ values? (Is that what he said?) And to study this carefully we would need to actually go to Maxwell's equation
+
+the can be done with an electron beam.
+
+\end{document}
