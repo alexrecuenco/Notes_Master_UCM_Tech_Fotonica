@@ -1,0 +1,57 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+%\setcounter{chapter}{1}
+%\setcounter{section}{1}
+\section{Homework}
+
+\emph{14 de Octubre: entrega de problemas 2.8, 2.11 y 2.19}
+
+\section*{Problem 2.8}
+
+%TODO: Put in main file
+\renewcommand{\vec}[1]{\vb{#1}}
+\renewcommand{\u}{\vec{u}}
+\renewcommand{\r}{\vec{r}}
+\renewcommand{\v}{\vec{v}}
+\newcommand{\FT}[1]{\textrm{FT}\left\{#1\right\}}
+
+Which of the following filters can be used in the Fourier domain to enhance edges on an image $f(r)$ (where $u$ is the frequency vector, $H(\u)$ is the frequency response)
+
+\begin{enumerate}
+	\item $H(\u) = (\FT{f(\r)}(\u))^{*}$
+	\item $H(\u) = \abs{\FT{f(\r)}(\u)}^{-1}$
+	\item $H(\u) = \abs{\FT{f(\r)}(\u)}^{-2}$
+	\item $H(\u) = e^{-u^{2}/a^{2}}$
+	\item $H(\u) = \frac{1}{1+\flatfrac {u}{|\u_{o}|}}$ where $u = \abs{\u}$
+
+\end{enumerate}
+
+\section*{Problem 2.11}
+
+To filter
+\begin{equation*}
+f(x) = \sin(\pi/2) + \cos(2\pi u_{0}x + \pi/3) + \sin(10\pi u_{0} x)
+\end{equation*}
+A system is used that acts on $f$ and is described with
+
+\begin{equation*}
+g(x) = a \int_{-\infty}^{\infty} %
+f(\xi) sinc^{2}\left[a(x - \xi)\right]\dd{\xi}
+\end{equation*}
+
+\begin{enumerate}
+	\item Find the Fourier transform and represent the \emph{espectro de potencia de la señal de entrada}
+	\item Which is the \emph{function de transferencia del sistema}
+	\item suppose you want to remove the highest frequencies (they are noise). What value does $a$ such that $g(x)$ provides more contrast? Determine the filtered signal in that case
+
+\end{enumerate}
+
+\section*{Problema 2.19}
+
+\emph{Una imagen esta corrompido con el ruido ``sal y pimienta''. Usando el programa ImageJ (véanse la diapositiva final de la clase convolución y Correlación) elegir un filtro (entre los filtros Gaussian Blur, Mean o Medium) más adecuado para la reducción del ruido. Presentar las imágenes (original, con el ruido, filtradas) y comentar su elección}
+
+\end{document}
