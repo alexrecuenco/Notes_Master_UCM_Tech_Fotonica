@@ -1,0 +1,187 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\chapter{Fabrication methods}
+
+slide 5
+
+Cleanroom.
+
+\begin{itemize}
+	\item Laminar air flow
+	\item HEPA filter for the room
+	\item Positive pressure room (prevent things from leaving)
+	\item Entry through a 2 door system
+\end{itemize}
+
+Temperature control, particle\ldots In Europe, it is usual to aim for $20\pm 1 C$, humidity of $45\%\pm5\%$
+
+slide 6
+
+\begin{itemize}
+	\item Large cost
+	\item Maintainance
+	\item Difficult daily use for workers
+\end{itemize}
+
+Habitual equipment. Note that you protect within it, since vapor from chemical or whatever could affect other parts.
+
+slide 8
+
+Diamond end with rotational system that print the edge.
+
+You record it on metal to make the correct shape.
+
+Less than $0.1 \mu m$ precission.
+
+Rotational symmetry is quite decent with these, since rotating around an axis produces a very good trace
+
+You can't mass-produce them like this, you create a negative master that is later used to create the different ones
+
+
+
+slide 9
+
+\section{Laser printing}
+
+This needs to be on an isolated anti-vibration place. It has both passive and active anti-vibration methodology
+
+For antivibration: Different anti-vibration fundation, on a passive vibration footing, with active vibration detectors that compensate
+
+We use high-frequency lasers,  large lenses for focal,
+
+Because we have a small focal point, but we have a ``profunddidad de foco'' that is very low. A very small margin of error. (2\mu m)
+
+To prevent errors we use an autofocus, using a different laser that does not activate the resin to use to detect a margin of error and use as feedback to correct the height ($z$) of the laser
+
+This type of fabrication needs to be really quick, since you need to do millions of perforations. For that reason the control system needs to go at a realy high frequency
+
+
+\subsection{Resine}
+
+slide 10
+
+Photo-resine. A quemical substance that is sensitive and is placed over a surface. Then this is exposed to the laser, that with a very small power reacts
+
+\begin{itemize}
+	\item Blue light 365--405 nm.
+	\item In the lab you need to use a yellow/red light to prevent affecting the resine
+\end{itemize}
+
+\subsection{Printing method}
+slide 11
+
+Positive (creates holes), or negative (add material)
+
+Note that the width of the resine is comparable to the focal depth, and you therefore need to deal a lot with the light as it goes there, what is the interference inside that, etc.
+
+\subsection{Photo-resin deposition}
+
+slide 12
+
+Leave a drop of resine on a spinning disk, spinning rate is important to spread it correctly
+
+slide 13
+
+The spinning can create different shapes, you want to find the right speed for it to prevent wave formation
+
+slide 14 doesnt exist; slide 15
+
+\subsection{Auto focus system}
+
+slide 16
+
+Pictures there of a red laser and and the blue laser. You get a signal method.
+
+\subsection{Exposure}
+slide 17
+
+You need to calculate what is the exposure time you need based on laser power, etc.
+
+slide 18
+
+Gaussian beam exposition:
+
+Convert the W in J by  integrating and decide that way what is the right width of these thigns
+
+Width of the line is determined by the equation there with the log.
+
+If we print the line with a gaussian beam we might create errors and ondulations at the edge of the line
+
+Therefore, to create a better edge, it is better to create laser wave that has a sharp edge
+
+Slide 19
+
+Image of a line, started and accelerated.
+
+To prevent the acceleration issues, you want to make it move at a constant speed by accelerating to the speed outside the area.
+
+(TODO: Could we just analize acceleration and jerk to create a system that does not require step that accelerates)
+
+
+Slide 20
+
+This is an example, removing from the DOE
+
+
+\section{Interferometry printing}
+
+Slide 21
+
+By using interferomtry we can print multiple much sharper lines at the same time with a period $p = \lambda/ 2 \sin (\theta)$
+
+Slide 22
+
+Creating a net with plane wave front interferomtry using a mirror.
+
+You need to allow this to collimate from far away.
+
+\section{Ablation laser}
+
+More agressive. You ablate the material directly, so you need lasers with a lot more power.
+
+These lasers are created as laser pulses.
+
+Material in nanoseconds gets heated, melts, and explodes.
+
+
+slide 24
+
+thermical process
+
+It is no longer a mW power laser, it is a 10W power or similar
+
+Q-switching. Pulse frequency around 20 kHz.
+
+This is a very direct technique but it works directly and much easier.
+
+They are good for prototyping, and are flexible in use. They work both for metal and glass.
+
+Slide 25
+
+Lab here,
+
+Describes teh current method. Using a non-linear crystal to split in 3, dissipating energy.
+
+Slide 26
+
+Description of lines over steel and glass.
+
+If we have a 3$\mu$m focal point, but we want to make a 20$\mu m$ line. We can move the object further up, although the energy focus will be much smaller, so we will need to go slower.
+
+In glass we can record inside of it by focusing inside. Look that the dots are created with a certain speed.
+
+Slide 27
+
+Fresnel lense over steel.
+
+In a metal, the topography, even if polished, will have some ondulations.
+
+You would use them for components that need to sustain large stresses and forces
+
+
+
+\end{document}
