@@ -1,0 +1,4 @@
+# See https://gist.github.com/33eyes/431e3d432f73371509d176d0dfb95b6e
+# When adding pynb notebooks,
+# Run git config filter.strip-notebook-output.clean 'jupyter nbconvert --ClearOutputPreprocessor.enabled=True --to=notebook --stdin --stdout --log-level=ERROR'
+*.ipynb filter=strip-notebook-output
