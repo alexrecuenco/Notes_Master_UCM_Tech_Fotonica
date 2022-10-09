@@ -2,7 +2,11 @@
 title: "Exercise 0"
 author: "Alex Recuenco"
 date: "`r Sys.Date()`"
-output: pdf_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+
 ---
 
 ```{r setup, include=FALSE}

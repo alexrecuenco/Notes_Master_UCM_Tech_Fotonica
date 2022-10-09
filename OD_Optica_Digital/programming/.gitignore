@@ -1,2 +1,5 @@
 env
 *.html
+# These are used by RMarkdown for caching results, so future renders are faster
+*_cache/
+*_files/

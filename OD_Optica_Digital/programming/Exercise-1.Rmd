@@ -1,6 +1,9 @@
 ---
 title: Ejercicio 01 Check diffractio
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
 
 ![](http://www.ucm.es/logo/ucm.png "ucm logo")
@@ -32,6 +35,7 @@ Como base, podeís ver el ejemplo https://diffractio.readthedocs.io/en/latest/so
 
 ```{r setup, include=FALSE}
 library(reticulate)
+knitr::opts_chunk$set(cache = TRUE)
 use_python("./env/bin/python")
 ```
 
@@ -57,7 +61,7 @@ import diffractio
    - Representar la intensidad luminosa.
    - El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer).
 
-### Resolución Parte 1
+## Resolución Parte 1
 
 ```{python}
 from diffractio import degrees, mm, plt, np, um
@@ -74,7 +78,7 @@ def plot(field, title, **kwargs):
   plt.title(title)
   plt.show()
 
-get_backend()
+get_backend();
 
 rcParams['figure.dpi']=125
 rcParams['figure.figsize']=(5,4)
@@ -84,15 +88,17 @@ wavelength = 5 * um
 
 # plane wave
 u0 = Scalar_source_X(x=x0, wavelength=wavelength)
-u0.plane_wave(A=1, theta=0)
+u0.plane_wave(A=1, theta=0);
 plot(u0, 'Initial field')
 
 
-plot(u0.RS(z=25 * um, new_field=True, verbose=True), "RS propagated 25um")
+plot(u0.RS(z=25 * um, new_field=True, verbose=False), "RS propagated 25um")
 
 # slit
+
 t0 = Scalar_mask_X(x=x0,  wavelength=wavelength)
-t0.slit(x0=0, size=25 * um)
+#';' prevents outputting results https://github.com/rstudio/reticulate/pull/722
+t0.slit(x0=0, size=25 * um);
 plot(t0, "Mask")
 
 u1 = u0 * t0
@@ -100,25 +106,224 @@ u1 = u0 * t0
 
 
 # Propagation a certain distance and draw
-plot(u1.RS(z=25 * um, new_field=True), "field masked RS propagated 25 um")
+plot(u1.RS(z=25 * um, verbose=False), "field masked RS propagated 25 um")
 
-plot(u1.RS(z=250 * um, new_field=True), "field masked RS propagated 250 um")
+plot(u1.RS(z=100 * um, amplification=3, verbose=False), "field propagated 100 um, ")
+
+plot(u1.RS(z=1 * mm, amplification=15, verbose=False), "field propagated 1 mm")
+
+```
 
 
-plot(u1.RS(z=5 * mm, amplification=8, new_field=True), "field amplifiedx8  propagated 5 mm")
+### **El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**
+
+Si, en la ultima figura, la estructura es similar a una sinc function. Habria que calcular la correlación con un best-fitting para informarnos de forma cuantitativa cuanto se aproxima.
+
+Viendo los 3 planos a distintas distancias se puede observar como existe una transicion entre los distintos regimenes entre 0.1 mm y 1 mm
+
+## Resolución Parte 2
 
 
-u1.fft(z=1*mm, remove0=False, new_field=True).draw(kind='fft',logarithm=False, normalize=True)
-plt.xlim(-40000,40000)
-plt.ylim(bottom=0);
-plt.title("Field FFT  (after 1mm)")
+
+```{python, include=FALSE}
+#### Sanity check, on XZ
+
+# Plane waves propagate as plane waves when no obstructions are found
+
+from diffractio import degrees, mm, plt, sp, um, np
+from diffractio.scalar_sources_X import Scalar_source_X
+from diffractio.scalar_masks_X import Scalar_mask_X
+from diffractio.scalar_masks_XZ import Scalar_mask_XZ
+
+diameter=1*mm
+
+x0 = np.linspace(-diameter/2, diameter/2, 1024*4)
+z0 = np.linspace(-50 * um, 50*mm, 1024)
+wavelength = 2 * um
+u0 = Scalar_source_X(x=x0, wavelength=wavelength)
+u0.plane_wave(A=1, theta=0*degrees)
+u0
+u1 = Scalar_mask_XZ(x=x0, z=z0, wavelength=wavelength)
+u1.incident_field(u0)
+u1.BPM()
+u1.draw();
+plt.show()
+u1.draw(kind='phase');
 plt.show()
 
 ```
 
 
+```{python, include=FALSE}
+#### Sanity check on XY
+
+# Double slits create a diffraction pattern.
+
+from diffractio.scalar_sources_XY import Scalar_source_XY
+from diffractio.scalar_masks_XY import Scalar_mask_XY
+from diffractio.utils_drawing import draw_several_fields
+plt.close()
+# Longitud de onda predeterminada
+wavelength = 10 * um
+resolution = 2048
+# Algorithm complexity is at least O(resolution^2)
+x0 = np.linspace(-15*wavelength, 15*wavelength, resolution)
+y0 = np.linspace(-15*wavelength, 15*wavelength, resolution)
+
+
+
+# Source
+u1 = Scalar_source_XY(x=x0, y=y0, wavelength=wavelength)
+# Iluminacion de onda plana
+u1.plane_wave(A=1, theta=np.pi / 2, phi=0)
+# Clase masks
+t1 = Scalar_mask_XY(x=x0, y=y0, wavelength=wavelength)
+t2 = Scalar_mask_XY(x=x0, y=y0, wavelength=wavelength)
+# slit
+
+t1.slit(x0=0, size=wavelength, angle=0)
+t2.slit(x0=2*wavelength, size=wavelength, angle=0)
+# Campo transmitido
+u2 = u1 * (t1+t2);
+
+zplane = wavelength*30
+u3=u2.RS(z=zplane, new_field=True)
+
+draw_several_fields(fields=(u2,u3), title=f'Slits and sources at {zplane}um');
+axes = plt.gca()
+axes.figure._suptitle.set_fontsize(12)
+
+plt.show()
+
+
+
+```
+
+#### Simple Lens
+
+Primero definimos nuestro contexto
+```{python}
+from diffractio.scalar_sources_XY import Scalar_source_XY
+from diffractio.scalar_masks_XY import Scalar_mask_XY
+from diffractio.utils_drawing import draw_several_fields
+
+from diffractio import degrees, mm, plt, sp, um, np
+from diffractio.scalar_sources_X import Scalar_source_X
+from diffractio.scalar_masks_X import Scalar_mask_X
+from diffractio.scalar_masks_XZ import Scalar_mask_XZ
+
+wavelength = 0.6238 * um
+
+# Simulation diameter, not real diameter of any element
+diameter = 1*mm
+thickness = .25*mm
+    # radius=(1*mm, -1*mm), ## WARNING: When I set (1,-1)mm as the radius the phase diagram breaks. I am not sure why
+
+radius = (2*mm, -1*mm)
+
+aperture=diameter/2
+r0 = (0, 0)
+
+mask = (200 * um, 2+0.1j)
+
+resolution = 1024
+
+x0 = np.linspace(-diameter/2, diameter/2, resolution*2)
+z0 = np.linspace(-250 * um, 3*mm, resolution)
+y0 = x0[:]
+
+
+```
+
+Segundo, realizamos la transmisión en el plano XZ
+```{python}
+u0 = Scalar_source_X(x=x0, wavelength=wavelength)
+u0.plane_wave(A=1, theta=0*degrees)
+u1 = Scalar_mask_XZ(x=x0, z=z0, wavelength=wavelength)
+u1.incident_field(u0);
+true_focal, _ = u1.lens_convergent(
+    r0=r0,
+    aperture=aperture,
+    radius=radius,
+    thickness=thickness,
+    refraction_index=1.5,
+    angle=0,
+    mask=mask
+    )
+
+u1.draw_refraction_index();
+plt.show();
+
+edge_matrix=u1.borders;
+
+# I dont understand this part
+u1.filter_refraction_index(type_filter=2, pixels_filtering=50);
+
+approx_focal_plane = true_focal+thickness;
+u1.BPM(verbose=False, has_edges=False);
+u1.draw(logarithm=True, normalize='maximum', draw_borders=True,  edge_matrix=edge_matrix);
+plt.vlines(approx_focal_plane, min(x0), max(x0));
+plt.show();
+u1.draw(kind='phase');
+plt.title("Phase diagram (not sure why it is empty under certain circumstances");
+plt.show();
+
+
+```
+
+
+Por último, medimos el resultado en un par de planos XY "cercanos" al foco
+
+```{python}
+
+
+u1 = Scalar_source_XY(x=x0, y=y0, wavelength=wavelength)
+u1.plane_wave(A=1, theta=np.pi / 2, phi=0);
+t1 = Scalar_mask_XY(x=x0, y=y0, wavelength=wavelength);
+t1.lens(
+  r0=r0,
+  radius=(aperture, aperture),
+  focal=true_focal,
+  angle=0,
+  mask=True
+)
+
+u2 = u1*t1
+
+first_plane=true_focal+0.1*mm
+second_plane=true_focal*3
+out_close_to_focus = u2.RS(first_plane, new_field=True)
+out_far_from_focus = u2.RS(second_plane, new_field=True)
+print(f"{aperture**2/wavelength/mm=:.0f}")
+print(f'{second_plane/mm=:.2f}')
+print(f'{first_plane/mm=:.2f}')
+
+
+
+def draw_intensity_phase(field, **kwargs):
+  draw_several_fields(
+    fields=(field, field),
+    kinds=['intensity', 'phase'],
+    **kwargs
+    )
+  axes = plt.gca()
+  axes.figure._suptitle.set_fontsize(12)
+
+  plt.show()
+draw_intensity_phase(u2, title=f'Incident wave after passing lens element,(f={round(true_focal/mm, 1)}mm)')
+draw_intensity_phase(out_close_to_focus, title=f'Outgoing wave propagation to {round(first_plane/mm, 1)}mm,(f={round(true_focal/mm, 1)}mm)')
+draw_intensity_phase(out_far_from_focus, title=f'Outgoing wave propagation to {round(second_plane/mm, 1)}mm,(f={round(true_focal/mm, 1)}mm)')
+
+
+```
+
 **El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**
 
-### Resolución Parte 2
+Es difícil medir claramente sin un análisis concreto, pero a primera vista el resultado final es parecido a un airy disk, que seria más o menos lo que esperaríamos a largas distancias, que es el efecto que hace estar cerca de un foco de una lente. Las aberraciones en la fase complican el estudio.
 
-**El campo obtenido ¿se parece al obtenido mediante la aproximación de campo lejano (Fraunhofer)?**
+
+### NOTAS
+
+Al principio tenía aberración por bordes de simulacion, resulta que el diámetro de máscara que había elegido se acercaba demasiado a los bordes de la simulación e interaccionaba con ese borde.
+
+Eligiendo un diámetro de simulación mucho mas grande que la apertura consigo evitar eso. Sin embargo, sigo viendo aberraciones en los plots finales de XY en los ejes, y no he conseguido entender porqué.
