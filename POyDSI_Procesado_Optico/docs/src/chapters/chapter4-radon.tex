@@ -1,0 +1,228 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Radon transformation}
+
+Slides ``\emph{Transformadata de Radon}''
+\section{Introduction}
+slide 3
+
+Beer's law $I(l) = I_0 e^{- \int_0^l \eta(x) dx} \implies \ln(I_0/I) =\int_{-\infty}^{\infty} \eta(x) dx $
+
+Projection taken over parallel lines would mean it is a parallel projection
+
+Projection taken from the projection of one point, fan-beam projection and cone-beam projection (3D)
+
+\subsection{Tomography in medicine}
+Slides 4--6
+
+Nobel prizes, whatever
+
+Brain tomography using line scans in multiple anlges
+
+\section{Definition of Radon transform}
+
+Slide 7, see picture
+
+Basically, we define a line from detector to source, and the angle of this line changes as well as we go through every line
+
+We then integrate the line $\vec(r)\vec(n) = s$ where $\vec{n}$ is the normal of the line of measurement
+
+Under that, the transformation is
+\begin{equation}
+	R(s, \theta) = \iint f(\vec r) \delta(s - \vec{r} \vec n )\dd{\vec r}
+\end{equation}
+
+With the parametric definition of the line,
+
+\begin{equation}
+	R(s, \theta) = \int \dd z f(s \cos \theta - z \sin \theta, s \sin \theta + z \cos \theta )
+\end{equation}
+
+The full set of R are the Radon transformation
+
+TODO Matrix slide 8, do it
+
+\subsection{Senogram}
+slide 9--10
+
+The projection has coordinates $s, \theta$ in an interval $\theta \in [\theta_{0}, \theta_{0} + \pi]$
+
+The transform of a point, $f = \delta(\vec{r}-\vec{r_{0}} )$ will be a line in $(s, \theta)$ space of poles. When the point coincides with the measure line for each angle
+
+\begin{equation}
+R(s, \theta) = \delta(s - r_{0} \cos (\theta - \theta_{0}))
+\end{equation}
+
+Where $\theta_{0}$ is the line original
+
+Therefore, $s = r_{0} \cos(\theta-\theta_{0})$ will define the absorvation line.
+
+
+Slide 11
+
+When you have multiple points, each of these lines overlap
+
+
+\section{Radon transform properties}
+
+\begin{itemize}
+	\item Linear
+	\item Periodic, period $2\pi$
+	\item Symmetry, $R(s, \theta) = R(-s, \theta + \pi)$
+
+\end{itemize}
+
+Flow conservation
+
+\begin{equation}
+\iint f(x,y) \dd x \dd y = \int R(s, \theta) \dd s
+\end{equation}
+
+Rotation. Given polar coordinates $f(r, \phi)$ some transformation
+
+Scaling theorem
+
+Displacement
+
+Homeomorphic through convolution
+
+Space limited signal
+
+\section{Shape reconstruction}
+\subsection{Fourier transformation}
+
+slide 14
+
+Central slice theorem: Can you recover the initial signal given a radon transform?
+
+Fourier transform with respect to s is equivalent to the bidimensional transform of $f$, where the vector $\nu \vec{n}$ is there instead of the spacial frequency
+\begin{equation}
+TF_{s} =///
+\end{equation}
+
+slide 15
+
+F()
+
+\begin{equation}
+F(\nu \cos \theta, \nu \sin \theta) = F(u, v) = TF_{s}{R} = \int_{\R} \dd{s} R(s, \theta ) e^{-i2\pi \nu s}
+\end{equation}
+
+\subsection{Procedure to reproduce}
+
+slide 16
+
+\begin{itemize}
+	\item How many projections need to be taken for reconstruction
+	\item Assume a signal is compact. $f = 0$ for a certain $x^{2}+y^{2} \geq T_{0}$ and its fourier transform is space limited as well
+	\item Due to sampling theorem
+\begin{align}
+\Delta x \leq 1/2F_{0} & \Delta y \leq 1/2F_{0} \\
+\Delta u \leq 1/2T_{0} & \Delta \nu \leq 1/2T_{0} \\
+\end{align}
+Where $T_{0}$ is the size of the object, and  $F_{0}$ is the maximum frequency bound
+
+\end{itemize}
+
+slide 17
+
+Fourier method of reconstraction
+
+Interpolation, measure a net in the polar thingy. low resolution for high frequencies
+
+
+slide 18
+
+The transform can also be expressed instead of ranges $0, \infty$ and $0, 2\pi$ due to Radon's symmetry, $0, \pi$, and then we do it twice. so also $-\infty, \infty $
+
+Slide 19
+
+\begin{equation}
+f(r) = \int_{\R} \abs{v} \dd v \int_{0}^{\pi}e^{i2\pi v(x \cos \theta + y \sin \theta)} R^{hat}(v, \theta) \dd \theta
+\end{equation}
+
+This form is basically the frequency filter, using the filter version using the frequency filter with a response $H(\nu) = \abs{\nu}$
+
+
+\subsection{Retro-projection filters}
+
+Slide 20
+
+\subsection{3D reconstruction}
+
+Slide 21
+
+We do the same thing for multiple planes, then calculate the inverse
+
+Slide 22
+
+\section{Wigner distribution, WD}
+
+how can we use this same method for signal analysis, using the tomography as a tool that allows us to write the signal
+
+\begin{align*}
+W(x,y) &= \int_{\R} f (x + x'/2) f^{*}(x - x'/2) e^{-i2\pi u x'} \dd{x'}\\
+&= \int_{\R} F (u + u'/2) F^{*}(u - u'/2) e^{-i2\pi u x'} \dd{u'}\\
+\end{align*}
+
+WD of stochastic processes.
+
+\begin{equation}
+W(\vec{r}, \vec{u}) = \iint_{\R^{2}}< f (\vec{r} + \vec{r'}/2) f^{*}(\vec{r} - \vec{r'}/2)>e^{-i2\pi \vec{u} \vec{r'}} \dd{\vec{r'}}
+\end{equation}
+
+\subsection{WD, coherencia}
+analysis of non-stationary waves
+
+The WD is a unified formalism of analysis and synthesis of signals both deterministic and stochastic.
+
+\subsection{Rotation of WD during a Fourier transform}
+
+See slide 24
+
+\subsection{Radon-Wigner transform}
+
+slide 25
+
+Allow us to identify this type of signal, and for us to filter something something
+
+Phase tomography. slide 26
+
+\section{Conclusion}
+
+Non-destructive reconstruction.
+
+Iterative methods for reconstruction
+
+Algorithms rely on whatever
+
+
+\section{Homework resolution}
+
+\subsection{Exercise sheet 2.15}
+
+slide 28
+
+\begin{equation}
+f(x,y) = e^{-(x-x_{0})^{2} - y^{2}}
+\end{equation}
+
+
+Firstly, calculate the Radon transform of
+\begin{equation}
+f(x,y) = e^{-(x-x)^{2} - y^{2}}
+\end{equation}
+
+Then, apply a transformation
+
+
+
+
+
+
+\end{document}
