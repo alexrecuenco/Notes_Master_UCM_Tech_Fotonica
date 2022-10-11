@@ -1,0 +1,14 @@
+{
+  "search.exclude": {
+    "diffractio-dev": true
+  },
+  "files.exclude": {
+    "diffractio-dev": true
+  },
+  "files.watcherExclude": {
+    "diffractio-dev": true
+  },
+  "python.defaultInterpreterPath": "./env/bin/python",
+  "python.formatting.provider": "black",
+  "editor.formatOnSave": true
+}

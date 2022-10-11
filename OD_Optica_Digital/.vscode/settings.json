@@ -1,0 +1,11 @@
+{
+  "search.exclude": {
+    "programming": true
+  },
+  "files.exclude": {
+    "programming": true
+  },
+  "files.watcherExclude": {
+    "programming": true
+  }
+}
