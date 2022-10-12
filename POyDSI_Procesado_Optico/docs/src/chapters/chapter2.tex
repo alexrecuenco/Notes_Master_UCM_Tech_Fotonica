@@ -13,13 +13,13 @@ Given a dot product, and a complete set of functions ${v_{n}}$ --- for a certain
 Assuming our base is orthogonal under a certain dot product, $\langle v_{i},v_{j}\!\rangle = \delta_{ij}$, When that is possible, each vector will be able to be described,
 
 \begin{equation}
-f(x) = \sum_{n}a_{n} v_{n}
+	f(x) = \sum_{n}a_{n} v_{n}
 \end{equation}
 
 And you can find each parameter using the linearity of the dot product,  because $\langle f,\! v_{n}\rangle = \langle v_{n},\! v_{n}\rangle a_{n}$, therefore
 
 \begin{equation}
-a_{n} = \frac{\langle f,\! v_{n}\rangle}{\langle v_{n},\! v_{n} = \frac{\langle f,\! v_{n}\rangle}\rangle}
+	a_{n} = \frac{\langle f,\! v_{n}\rangle}{\langle v_{n},\! v_{n} = \frac{\langle f,\! v_{n}\rangle}\rangle}
 \end{equation}
 
 
@@ -32,63 +32,63 @@ a_{n} = \frac{\langle f,\! v_{n}\rangle}{\langle v_{n},\! v_{n} = \frac{\langle 
 
 Fouriere series are the separation of periodic functions based on the complete sets  of periodic functions with period $2\pi$, together with the \emph{complete set} $\left\{\sin (nx), \cos(nx), 1 | \,n \in \N\right\}$.
 
-	In this case, if we look at the range  $[-\pi,\, \pi]$, we get with our complete set. We can first normalize the vectors finding the square norm of each of the base items
+In this case, if we look at the range  $[-\pi,\, \pi]$, we get with our complete set. We can first normalize the vectors finding the square norm of each of the base items
 
-	\begin{align}
-	\fourierint{\sin^{2}(nx)} &=\fourierint{\frac{1-\cos(2nx)}{2}}  &=\pi  \\
-	\fourierint{\cos^{2}(nx)} &=\fourierint{\frac{1+\sin(2nx)}{2}}  &=\pi  \\
-	\fourierint{1} &&=2\pi
-	\end{align}
+\begin{align}
+	\fourierint{\sin^{2}(nx)} & =\fourierint{\frac{1-\cos(2nx)}{2}} & =\pi  \\
+	\fourierint{\cos^{2}(nx)} & =\fourierint{\frac{1+\sin(2nx)}{2}} & =\pi  \\
+	\fourierint{1}            &                                     & =2\pi
+\end{align}
 
 
-	Remember that in this base $\langle v_{i},v_{j}\!\rangle \propto \delta_{ij}$, they are not unitary vectors
+Remember that in this base $\langle v_{i},v_{j}\!\rangle \propto \delta_{ij}$, they are not unitary vectors
 
-	Then, if we associate the following parameters
+Then, if we associate the following parameters
 
-	\begin{align*}
-	a_{0} \iff {1}\\
-	a_{n} \iff {\cos nx},\, n \in \N\\
-	b_{n} \iff {\sin nx} ,\,n \in \N\\
-	\end{align*}
+\begin{align*}
+	a_{0} \iff {1}                   \\
+	a_{n} \iff {\cos nx},\, n \in \N \\
+	b_{n} \iff {\sin nx} ,\,n \in \N \\
+\end{align*}
 
-	Any period function with period $2\pi$ that is normed under our basis can therefore be expressed as
+Any period function with period $2\pi$ that is normed under our basis can therefore be expressed as
 
-	\begin{equation}
+\begin{equation}
 	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos (nx) + b_{n} \sin(nx)\right)
-	\end{equation}
+\end{equation}
 
 
-	Where
-	\begin{align}
-	a_{0} &= \frac{1}{2\pi} \fourierint{f(x)} \\
-	a_{n} &= \frac{1}{\pi} \fourierint{f(x) \cos(nx)} \\
-	b_{n} &= \frac{1}{\pi} \fourierint{f(x) \sin(nx)}
-	\end{align}
+Where
+\begin{align}
+	a_{0} & = \frac{1}{2\pi} \fourierint{f(x)}         \\
+	a_{n} & = \frac{1}{\pi} \fourierint{f(x) \cos(nx)} \\
+	b_{n} & = \frac{1}{\pi} \fourierint{f(x) \sin(nx)}
+\end{align}
 
-	Then, we can do a change of variable to change from period $2\pi$ to any other period $T$. If we do the transformation $\frac{x}{2\pi} = \frac{y}{T}$.
+Then, we can do a change of variable to change from period $2\pi$ to any other period $T$. If we do the transformation $\frac{x}{2\pi} = \frac{y}{T}$.
 
-	With the transformation, we can finally describe
+With the transformation, we can finally describe
 
 
-	\begin{align*}
-	a_{0} \iff {1}\\
-	a_{n} \iff {\cos 2\pi \nu n y},\, n \in \N\\
-	b_{n} \iff {\sin 2\pi \nu n y} ,\,n \in \N\\
-	\end{align*}
+\begin{align*}
+	a_{0} \iff {1}                             \\
+	a_{n} \iff {\cos 2\pi \nu n y},\, n \in \N \\
+	b_{n} \iff {\sin 2\pi \nu n y} ,\,n \in \N \\
+\end{align*}
 
-	And renaming $y$ to $x$ again --- because we won't be using the $x$ variable anymore --- any period function with period $T$ that is normed under our basis can therefore be expressed as
+And renaming $y$ to $x$ again --- because we won't be using the $x$ variable anymore --- any period function with period $T$ that is normed under our basis can therefore be expressed as
 
-	\begin{equation}
+\begin{equation}
 	f(x) = a_{0} + \sum_{n}\left(a_{n} \cos ( 2\pi \nu n x) + b_{n} \sin( 2\pi \nu n x)\right)
-	\end{equation}
+\end{equation}
 
 
-	Where,
-	\begin{align}
-	a_{0} &= \frac{1}{T} \fourier[-T/2][T/2]{f(x)} \\
-	a_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \cos(2\pi \nu n y)} \\
-	b_{n} &= \frac{2}{T} \fourier[-T/2][T/2]{f(x) \sin(2\pi \nu n y)}
-	\end{align}
+Where,
+\begin{align}
+	a_{0} & = \frac{1}{T} \fourier[-T/2][T/2]{f(x)}                    \\
+	a_{n} & = \frac{2}{T} \fourier[-T/2][T/2]{f(x) \cos(2\pi \nu n y)} \\
+	b_{n} & = \frac{2}{T} \fourier[-T/2][T/2]{f(x) \sin(2\pi \nu n y)}
+\end{align}
 
 
 \subsubsection{Fourier transformation}
@@ -105,8 +105,8 @@ Continuous form of the fourier series, in which the bases is the vectors $e^{i\n
 We can reconstruct a  signal based on sampling
 
 \begin{align}
-f(x) \implies& F(u)\\
-f_{sample} \implies& F_{sample}
+	f(x) \implies       & F(u)       \\
+	f_{sample} \implies & F_{sample}
 \end{align}
 
 \subsection{Fresnel transformation}
@@ -120,8 +120,8 @@ f_{sample} \implies& F_{sample}
 
 \begin{itemize}
 	\item \begin{equation}
-	TH[f(x)]](u) = H(u) = \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{f(x)}{u-x} dx = f(u)\conv \frac{1}{\pi u}
-	\end{equation}
+		      TH[f(x)]](u) = H(u) = \frac{1}{\pi}\int_{-\infty}^{\infty}\frac{f(x)}{u-x} dx = f(u)\conv \frac{1}{\pi u}
+	      \end{equation}
 	\item $H(x) = f(x) \conv \frac{1}{\pi u}$
 	\item Fourier transform, something something something
 
@@ -133,9 +133,9 @@ f_{sample} \implies& F_{sample}
 \begin{itemize}
 	\item Negatvie frequencies are redundant. The fourier transform of a real signal is hermitic. (Real part is  even and imaginary part is odd) $F(-u)= F^{*}(u)$
 	\item Analytical signal
-	\begin{equation}
-	a(x) = f(x) + i \, TH[f](x)
-	\end{equation}
+	      \begin{equation}
+		      a(x) = f(x) + i \, TH[f](x)
+	      \end{equation}
 	\item Fourier transform of an analytical signal only has twice the positive frequencies
 
 \end{itemize}
@@ -209,13 +209,13 @@ If response depends only on $f(t)$ for values of $t<\leq t_{0}$
 Expand signal, (Hermite, Laguerre, Zernike, etc) polynomials.
 
 \begin{equation}
-f(x,y) = \sum_{n=1}\sum_{m=1} a_{nm} \phi_{nm}(x,y)
+	f(x,y) = \sum_{n=1}\sum_{m=1} a_{nm} \phi_{nm}(x,y)
 \end{equation}
 
 Since it is linear, characterization is linear, and we can base response based on the sum
 
 \begin{equation}
-g(x,y) = S\left\{f(x,y)\right\} = \sum_{n=1}\sum_{m=1} a_{nm} S\left\{f\phi_{nm}(x,y)\right\}
+	g(x,y) = S\left\{f(x,y)\right\} = \sum_{n=1}\sum_{m=1} a_{nm} S\left\{f\phi_{nm}(x,y)\right\}
 \end{equation}
 
 \subsubsection{Impulse response}
@@ -231,7 +231,7 @@ PSF is Point Spread Function
 
 
 \begin{equation}
-h(x,y,\eta,\phi) =  S\left\{\delta(x-\eta,y-\phi)\right\}
+	h(x,y,\eta,\phi) =  S\left\{\delta(x-\eta,y-\phi)\right\}
 \end{equation}
 
 Response of system in $(x,y)$ when an impulso occured in $(\eta,\phi)$
@@ -241,7 +241,7 @@ Response of system in $(x,y)$ when an impulso occured in $(\eta,\phi)$
 slide 10
 
 \begin{equation}
-g_{\textrm{flood}}(x,y) = \iint h(x-\eta,y-\phi) \dd{\eta}\dd{\phi}
+	g_{\textrm{flood}}(x,y) = \iint h(x-\eta,y-\phi) \dd{\eta}\dd{\phi}
 \end{equation}
 
 if $g_{flood}$ depends on $x,y$ it is non linear posterior to g
@@ -249,7 +249,7 @@ if $g_{flood}$ depends on $x,y$ it is non linear posterior to g
 Sensitivity $S_{pi}$
 
 \begin{equation}
-S_{pi} = \iint h(x-\eta,y-\phi) \dd{x}\dd{y}
+	S_{pi} = \iint h(x-\eta,y-\phi) \dd{x}\dd{y}
 \end{equation}
 
 slide 11,12 graphic example
@@ -268,7 +268,7 @@ slide 14
 description throgh a matrix
 
 \begin{equation}
-g = M\times f
+	g = M\times f
 \end{equation}
 
 Toeplitz matric,
@@ -285,19 +285,19 @@ NOTE: To calculate the PSF we change f for delta and calculate
 \begin{enumerate}
 	\item it is linear, since the question is linear with respect to f.
 
-	Is it invariant with respect to shift? No, it can't be expressed in a convolution form
+	      Is it invariant with respect to shift? No, it can't be expressed in a convolution form
 
 	\item Non-linear, it does not have PSF because that is only for linear systems
 
 	\item It is linear, what is the PSF? the exponential
 
-	It is LSI
+	      It is LSI
 
 	\item Fourier transform,
 
-	PSF is the exponent squared,
+	      PSF is the exponent squared,
 
-	non lsi
+	      non lsi
 
 \end{enumerate}
 
@@ -327,7 +327,7 @@ slide 19 funcion de transferencia de LSI
 	\item In fourier domain it is simply a product
 	\item The transfer function $H$ of the system is the fourier transform of the PSF
 
-	$H(p) = TF\{h(r)\}(p);\ p=(u,v)$
+	      $H(p) = TF\{h(r)\}(p);\ p=(u,v)$
 
 \end{itemize}
 
@@ -349,13 +349,13 @@ slide 23
 contraste, Michelson
 
 \begin{equation}
-M_{f} = \frac{f_{max} - f_{min}}{f_{max} + f_{min}}
+	M_{f} = \frac{f_{max} - f_{min}}{f_{max} + f_{min}}
 \end{equation}
 
 Out signal of LSI
 
 \begin{equation}
-g(x_{0})
+	g(x_{0})
 \end{equation}
 Note $a$ will be transfer at point $0$, $b$ will be transfer point at $u$,
 
@@ -492,9 +492,8 @@ slide 42
 In fuirier doman
 
 \begin{align}
-G = FH + N\\
-
-f(r)? = TF^{-1}\left(\frac{G(u)- N(u)}{H(r)}\right)
+	G = FH + N \\
+	f(r)? = TF^{-1}\left(\frac{G(u)- N(u)}{H(r)}\right)
 \end{align}
 
 Non unique solution
@@ -504,5 +503,93 @@ Unstable
 slide 43
 
 something fun, deregularized
+
+
+\chapter{Signal analysis}
+
+Notes post-class convertion, the goal is to replace everything above on this file with this
+
+
+
+\section{Linear system}
+Given an input image, $f(\vec{r})$, the measured output is $g(\vec{r})$.
+
+An impulse is expressed mathematically with a density function, $f(\vec(r)) = A \delta(\vec{r} - \vec{r_0})$.
+
+The system is considered linear when, for any two
+$f_0(\vec(r)) = A_0 \delta(\vec{r} - \vec{r}_0)$ and
+$f_1(\vec(r)) = A_1 \delta(\vec{r} - \vec{r}_1)$. Given their individual responses
+$A_0 h_0(\vec{r}, \vec{r}_0)$ and
+$A_1 h_1(\vec{r}, \vec{r}_1)$
+
+Given an input source that is the combined sum
+\begin{equation}
+	f_0 + f_1 =
+	A_0 \delta(\vec{r} - \vec{r}_0)
+	+ A_1 \delta(\vec{r} - \vec{r}_1)
+	\forall \vec{r_0}, \, \vec{r_1}
+\end{equation}
+
+If the output is
+\begin{equation}
+	A_0 h_0(\vec{r}, \vec{r}_0) + A_1 h_1(\vec{r}, \vec{r}_1)
+\end{equation}
+the process is considered \textbf{linear}
+
+On top of that, if the function $h$ is translation invariant, i.e., it can be expressed as $h(\r - \r_i)$
+the system is translation invariant.
+
+$h$ is called \textbf{Point Spread Function, PSF}
+
+Even though the PSF characterizes the system, determining it experimentally is hard.
+
+When the system is translational invariant it is called LSI (Linear shift invariant)
+
+On LSI systems the MTF is used instead, Modular Transfer Function.
+
+Given that under those systems, the resulting image is a convolution (do that)
+
+
+The transfer function of the fourier transform is $H$.
+Instead of point sources, you have a plane wabe as the source of it
+
+The Optical Transfer function is defined as
+
+\begin{equation}
+	OTF(p) = \frac {H(p)} {H(0)}
+\end{equation}
+
+Then, we define \textbf{Modulation transfer function, MTF} as the module of the OTF
+
+\begin{equation}
+	\abs{OTF(p)} \equiv MTF(p)
+\end{equation}
+
+And, we define \textbf{Phase transfer function, PTF} as the argument of the OTF
+
+\begin{equation}
+	\arg(OTF(p)) \equiv MTF(p)
+\end{equation}
+
+section{Experimental measurement of these}
+
+PSF is really hard.
+
+Usually you can measure more easily to try to measure MTF
+
+Directly, by measuring the response on test standard object
+
+We can establish it with a step function, seeing the response to the step function. We can characterize the Step Response (SR) to the parallel axis to the step
+
+\begin{equation}
+	g(x,y) = SR(x) =
+	\iint_{R^2} s(\xi)h(x-\xi, y -\eta)\dd \xi \dd \eta
+	\int_{-\infty}^x int_{R} h(\xi, \eta)\dd \xi \dd \eta
+	\int_{-\infty}^x l(\xi)\dd \xi
+\end{equation}
+
+Where $l(x)$ is the Linear Spread Function LSF. Note that the fourier transform of l is the transfoer function of the system in the direction $x$ $H(u, 0)$
+
+
 
 \end{document}
