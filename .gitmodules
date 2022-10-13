@@ -1,3 +1,6 @@
 [submodule "OD_Optica_Digital/programming/diffractio-dev"]
 	path = OD_Optica_Digital/programming/diffractio-dev
 	url = git@bitbucket.org:alex-recuenco/diffractio.git
+[submodule "POyDSI_Procesado_Optico/docs/labs"]
+	path = POyDSI_Procesado_Optico/docs/labs
+	url = git@github.com:alexrecuenco/lab-notes-POyDSI.git
