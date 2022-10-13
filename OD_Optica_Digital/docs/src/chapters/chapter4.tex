@@ -324,4 +324,162 @@ And then we use a microscope to align all of them.
 
 You can also do it with a diffraction net, which will cancel each other
 
+\subsection{Projection systems}
+Slide 22
+
+When touching our master we can get issues with damage and tear to the master.
+
+We therefore can add a gap. If we add a 1mm gap on a 40mm resolution binary mask, that is ok. The aberration of light and spread will not affect it
+However if you have really small holes, you will need a lens to align light, to do it well (Even though it will invert it)
+
+This is a projection method
+
+\subsection{Contact and proximity}
+
+slide 26
+
+Effects bad
+
+...
+
+
+\subsection{Lithography with grey levels}
+
+By adding a small mask with small holes within each hole it will be continuous
+
+
+\section{Thermal reflux/reflow}
+
+Slide 28
+
+Incident UV light with mask, create structure, then melt it to create microlenses
+
+See Slide 29 for extra information on that.
+
+
+Slide 30
+
+Similar techniques:
+
+Reactive Ion Etching.
+
+In low pressure, photoresin is usually transferred to the silicon structure
+
+Low pressure and fluoride creates strong edges that creates really good quality
+
+Usually use for resin but it can be used to create masks
+
+Look at the precision on slide 32
+
+
+\section{Characterization}
+
+Slide 33
+
+Parameters that are miportant to characterize our system
+
+Slide 34
+
+Techniques for characterization.
+
+Physical probing ---
+
+Profilometry Good for finding surface but they can wear the components
+
+Tunnel microscopy
+
+Slide 35
+
+Up to half a micrometer with photonic optics. After that the wavelength of the light gives issues. When the size is comparable to the wavelength. In practice this limit is reached around 2--3 $\mu m$
+
+
+Slide 36
+
+Ilumination techniques.
+
+You provide light laterally.
+
+And I understood nothing from here to slide 38
+
+
+Slide 39
+
+\subsection{Force atomic microscropy}
+
+We detect a ven-der-Walls force between a tiny tip (AFM cantilevel and tip)
+
+We have a photodetector, and try to maintain the oscillator signal from the tip constant.
+
+To measure the surface we keep moving the tip up/down trying to maintain the oscillator signal constant.
+
+This information allows us to later reconstruct the image
+
+Piezoelectric systems used for displacement, since mechanical displacement systems are really hard to achieve such small movements. With piezoelectric elements, they can move a few nanometers that are controlled applying an electric current
+
+
+\subsection{Confocal microscropy}
+
+Slide 41
+
+We have two points that are separate enough to not interact
+
+With the piezoelectric eleemnts, as we move in z we can find the maximum of a point, with nm movements. (We find the maximum in comparison to another one, seeing which is higher)
+
+If the second point is at a different height it will not be at the maximum, we can therefore infer the height difference
+
+For each of the points we can do a $z$ search to find the maximum. (When they are \emph{exactly} on the focal)
+
+This would be a 3D search. It takes a long time to get enough precision
+
+Now, if we do this with one point it takes forever. We can do multiple passes at the same time by having enough points separate enough. Speeding up the process
+
+Slide 42
+
+We can go further in speeding up, we can do lines instead of points \href{https://www.youtube.com/watch?v=QFtZFbug1SA}
+
+So we only do the scan in one direction
+
+It still works since each line is far enough to not interact with each other. We look at each point on the line in reference to another line to do another calculation, allowing us to reduce the 3D scanning problem into a 2D scanning problem
+
+Slide 43--44
+
+\subsection{Electronic microscropy}
+
+Really high precision, doing scans.
+
+\subsection{Mach Zender interferometry}
+
+Slide 45
+
+Place the surface at one place on an interferometry two beam.
+
+We know that the phase has changed when placing this object on one of the beams.
+
+We can see the phase differences and discern from that the height difference. However, we don't know which places are holes and which are not, we only know they are different phases, not if it is because of more or less material
+
+To fix that, we do 4 measurements with a piezoelectric attached mirror
+
+Each of those, with a $\pi/2 $ phase from each other.
+
+We get then measures related to $h_1 \propto \sin \Delta$, $h_2 \propto\sin( \Delta + \pi/2) = \cos \Delta$,  $h_3 \propto\sin( \Delta + \pi) = -\sin \Delta$,  $h_14 \propto\sin( \Delta + 3\pi/2) = -\cos \Delta$
+
+
+We then obtain
+
+\begin{equation}
+	\tan \Delta = \frac{h_2 - h_4}{h_1 - h_3} \implies \Delta = arctan\left(\frac{h_2 - h_4}{h_1 - h_3}\right)
+\end{equation}
+
+This procedures recovers the sign, so we can know if the shift was in one direction or another
+
+
+\subsection{Twymann-Green interferometry}
+
+Similar.
+
+We calibrate the actual
+
+
+
+
 \end{document}
