@@ -1,25 +1,39 @@
 {
   "folders": [
     {
-      "path": ".."
-    },
-    {
+      "name": "OD",
       "path": "../OD_Optica_Digital"
     },
     {
-      "path": "../POyDSI_Procesado_Optico"
-    },
-    {
+      "name": "OD programming",
       "path": "../OD_Optica_Digital/programming/"
     },
     {
+      "name": "diffractio",
       "path": "../OD_Optica_Digital/programming/diffractio-dev/"
     },
     {
+      "name": "POyDSI",
+      "path": "../POyDSI_Procesado_Optico"
+    },
+    {
+      "name": "POyDSI programming",
+      "path": "../POyDSI_Procesado_Optico/programming/"
+    },
+
+    {
+      "name": "workspace settings",
       "path": "../workspace"
+    },
+    {
+      "name": "Global View",
+      "path": ".."
     }
   ],
   "settings": {
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "editor.trimAutoWhitespace": true,
     "files.exclude": {
       "**/env": true,
       "**/*.aux": true,
@@ -30,7 +44,32 @@
       "**/*.maf": true,
       "**/_minted*": true,
       "**/*.toc": true,
-      "**/*.mtc*": true
+      "**/*.mtc*": true,
+      "*.pdf": true,
+      "*_checkpoints/": true,
+      "*_cache/": true,
+      "*_files/": true
+    },
+    "search.exclude": {
+      "**/env": false
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/bower_components/**": true,
+      "**/*.code-search": true,
+      "**/*.aux": true,
+      "**/*.fls": true,
+      "**/*.listing": true,
+      "**/*.fdb_latexmk": true,
+      "**/*.synctex*": true,
+      "**/*.maf": true,
+      "**/_minted*": true,
+      "**/*.toc": true,
+      "**/*.mtc*": true,
+      "*.pdf": true,
+      "*_checkpoints/**": true,
+      "**/*_cache/**": true,
+      "**/*_files/**": true
     }
   }
 }

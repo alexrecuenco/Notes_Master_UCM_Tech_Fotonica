@@ -1,10 +1,8 @@
 {
   "files.exclude": {
-    "diffractio-dev": true,
     "*.html": true
   },
   "files.watcherExclude": {
-    "diffractio-dev": true,
     "*.html": true
   },
   "python.defaultInterpreterPath": "./env/bin/python",

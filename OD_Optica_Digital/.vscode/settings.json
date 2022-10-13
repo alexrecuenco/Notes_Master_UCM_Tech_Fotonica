@@ -1,6 +1,6 @@
 {
   "search.exclude": {
-    "programming": true
+    "programming": false
   },
   "files.exclude": {
     "programming": true
