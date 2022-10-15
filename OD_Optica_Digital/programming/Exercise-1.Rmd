@@ -71,7 +71,7 @@ from diffractio.utils_drawing import draw_several_fields
 
 from matplotlib import rcParams, get_backend, pyplot as plt
 
-plt.close()
+plt.close();
 
 def plot(field, title, **kwargs):
   field.draw(**kwargs)
@@ -111,6 +111,7 @@ plot(u1.RS(z=25 * um, verbose=False), "field masked RS propagated 25 um")
 plot(u1.RS(z=100 * um, amplification=3, verbose=False), "field propagated 100 um, ")
 
 plot(u1.RS(z=1 * mm, amplification=15, verbose=False), "field propagated 1 mm")
+
 
 ```
 

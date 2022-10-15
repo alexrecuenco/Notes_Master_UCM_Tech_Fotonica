@@ -1,6 +1,6 @@
 # diffractio
 
--e ./diffractio
+-e ./diffractio-dev
 ## Difractio peer dependencies
 psutil
 
