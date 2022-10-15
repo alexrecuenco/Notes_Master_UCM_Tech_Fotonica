@@ -23,6 +23,31 @@ Which of the following filters can be used in the Fourier domain to enhance edge
 	\item $H(\u) = \frac{1}{1+\flatfrac {u}{|\u_{o}|}}$ where $u = \abs{\u}$
 \end{enumerate}
 
+% Pasa alta para detectar edges.
+
+
+
+
+The filter will be applied to the signal $f(r)$ by
+
+\begin{equation*}
+\FT{f(\r)}^{-1}\left[F(u)H(u)\right]
+\end{equation*}
+
+Let's see how they work for each of our statements
+
+
+\begin{enumerate}
+	\item
+	\begin{align*}
+	g(x)
+	&=  \FT{\left[F(u)H(u)\right]}\\
+	&=  \FT{\left[F(u)F^{*}(u)\right]}\\
+	&=  \FT{\left[\abs{F(u)}^{2}\right]}\\
+	\end{align*}
+
+\end{enumerate}
+
 \section*{Problem 2.11}
 
 To filter
