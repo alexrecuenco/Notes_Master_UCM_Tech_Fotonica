@@ -833,3 +833,7 @@ DerivedData/
 
 
 downloads
+
+*_checkpoints
+*_cache
+*_files

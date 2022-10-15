@@ -1,0 +1,547 @@
+---
+title: "Homework"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 4
+    fig_caption: true
+    toc: yes
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+subtitle: '**Entrega de problemas 2.8, 2.11 y 2.19 antes del 14 de Octubre: **'
+---
+
+
+```{=latex}
+
+
+\newcommand{\inlinecode}[1]{\texttt{\detokenize{#1}}}
+
+\NewDocumentCommand{\fourier}{ O{0} O{\pi} m O{\dx}}{\int_{#1}^{#2}{#3 #4}}
+\newcommand\fourierint[1]{\fourier[-\pi][\pi]{#1}}
+\newcommand\fourierfull[1]{\fourier[\R][]{#1}}
+
+
+% Commands for physics in optics
+
+\newcommand\comb{\textrm{comb}}
+\newcommand\qed{\hfill\blacksquare}
+
+\newcommand\R{\mathbb{R}}
+\newcommand\N{\mathbb{N}}
+\newcommand\dx{\mathop{dx}}
+\newcommand\rect{\mathop{rect}}
+\newcommand\conv{\circledast}
+
+%TODO: Put in main file
+\renewcommand{\vec}[1]{\vb{#1}}
+\renewcommand{\u}{\vec{u}}
+\renewcommand{\r}{\vec{r}}
+\renewcommand{\v}{\vec{v}}
+\newcommand{\FT}[2][]{\textrm{FT}^{#1}\left\{#2\right\}}
+
+
+```
+
+
+```{r setup, echo=FALSE,  }
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("env/bin/python")
+
+```
+
+
+# Problem 2.8
+
+
+Which of the following filters can be used in the Fourier domain to enhance edges on an image $f(r)$ (where $u$ is the frequency vector, $H(\u)$ is the frequency response)
+
+Reminder The filter will be applied to the signal $f(r)$, producing an output $g(r)$ by
+
+```{python, include=FALSE}
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+
+def clean():
+  plt.close()
+  get_backend()
+```
+
+\begin{equation*}
+g(r)=\FT{f(\r)}^{-1}\left[F(u)H(u)\right]
+\end{equation*}
+
+
+We will use the following image as our example in which we will apply all filters
+
+```{python img, out.width="75%"}
+import cv2 as cv
+import numpy as np
+from numpy import fft
+import matplotlib
+from matplotlib import rcParams, get_backend, pyplot as plt, use
+clean()
+image_file="images/Lenna.png"
+
+def load_img(file):
+  img = cv.imread(file, cv.IMREAD_GRAYSCALE)
+  if (img.shape[0] % 2 == 0):
+    # make it odd
+    img = np.pad(img, pad_width=1, mode='constant')
+    img = img[1:, 1:]
+
+  return img
+
+img = load_img(image_file)
+
+
+
+def plot2img(img1, img2, title1="Input", title2="Output", cmap='gray'):
+  plt.subplot(121)
+  plt.imshow(img1, cmap = cmap)
+  plt.title(title1)
+  plt.xticks([]), plt.yticks([])
+  plt.subplot(122)
+  plt.imshow(img2, cmap = cmap)
+  plt.title(title2)
+  plt.xticks([]), plt.yticks([])
+  plt.tight_layout()
+  plt.show()
+
+f = fft.fft2(img)
+fcentered = np.fft.fftshift(f)
+
+magnitude_spectrum = np.log(np.abs(fcentered)+1)
+
+plot2img(img, magnitude_spectrum, "Sample image", "FT of sample image")
+
+# How to do everything reverse
+# reverse = fft.ifftshift(fcentered)
+# reverse_f = np.abs(fft.ifft2(reverse))
+#
+# plot2img(np.log(np.abs(reverse)), np.abs(reverse_f))
+```
+
+```{python}
+# kernel = cv.getGaussianKernel(50, 0)
+# kernel
+# k = kernel * kernel.T
+# # Make my own kernel
+
+
+## Process
+
+## We choose our kernel size (needs to be odd, because the center is 0,0)
+## We create a nxn shape
+## We apply in each of them the function, taking into account that x=i-n//2; y=j-n//2
+## We pad the shape, evenly? then we shift, then we convolve and recover image
+
+
+def create_kernel(size, f):
+  """
+
+  size: Size should be ODD,
+  f: Function with aprameters (x,y)
+  """
+  arr = np.zeros((size, size))
+  it = np.nditer(arr, flags=['multi_index'])
+  for el in it:
+    (i, j) = it.multi_index
+    x = i - size // 2
+    y = j - size // 2
+    arr[i, j] = f(x,y)
+  return arr
+
+def pad_kernel(kernel, out_shape):
+  """Assumes shape is square
+  assert len(out_shape)==2 && out_shape[0] == out_shape[1]
+  """
+  in_shape = kernel.shape
+  out_size = out_shape[0]
+  in_size = in_shape[0]
+  pad_diam = out_size - in_size
+  if pad_diam % 2 != 0:
+    raise TypeError("Both shapes need to be odd or even")
+  return np.pad(kernel, pad_width=pad_diam//2, mode='constant')
+
+
+def apply_fft_kernel(img, fft_kernel):
+  # Kernel has frequencies cenetered on the center of the image
+  f = fft.fft2(img)
+  fcentered = fft.fftshift(f)
+  applied = fcentered*fft_kernel
+  applied_edge = fft.ifftshift(applied)
+  return fft.ifft2(applied_edge)
+
+
+
+
+
+
+```
+
+
+## $H(\u) = (\FT{f(\r)}(\u))^{*}$
+
+<!-- % Pasa alta para detectar edges. -->
+In this case
+
+\begin{align*}
+	g(x)
+	&=  \FT[-1]{F(u)H(u)}\\
+	&=  \FT[-1]{F(u)F^{*}(u)}\\
+	&=  \FT[-1]{\abs{F(u)}^{2}}
+\end{align*}
+
+Since we are squaring the amplitude. It will be enhancing whatever frequencies were already more prominent in the picture. In our case, those would be the lower frequencies. We are therefore getting a much smoother image. It won't detect edges
+
+```{python, out.width="75%"}
+f = fft.fft2(img)
+f_abs_square = f * np.conjugate(f)
+g = np.fft.ifft2(f_abs_square)
+
+plot2img(img, np.abs(g), "Input", "$|g|$")
+# plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+
+```
+
+
+
+## $H(\u) = \abs{\FT{f(\r)}(\u)}^{-1}$
+
+
+In this case
+
+\begin{align*}
+	g(x)
+	&=  \FT[-1]{F(u)\abs{F(u)}^{-1}}\\
+	&=  \FT[-1]{\frac{F(u)}{\abs{F(u)}}} \\
+	&=  \FT[-1]{e^{\arg{F(u)}}}
+\end{align*}
+
+And I fail to image how the argument of $F$ can provide us an edge filter. However, I seem to be wrong, since the real part clearly provides an edge.
+
+Perhaps, since it is normalizing all the frequencies to be the same amplitude, it therefore gives relatively more importance to higher frequencies as oppose to the actual image. Therefore, providing a natural enhancement of edges.
+
+Since the imaginary part of this filter is mostly error, you can see how the real part of $g$ provides clearer edges.
+
+```{python, out.width="50%"}
+f = fft.fft2(img)
+f_abs_square = f/np.abs(f)
+g = np.fft.ifft2(f_abs_square)
+
+plot2img(img, np.abs(g), "Input", "$|g|$")
+plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+
+
+```
+
+
+## $H(\u) = \abs{\FT{f(\r)}(\u)}^{-2}$
+
+
+Working form analogy to the previous problem we immediatly get,
+
+\begin{align*}
+	g(x) =  \FT[-1]{\frac{\arg{F(u)}}{\abs{F(u)}}}
+\end{align*}
+
+By the same logic as before, we should expect this filter to provide us an edge filter. However, when we apply it we don't get anything that is clearly visible. We suspect this is the case because our image being 500x500 may be succumbing to noise in the transformation with the fast fourier transform. Since, as you can see, the noise on the image is quite visible
+
+```{python, out.width="75%"}
+f = fft.fft2(img)
+f_abs_square = f/np.square(np.abs(f))
+g = np.fft.ifft2(f_abs_square)
+
+plot2img(img, np.abs(g), "Input", "$|g|$")
+# plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+
+```
+
+
+## $H(\u) = e^{-u^{2}/a^{2}}$
+
+This is a gaussian filter. It will just keep the low frequencies, and we don't expect it to therefore sharpen edges, which are usually high frequency structures.
+
+We expect to get a smoother image, since that would mean less "high frequency" changes throughout the image.
+
+
+```{python, out.width="50%"}
+
+kernel = cv.getGaussianKernel(51, 0)
+
+# Make kernel 2D,
+kernel = kernel * kernel.T
+
+kernel = pad_kernel(kernel, img.shape)
+g = apply_fft_kernel(img, kernel)
+
+plot2img(img, np.abs(g), "Input", "$|g|$")
+plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+
+```
+
+
+## $H(\u) = \frac{1}{1+\flatfrac {u}{|\u_{o}|}}$ where $u = \abs{\u}$
+
+The structure of this filter should be similar to the gaussian filter, since it is preserving low frequencies while removing large ones.
+
+As a result, we expect that it will wash over edges, not preserve them.
+
+```{python, out.width="50%"}
+
+k = create_kernel(101, lambda x, y: 1/(1+(x**2+y**2)**.5/20))
+k = pad_kernel(k, img.shape)
+g = apply_fft_kernel(img, k)
+
+
+plot2img(img, np.abs(g), "Input", "$|g|$")
+plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+
+```
+
+# Problem 2.11
+
+To filter
+
+
+\begin{equation*}
+	f(x) = \sin(\pi/2) + \cos(2\pi u_{0}x + \pi/3) + \sin(10\pi u_{0} x)
+\end{equation*}
+A system is used that acts on $f$ and is described with
+
+\begin{equation*}
+	g(x) = a \int_{-\infty}^{\infty}
+	f(\xi) sinc^{2}\left[a(x - \xi)\right]\dd{\xi}
+\end{equation*}
+
+## Find the Fourier transform and represent the \emph{signal power spectrum}
+
+We will use the fact that
+
+\begin{align*}
+	FT(\cos 2 \pi A t) &= \frac 1 2 \left[\delta(f-A) + \delta(f+A) \right]\\
+	FT(\sin 2 \pi A t) &= \frac 1 {2i} \left[\delta(f-A) - \delta(f+A) \right]
+\end{align*}
+
+Since the fourier transform is linear
+
+\begin{align*}
+	\FT{f(x)}(t) &= \FT{\sin(\pi/2) + \cos(2\pi u_{0}x + \pi/3) + \sin(10\pi u_{0} x)} \\
+	&= \FT{1 + \cos(2\pi u_{0}x + \pi/3) + \sin(10\pi u_{0} x)} \\
+	&= \delta(t)
+	 + \FT{
+	    \cos\left(2\pi u_{0}(x + \frac{1}{6u_0})\right)
+	    + \sin(2\pi * 5u_{0} x)} \\
+	&= \delta(t)
+	 + e^{i \pi \frac{1}{3u_0} t}
+	 \left[
+	    \frac 1 2 \left[\delta(t- u_{0}) + \delta(t+ u_{0}) \right]
+	 \right]
+	 +
+	 \frac 1 {2i} \left[\delta(t-5u_{0}) - \delta(t+5u_{0}) \right]\\
+\end{align*}
+
+```{=latex}
+\begin{center}
+
+  \begin{tikzpicture}[x=.5cm, y=2cm]
+    % grid
+    \draw[help lines, dotted] (-6,-1) grid (6, 3);
+    \draw[thin, dotted](-6,0)--(6,0) node[anchor=south east]{$t$};
+    \draw[thin, dotted](0,-1)--(0,1.7) node[anchor=north west]{$P(x) = \abs{\FT{f(x)(t)}}^2$};
+
+    \draw[->, very thick] (0, 0)  node[anchor=east, rotate=90] {$t=0$}--+(0, 1) ;
+    \draw[->, very thick] (-1, 0)  node[anchor= east, rotate=90] {$t=-u_0$} --+(0, .25) ;
+    \draw[->, very thick] (1, 0)  node[anchor=east, rotate=90] {$t=u_0$}--+(0, .25) ;
+    \draw[->, very thick] (-5, 0)  node[anchor= east, rotate=90] {$t=-5u_0$} --+(0, .25) ;
+    \draw[->, very thick] (5, 0)  node[anchor=east, rotate=90] {$t=5u_0$}--+(0, .25) ;
+
+  \end{tikzpicture}
+\end{center}
+
+
+```
+
+
+
+## Which is the Transfer function of the system
+
+The PSF of the system is
+
+\begin{equation*}
+ sinc^{2}\left[a(x - \xi)\right]
+\end{equation*}
+
+Therefore, the Transfer Function is
+
+\begin{align*}
+ TF(t)
+  &= \FT{sinc^{2}\left[a x\right]} \\
+  &= \frac{1}{\abs{a}} \textrm{tri} \left(\frac{t}{a}\right)
+\end{align*}
+
+
+## Suppose you want to remove the highest frequencies (they are noise). What value does $a$ such that $g(x)$ provides more contrast? Determine the filtered signal in that case
+
+If by the highest frequencies, we mean the frequencies at $\pm 5 u_0$. In that case, we want the mask to be zero at those points, which means that we will choose
+
+\begin{equation*}
+\abs{a} \leq\abs{5u_0}
+\end{equation*}
+
+
+The resulting signal can be calculated using the inverse fourier transform. Considering that the higher frequencies are removed, we don't include those terms.
+
+
+
+```{=latex}
+
+
+\begin{align*}
+g(x) &= \FT[-1]{%
+\left(\delta(t)
+	 + e^{i \pi \frac{1}{3u_0} t}
+	 \left[
+	    \frac 1 2 \left[\delta(t- u_{0}) + \delta(t+ u_{0}) \right]
+	 \right]
+\right)
+\left(
+ \frac{1}{\abs{a}} \textrm{tri} \left(\frac{t}{a}\right)
+\right)
+} \\
+&= \FT[-1]{%
+\left(\frac{1}{\abs{a}}\delta(t)
+	 + e^{i \pi \frac{1}{3u_0} t}\textrm{tri} \left(\frac{t}{a}\right)
+	 \left[
+	    \frac 1 {2\abs{a}} \left[\delta(t- u_{0}) + \delta(t+ u_{0}) \right]
+	 \right]
+\right)
+} \\
+&= \FT[-1]{%
+\left(\frac{1}{\abs{a}}\delta(t)
+	 +
+	 e^{i \pi \frac{1}{3}}\textrm{tri} \left(\frac{u_0}{a}\right)
+	    \frac 1 {2\abs{a}} \delta(t- u_{0})
+	 +
+	 e^{-i \pi \frac{1}{3}}\textrm{tri} \left(\frac{u_0}{a}\right)
+	    \frac 1 {2\abs{a}} \delta(t+ u_{0})
+\right)
+} \\
+&=
+\left(\frac{1}{\abs{a}}
+	 +
+\FT[-1]{
+	 e^{i \pi \frac{1}{3}}\textrm{tri} \left(\frac{u_0}{a}\right)
+	    \frac 1 {2\abs{a}} \delta(t- u_{0})
+	 +
+	 e^{-i \pi \frac{1}{3}}\textrm{tri} \left(\frac{u_0}{a}\right)
+	    \frac 1 {2\abs{a}} \delta(t+ u_{0})
+\right)
+} \\
+&=
+\frac{1}{\abs{a}}
+	 +
+\FT[-1]{
+	  \phi k
+	  \delta(t- u_{0})
+	 +
+	 \phi^{-1} k
+	 \delta(t+ u_{0})
+} \\
+&=
+\frac{1}{\abs{a}}
+	 +
+	  \phi k
+	  e ^{i 2 \pi u_0 x}
+	 +
+	 \phi^{-1} k
+	 	  e ^{-i 2 \pi u_0 x}
+\\
+\qed
+\end{align*}
+```
+
+Where $\phi = e^{i \frac{\pi}{3}}$ and $k = \frac 1 {2\abs{a}}\textrm{tri} \left(\frac{u_0}{a}\right)$
+
+
+Note that I am not confident this is correct, because we are getting some imaginary part in the result. But I can't correct this within the time I have left. I hope to do that later.
+
+The maximum contrast would be achieved when the difference of the minimum and maximum on the obtained function is maximal. This is entirely modulated by $k$.
+
+Maximizing $k$ implies maximizing the following, assuming $a$ is bigger tha $u_0$
+
+\begin{equation*}
+\frac 1 {2a} \left(1-\frac{u_0}{a}\right)
+\end{equation*}
+
+
+
+\begin{equation*}
+\frac 1 {2a^2} -2\frac{u_0}{a^3} = 0
+\implies
+\frac 1 {2} -2\frac{u_0}{a} = 0
+\implies
+a=4 u_0
+\end{equation*}
+
+Therefore $a = 4 u_0$ seems to be the right number. (Assuming it is indeed a maxima.) This is conveniently below the $5u_0$ limit that would bring the noise we were trying to remove.
+
+```{r}
+library(ggplot2)
+library(tidyr)
+x <- seq(-5, 5, length.out=300)
+u <- 1
+a <- 4
+f <- function(x, phi = exp(1i*pi/3)) {
+	  phi * exp(2i * pi * x) + 1/phi * exp(-2i*pi*x)
+}
+y <- f(x)
+
+df <- data.frame(x=x, real=Re(y), imaginary=Im(y))
+
+df <- pivot_longer(df, -x, values_to='y')
+
+ggplot(df) +
+  geom_line(aes(x, y, colour=name))
+```
+
+
+```{=latex}
+\begin{align*}
+FT(cos(2pi \nu x))=
+\frac{1}{2}(\delta(t-\nu) + \delta (t + \nu))
+\end{align*}
+\begin{align*}
+FT(cos(2pi \nu (x - \frac{1}{6 u_0}))=
+e^{}\frac{1}{2}(\delta(t-\nu) + \delta (t + \nu))
+\end{align*}
+
+```
+
+
+
+
+
+# Problema 2.19
+
+*Una imagen esta corrompido con el ruido ``sal y pimienta''. Usando el programa ImageJ (véanse la diapositiva final de la clase convolución y Correlación) elegir un filtro (entre los filtros Gaussian Blur, Mean o Medium) más adecuado para la reducción del ruido. Presentar las imágenes (original, con el ruido, filtradas) y comentar su elección}*
+
+I haven't had time to solve it yet. My bad. ImageJ seems to be acting up on my machine

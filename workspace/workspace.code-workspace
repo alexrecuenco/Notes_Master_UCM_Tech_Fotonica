@@ -37,6 +37,7 @@
     "files.exclude": {
       "**/env": true,
       "**/*.aux": true,
+      "**/*.out": true,
       "**/*.fls": true,
       "**/*.listing": true,
       "**/*.fdb_latexmk": true,

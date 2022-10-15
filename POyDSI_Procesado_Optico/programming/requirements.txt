@@ -1,3 +1,6 @@
 numpy
 matplotlib
-opencv2
+opencv-python
+
+rsconnect_jupyter
+jupyter
