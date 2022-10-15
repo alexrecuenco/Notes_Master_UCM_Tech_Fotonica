@@ -260,7 +260,7 @@ plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
 Working form analogy to the previous problem we immediatly get,
 
 \begin{align*}
-	g(x) =  \FT[-1]{\frac{\arg{F(u)}}{\abs{F(u)}}}
+	g(x) =  \FT[-1]{\frac{e^{\arg{F(u)}}}{\abs{F(u)}}}
 \end{align*}
 
 By the same logic as before, we should expect this filter to provide us an edge filter. However, when we apply it we don't get anything that is clearly visible. We suspect this is the case because our image being 500x500 may be succumbing to noise in the transformation with the fast fourier transform. Since, as you can see, the noise on the image is quite visible
@@ -468,50 +468,86 @@ g(x) &= \FT[-1]{%
 } \\
 &=
 \frac{1}{\abs{a}}
-	 +
+\left[
+	 1 +
 	  \phi k
 	  e ^{i 2 \pi u_0 x}
 	 +
 	 \phi^{-1} k
 	 	  e ^{-i 2 \pi u_0 x}
+\right]
 \\
 \qed
 \end{align*}
 ```
 
-Where $\phi = e^{i \frac{\pi}{3}}$ and $k = \frac 1 {2\abs{a}}\textrm{tri} \left(\frac{u_0}{a}\right)$
+Where $\phi = e^{i \frac{\pi}{3}}$ and $k = \frac 1 {2}\textrm{tri} \left(\frac{u_0}{a}\right)$
 
 
-Note that I am not confident this is correct, because we are getting some imaginary part in the result. But I can't correct this within the time I have left. I hope to do that later.
+Note that the imaginary parts cancel out, as shown in the figure below. Some trigonometry identities can probably be used to cast that into the shape of a $\cos\ $ function.
 
-The maximum contrast would be achieved when the difference of the minimum and maximum on the obtained function is maximal. This is entirely modulated by $k$.
+The maximum contrast would be achieved when the difference of the minimum and maximum on the obtained function is maximal. This is entirely modulated by $k/a$.
 
-Maximizing $k$ implies maximizing the following, assuming $a$ is bigger tha $u_0$
+Maximizing $k/a$ implies maximizing the following, assuming $a$ is bigger than $u_0$
 
 \begin{equation*}
 \frac 1 {2a} \left(1-\frac{u_0}{a}\right)
 \end{equation*}
 
 
-
 \begin{equation*}
-\frac 1 {2a^2} -2\frac{u_0}{a^3} = 0
+\frac 1 {2a^2} -\frac{u_0}{a^3} = 0
 \implies
-\frac 1 {2} -2\frac{u_0}{a} = 0
+\frac 1 {2} -\frac{u_0}{a} = 0
 \implies
-a=4 u_0
+a=2 u_0
 \end{equation*}
 
-Therefore $a = 4 u_0$ seems to be the right number. (Assuming it is indeed a maxima.) This is conveniently below the $5u_0$ limit that would bring the noise we were trying to remove.
+Therefore $a = 2 u_0$ seems to be the right number. This is conveniently below the $5u_0$ limit that would bring the noise we were trying to remove.
+
+
+```{r, out.width="60%"}
+library(ggplot2)
+u <- 1
+a <- seq(u, 5*u, length.out=300)
+f <- function(x) {
+  1/(2*x)*(1 - u/x)
+}
+y <- f(a)
+
+ggplot(data.frame(a, y)) +
+  geom_line(aes(a, y, colour="y=1/(2a) - /(2a^2)")) +
+  geom_vline(aes(xintercept=2, colour="x=2"))
+
+```
+
+
+
+And with that we obtain that our image optimized would be
+
+\begin{equation}
+g(x) = \frac{1}{2 u_0}
+\left[
+	 1 +
+	  \frac \phi {2}
+	  e ^{i 2 \pi u_0 x}
+	 +
+	  \frac {\phi^{-1}} {2}
+	 	  e ^{-i 2 \pi u_0 x}
+\right]
+\end{equation}
+
 
 ```{r}
 library(ggplot2)
 library(tidyr)
 x <- seq(-5, 5, length.out=300)
 u <- 1
-a <- 4
 f <- function(x, phi = exp(1i*pi/3)) {
-	  phi * exp(2i * pi * x) + 1/phi * exp(-2i*pi*x)
+  1/(2*u) * (
+    1 +
+      1/2 * (phi*exp(2i * pi * x) +  1/phi* exp(-2i*pi*x))
+  )
 }
 y <- f(x)
 
