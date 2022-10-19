@@ -1,0 +1,115 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+\chapter{Diffractive optical elements}
+
+Slides Tema 5. Diseño de elementos ópticos difractivos
+
+\section{Dammann gratins}
+
+slide 4
+
+Dammann gratings
+
+\emph{Reparto energético}
+
+In the binary network, as we have we have a period of $p$ by modifying the size of the 1s and the 0s, with a width $a$, $b$ such that $a+b=p$, they would reduce the size of the zero order and increase the other orders.
+
+
+Homework (a): Obtain a damman  network with a binary network such that they give you an even distribution in the orders 0, 1, -1
+
+
+Side (b) of picture. Add an extra 1 within our period, symmetric across the middle.
+
+e add in our period a couple assimetries. We know it is symmetric accross the center, but now we have 2 extra degrees of freedom (width of the extra lobs, $a_2$, and their position $x_2$ )
+
+Side (c) and (d). We add one each time. This is going to blow up our parameter space
+
+Slide 5
+
+We worry about the transition points $x_i$, the grating period $g$ and $d$ ``espesor''
+
+To try to create this analitically, who knows
+
+2D damman grating
+
+If the problem is spearable, we can just multiply the 1D grating with itself to create a 2D net. $a_n \implies a_n b_m$ as elements
+
+Too many degrees of freedom, we would find it with an iterative process.
+
+
+\subsection{Gradient descent}
+
+slide 8
+
+Create an error function ``\emph{figura de mérito}''
+
+Binary net  can express intensity in terms of the $x$.
+
+
+So, how do we find the right one?
+
+\begin{equation}
+	errpr = \sum_{m=0}^M (a_m a_m^* - I_{\textrm{desired}})^2
+\end{equation}
+
+For example, if we want the intensities to be the same for all orders below 6, we would set the $I_{desired}$ $a_n = 0; \forall n > 5$, $a_n = \alpha/5; x=1,\ldots,5$
+
+\subsection{Direct method}
+
+slide 9
+
+- Start with initial random DOE,
+- find far-field intensitiy distribution (by doing the FFT)
+- Calculate error,
+- If we keep or discard, based on whether the error improved
+- Loop until reaching desired error
+
+We can get stuck on local minima with simulation
+
+Also, the speed of this algorithm depends on how long it takes to do the simulation
+
+Slide 10
+
+
+Right slide is experiment.
+
+Damman issues:
+
+Most of the errors during making it, since the order zero depends heavily on the ehgiths, most of the errors end up going to the order zero
+
+For fabrication purposes we need to add restrictions to the simulation so that it doesn't end up with binary nets that are too small whoich would then be really hard to make within our tolerances, and very unstable to tolerances. Since bending to higher order the light requires really thin gratins
+
+
+\section{Generic design of DOE}
+Slide 11--13
+
+At a far field (Fourier) or near field (Fresnel) we want to find a field
+
+When we create optical elements for sensors and other similar things, we are usually in the near field approximation (Fresnel). Optical elements would create too many aberrations.
+
+
+To find the direct problem at a close distance we do a Rayliegh Sommerfel(RS) (SPELL RIGHT)
+
+Slide 14
+
+RS  gives you the output field as an answer. We want the intesity.
+
+Can we calculate the transmitance from that?
+
+We can invert the euqaition and we get the transmitance $t(\xi, \eta)$
+
+$E = \sqrt{I} e^{i \phi}$
+
+We can't do both amplitude and phase, it is really hard to do both phase and amplitude.
+
+Even though this is analytically sovable, it is impossible to solve it.
+
+
+
+
+
+\end{document}
