@@ -106,7 +106,6 @@ def load_img(file):
     # make it odd
     img = np.pad(img, pad_width=1, mode='constant')
     img = img[1:, 1:]
-
   return img
 
 img = load_img(image_file)
@@ -270,8 +269,8 @@ f = fft.fft2(img)
 f_abs_square = f/np.square(np.abs(f))
 g = np.fft.ifft2(f_abs_square)
 
-plot2img(img, np.abs(g), "Input", "$|g|$")
-# plot2img(np.real(g), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
+plot2img(img, np.log2(np.abs(g)+1), "Input", "$|g|$")
+plot2img(np.log2(1+np.abs(np.real(g))), np.imag(g), "$\Re(g)$", "$\Im(g)$" )
 
 ```
 
@@ -513,11 +512,12 @@ a <- seq(u, 5*u, length.out=300)
 f <- function(x) {
   1/(2*x)*(1 - u/x)
 }
-y <- f(a)
+k <- f(a)
 
-ggplot(data.frame(a, y)) +
-  geom_line(aes(a, y, colour="y=1/(2a) - /(2a^2)")) +
-  geom_vline(aes(xintercept=2, colour="x=2"))
+ggplot(data.frame(a, k)) +
+  geom_line(aes(a, k, colour="k(a)=1/(2a) - /(2a^2)")) +
+  geom_vline(aes(xintercept=2, colour="x=2")) +
+  labs(title = "Values of k for different values of a")
 
 ```
 
@@ -556,24 +556,9 @@ df <- data.frame(x=x, real=Re(y), imaginary=Im(y))
 df <- pivot_longer(df, -x, values_to='y')
 
 ggplot(df) +
-  geom_line(aes(x, y, colour=name))
+  geom_line(aes(x, y, colour=name)) +
+  ggplot2::ylab("g(x); normalized to u0 = 1")
 ```
-
-
-```{=latex}
-\begin{align*}
-FT(cos(2pi \nu x))=
-\frac{1}{2}(\delta(t-\nu) + \delta (t + \nu))
-\end{align*}
-\begin{align*}
-FT(cos(2pi \nu (x - \frac{1}{6 u_0}))=
-e^{}\frac{1}{2}(\delta(t-\nu) + \delta (t + \nu))
-\end{align*}
-
-```
-
-
-
 
 
 # Problema 2.19
