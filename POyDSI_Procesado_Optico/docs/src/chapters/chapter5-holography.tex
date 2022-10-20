@@ -97,4 +97,167 @@ Slide 16. Experiemnt on trapping using these.
 TFM. Digital holigraphy, thinguies and other things. Could be a Master thesis if talked about.
 
 
+\section{Numerical methods for Fourier transform}
+
+sllide 20
+
+\subsection{FFT}
+
+
+Riemann integral,
+
+Discrete Fourier transform
+
+Inverse.
+
+DFT transform is a matrix, $O(N^2)$
+
+FFT is $N \log_2(N)$
+
+
+How?
+
+Divide FFT into odd/even, then calculate the FFT of each separately.
+
+Repeat this step recursively (slides up to 23)
+
+fft shift?
+
+
+Slide 28
+
+Diffraction integral simulation
+
+Fresnel transform, Impulse response method, angular spectrum method (Transfer function method)
+
+Direct method of the integral calculation
+
+Fresnel Transform MEthod (FTM)
+Slide 29 --33
+
+Single FT involved
+
+Object in an rectangular area, $L \times  L$ $M \times N$ pixels. Assume $M=N$
+
+Wavelength $\lambda$
+
+One pixel correspnds to $\deltax = \lambda z / L$
+
+Field of view depends on $z$
+
+Aoid aliasing by $z_{\min} = L^2/ N \lambda$
+
+Slide 32, calculation for the letter F
+
+Problem: Window size grows linearly with distance
+
+
+\section{Impulse Response method}
+
+Based on FFT
+
+Three FT are required.
+
+Pixel resolution does not depend on propagation distance, since it is based on inverse FT
+
+Slide 36, showing how it works for smaller z
+
+
+\section{Transfer function}
+
+Slide 37
+
+Fresnel transform transfer function calculated analitically
+
+Transfer function in paraxial approximation.
+
+Two FT are required
+
+Size of window is constant
+
+Slide 38 shows how it is not limited by a minimum $z$ value
+
+Slide 39--40 code in matlab
+
+
+Slide 41
+
+What method to use.
+
+Short distance, TF and IR. TF limitation $D \leq \lambda z / Delta x$
+
+Further passed this limit TF attenuates the field.
+
+The IR creates copies of the observtion plane field,
+
+
+For critical samplling, TF requires only two FFT
+
+For long distance
+
+
+
+\subsection{Phase unwrapping}
+
+Important for topographic measures
+
+How is the phase calculated? In the range $[-\pi, \pi]$. So there will be jumps, we neeed to unwrap those jumps.
+
+Slide 43
+
+Phase unwrapping:
+
+Start from the left, and whenver there is a jump you look at the sign of the change and change everything moving forward
+
+Slide 44 (shown in picture)
+
+Slide 45 Phase unwrapping with white noise
+
+It can create wrong jumps in our signal
+
+Slide 46 Phase unwrapping of undersampled signal.
+
+
+\subsection{Optical phase unwrapping OPU}
+Slide 47
+
+2D signals unwrapping is computationally demanding.
+
+OPU provides better
+
+
+Proffesor recommends from references
+
+D. Voelz, Computational Fourier Optics, v. TT89, SPIE tutorials, Washington, USA (2011).
+
+
+
+Problem 1.10 $f' = f \sin(2 \pi \u_0 x)$
+
+We can use this for super-resolution. If we have an object iluminated by a sinusoidal signal,
+
+The convolution is equivalent with two displacements, which gives us extra resolution on frequencies, almost double.
+
+
+
+Problem 2.8
+
+Which filters let us observe the edges of an image?
+
+First, higher frequencies provide the information of the edges of signals. Therefore,
+
+\begin{enumerate}
+	\item No, for normal images $\abs{TF}$ is bigger for lower frequencies
+
+	Therefore, we will be enhancing the low  ones and removing the higher ones.
+
+
+	\item Yes, by removing the modulus and leaving just the phase, it will provide more visibility to higher frequencies
+	\item Yes, by dividing it should provide us with better image quality
+	\item No, it is a blurring effect, it is a high pa
+	\item No, it is a blur as well
+\end{enumerate}
+
+
+Homework 1.6
 \end{document}
