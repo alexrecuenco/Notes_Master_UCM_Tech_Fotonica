@@ -1,0 +1,172 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+
+Slides PRocesos aleatorios
+\chapter{Random signals}
+
+\section{Introduction}
+
+Deterministic
+\begin{itemize}
+	\item The signal has the same value at all time
+	\item Value at each instance can be defined
+	\item Defined by a deterministic function $f(t)$
+\end{itemize}
+
+Stochastic
+\begin{itemize}
+	\item Signal follows a probability distribution
+	\item The same instant could give a different measure
+\end{itemize}
+
+
+Our goal is to split a noisy signal into noise and signal.
+
+\section{Continuous probability distributions}
+
+\begin{equation}
+	F_y (\nu) = P(y(t) \leq \nu),\, -\infty< \nu < \infty
+\end{equation}
+
+Probability is defined by the Probablity Density Function (PDF)  $f_y$
+
+\begin{equation}
+	f_y(\nu) = \frac{d F_y \nu}{\dd v}
+\end{equation}
+
+\section{Discrete probability }
+
+Instead of PDF, we have a probability mass function.
+
+\begin{equation}
+	f_y(\nu) = P(y(t) = \nu),\,\nu \in \Z
+\end{equation}
+
+\section{Types of PDFs}
+
+
+\subsection{Uniform}
+
+\begin{equation}
+	f_y(\nu)=
+	\begin{cases}
+		\frac{1}{b-a}, \textrm{for $x \in [a,b]$} \\
+		0, \textrm{for $x \notin [a,b]$}          \\
+	\end{cases}
+\end{equation}
+
+
+Our signal will be $x_i + \in_i$
+
+\subsection{Normal or gaussian distribution}
+
+\begin{equation}
+	f_y(\nu)= \frac{e^ {\flatfrac{(\nu - \mu)^2}{2\sigma^2}}}{\sigma \sqrt{2\pi}}
+\end{equation}
+
+
+
+\subsection{Log-normal PDF}
+A variable $x$ is log-normal distributed, if their logarithm, $\log x$ is normally distributed.
+
+Common in microbiology and modeling of infection systems.
+\begin{equation}
+	f_y(\nu)= \frac{e^ {\flatfrac{(\log\nu - \mu)^2}{2\sigma^2}}}{\sigma \sqrt{2\pi}}
+\end{equation}
+
+\section{Characterization of system}
+
+Slide 17
+
+\subsection{Sample characterization}
+
+Looking at the histogram, and obtaining statistics of values. You can use to estimate the different properties
+
+\subsection{Average, expected value}
+
+\begin{equation}
+	\mu = \int_\R \nu f(\nu)\dd \nu
+\end{equation}
+$E(y)$ is an estimation of $\mu$. But in this class we use them interchangeably.
+
+\subsection{Momentums}
+
+\begin{equation}
+	\mu_k'  = \int_\R \nu^k f(\nu)\dd \nu
+\end{equation}
+
+Central momentums
+
+\begin{equation}
+	\mu_k = \int_\R (\nu - \mu)^k f(\nu)\dd \nu
+\end{equation}
+
+\subsection{Mode, median, and mean}
+
+The median and mean can be estimated more easily through the actual data.
+
+However, the mode is better to calculate by first creating the theoretical probability distribution model and obtaining the $sup_\nu \{f(\nu)\}$
+
+\subsection{Auto-correlation}
+\subsubsection{Random signals}
+Slide 23
+
+Given some samples $X(i)$, we have $p(X(0), \ldots, X(10))$, for example.
+
+\subsubsection{Definition}
+
+Autocorrelation is the correlation of the signal with itself at a delay, $t_1 = t_2+\textrm{delay}$
+
+\begin{equation}
+	R(t_1, t_2) = E(y(t_1)y(t_2))
+\end{equation}
+
+We do this for each delay value.
+\begin{equation}
+	R(t_2+\textrm{delay}, t_2) = E(y(t_2+\textrm{delay})y(t_2))
+\end{equation}
+The value for $\textrm{delay}=0$ gives us the mean
+
+Therefore, the autocorrelation is ploted in relation to the delay $R(\textrm{delay})$
+
+
+\begin{itemize}
+	\item The autocorrelation of a completely random variable would be zero
+	\item The autocorrelation of a periodic signal would have peaks on the auto-correlation function at the delay values that are an integer multiple of the period of the signal
+\end{itemize}
+
+\section{Auto-covariance}
+
+Similar
+
+\begin{equation}
+	C(t_1, t_2) = E((y(t_1)-\mu)(y(t_2)-\mu))
+\end{equation}
+
+We do this for each delay value.
+\begin{equation}
+	C(t_2+\textrm{delay}, t_2) = E((y(t_2+\textrm{delay})-\mu)(y(t_2)-\mu))
+\end{equation}
+
+Like before, The value for $\textrm{delay}=0$ gives us the variance
+
+\subsection{Strict-sense stationary}
+
+All statistical properties are invariant to a shift of the time origin.
+
+See slide 27, that I didn't understand much
+
+\subsection{White noise}
+Slide 28
+
+Is a signal whose autocorrelation is
+
+\begin{equation}
+	R(t_1,t_2) = I(t_1)\delta(t_1-t_2)
+\end{equation}
+
+\end{document}
