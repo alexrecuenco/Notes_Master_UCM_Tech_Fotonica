@@ -106,10 +106,221 @@ $E = \sqrt{I} e^{i \phi}$
 
 We can't do both amplitude and phase, it is really hard to do both phase and amplitude.
 
-Even though this is analytically sovable, it is impossible to solve it.
+Even though this is analytically sovable, it is impossible to create. We can't create these things physically.
+
+Slide 16
+
+How do we solve this fabrication issue?
+
+If we discretize the phase, and ignore the amplitude. We can see how it produces some case... but it is very noisy
+
+Mathematically the space is of too high dimension to optimize easily
+
+\section{Optimization algorithm}
+Slide 17
+
+\begin{itemize}
+	\item IFTA
+	\item Gradient descent
+	\item ``Genetic algorithm'' (Generations)
+\end{itemize}
+
+Slide 18, See the different algorithms chronology of when these algorithms got started
+
+This process starts once we ahve coherent light with the invention of the LASER
+
+
+\subsection{Unidirectional algorithm}
+
+First estimate, get output, compare, create a new estimate, go on ahead again.
+
+However, this method does not guide us in how to modify the unit cell constraints. It is therefore only adequate when we can do the estimation cheaply and we can do a random walk searching for improvements.
+
+
+\subsection{Bidirectional algorithm}
+
+The information provides us with how to modify the system
+
+\subsubsection{Iterative Fourier Transform Algorithm (IFTA)}
+slide 20
+
+Two operators:
+
+\begin{itemize}
+	\item On our mask (input systemsystem), comply with our fabrication constraints
+	\item On the output plane, modify to get closer to the desired distribution
+\end{itemize}
+
+Operator on the theoretical perfect system, to obtain a mask under our fabrication constraints.
+
+Then, we do the FFT  of the mask to obtain the output, then apply our operator on the image.
+
+Apply the inverse fourier transform, get back a mask, apply our constraints, etc]
+
+Diamgram on slide 21 explains all this decently well.
+
+We allow the phase of the system to change (remember how that is related to the width of the diffractive element). That is where our degrees of freedom that we are actually optimizing are
+
+
+This method is actually very effective
+
+\section{Characterization parameters}
+Slide 22
+
+\subsection{Error}
+Slide 22 top equation
 
 
 
+\subsection{Redirection efficiency}
+Slide 22 bottom equation
+
+\subsection{Luminosity efficiency}
+Slide 23
+
+What percentage of energy ends up in the right place? If this is low we will have larger levels of gray.
+
+\subsection{Non uniformity}
+Slide 23 bottom
+
+These two equations determine how much fluctuantion it has. We are discussing noise
+
+On a binarization, we devide this into two measures. The noise at the high levels, and the noise at lower levels.
+
+We care about dividing this in two in binarization, because the noise at lower levels can have a larger impact on the element quality
+
+
+\section{Convergence}
+Slide 24
+
+Diagram with efficiency during iterations.
+
+
+\section{Back to IFTA, bidirectional algorithms}
+Slide 25
+
+Not sure the point of this slide
+
+Note that what can happen is that some algorithms may reach a local minima, and after some extra searching, it starts increasing efficiency again.
+
+Iterative systems like the IFTA tend to not do this jumpy thing.
+
+Instead, we usually get a slow efficiency growth until it slows down and does not improve anymore from that. This occurs because we have found a local minima.
+
+Gradient decent algorithm tend to get stuck, while the ``particle soam'' algorithm or whatever he said usually can reach and find lower minima sinc eit can go back up the gradient sometimes and find lower minima.
+
+
+\section{Stopping criteria}
+Slide 26
+
+We need to determine when do we stop our system.
+
+\begin{itemize}
+	\item In iterative methods we stop when we reach a local minima
+	\item In non-iterative methods, we can wait a bit once it has reached the minima to let it have a chance to find a lower minima.
+\end{itemize}
+
+When do we stop
+\begin{itemize}
+	\item  When we reach a minima
+	\item When we reach an acceptable error
+	\item When our efficiency is converging and not improving after a certain time
+	\item After a certain number of iterations
+\end{itemize}
+
+
+\section{GERCHBERG-SAXTON (GSA)}
+
+Slide 27
+
+GSA uses the fact that since we a re measuring intensity we can use any phase on the obtained image.
+
+We keep modifying the phase of the replicated image to try to find a correct DOE. We change the phase on the obtained image on every iteration then obtain a different DOE
+
+Slide 28--29
+
+Note how it is using continuous phase values, so it can reach really low errors.
+
+Slide 32, Wyrowski.
+
+As a goal we provide a higher viewing window, and we allow phase and amplitude to change outside of our true desired window.
+
+Because of that, we have more degrees of freedom. (In our source image we still constraint the system to be zero outside our mask)
+
+And having more degrees of freedom, it can reach lower minima more quickly (See slide 33 for comparison)
+
+\subsubsection{Discretizing the phase}
+Slide 30
+
+Althoguht shown as a circle, think of all points of our system as being complex numbers anything within
+
+When we restrict amplitude, we are moving all the points radially to the edge
+
+When we discretize on phase, we move the points angularly to the nearest phase value we can generate.
+
+If we provide more levels, it will have a better chance at finding reduce errors.
+
+We can start by restricting the system to a much wider discretization (PRovide more phase levels that we discretize). And as we reach a good solution, we can reduce the levels to our desired number of levels.
+
+By taking this approach, we are  providing extra degrees of freedom at the start and provides better optimization and less stagnation
+
+\subsection{Adaptive additive algotihm}
+Slide 33
+
+Back to Slide 27 with this information.
+
+Instead of changing the result on the observation plane suddenly. We add a certain small percentage of our image on each iteration., With a paramter $\lambda$
+
+As iterations go by we will increase the value of $\lambda$ until we get close to 1
+
+
+\subsection{???}
+
+Slide 35--36
+
+
+Slide 36
+Multiplicative factor. Yes, we provide a better optimization. However, the result provides us light outside the image plane, so we are loosing some energy for our system
+
+
+
+Slide 38, note how the experiment sometimes gives us another image
+
+\section{Other optimization algorithms}
+
+next day
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Aside: Programming a simple example}
+
+Slide: Looking at python notebook.
+
+A damman network is good for pedagological reasons, as we can optimize it more easily.
+
+
+Then there is a notebook for simulation. We emphasize how the simulation is better than the simple theory, since in the simulation we can see how the dots outside the near center produce aberration.
+
+% TODO: Look at that simulation notebook. ``Dammann_PySwarms OD''
 
 
 \end{document}
