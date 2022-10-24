@@ -22,7 +22,8 @@
 \usepackage{minitoc}
 \usepackage{subfiles}
 
-
+% Create graphs
+\usepackage{pgfplots}
 \usepackage{tcolorbox}
 	\tcbuselibrary{most}
 	\tcbuselibrary{minted}
@@ -207,6 +208,7 @@ bashcode/.style={
 \newcommand\dx{\mathop{dx}}
 \newcommand\rect{\mathop{rect}}
 \newcommand\conv{\circledast}
+\newcommand\ddelta[1]{\delta\left(#1\right)}
 
 %TODO: Put in main file
 \renewcommand{\vec}[1]{\vb{#1}}
