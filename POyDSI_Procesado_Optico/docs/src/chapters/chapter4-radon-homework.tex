@@ -4,58 +4,47 @@
 \documentclass[../main/main.tex]{subfiles}
 
 \begin{document}
-%\setcounter{chapter}{1}
-%\setcounter{section}{1}
+\setcounter{chapter}{4}
+\setcounter{section}{0}
 \section{Homework}
 
 Entrega del problema 2.12 y 2.16: 28 de octubre
 
 
+% Sign function: it is the fourier transform of 1/pi x, therefore you can view that 1/pi t convolution as a filter in fourier where you add one side, substract the other around the center
+% Hilbert transform, It's inverse is minus itself, it is a  convolution with 1/pit
+
+% Analytical signal is done obtaining only positive frequencies. So you pass the signal by multiplying with (1+sign(freuqnecy)), which will be zero for any negative, and will be 2 for any positive frequency
+% Then, you can do the inverse transform, whihc transforms products in convolutions
+% Quite decent explanation here https://en.wikipedia.org/wiki/Analytic_signal
 
 \subsection*{Problem 2.12}
 \emph{Encontrar la señal analítica asociada a la función $\cos x +\sin x$}.
 
+Defining analytical transform as
+\begin{equation}
+	a(x) = f(x) + i HT\left[f(\xi)\right](x)
+\end{equation}
 
-I am not sure what it means by ``find the analytical signal of the function''. However, since this is a Radon equation problem, I imagine we mean that, that is the Radon signal $R(s, \alpha) = \ddelta{s-\cos \alpha} + \ddelta{s-\sin \alpha}$ and we need to find the actual mass density, or $R(s, \alpha) = \ddelta{s-\cos \alpha - \sin\alpha}$
+Where
+\begin{equation}
+	HT\left[f(\xi)\right](x) = \frac{1}{\pi x} \conv f(x)
+\end{equation}
 
-If we understand it as $R(s, \alpha) = \ddelta{s-\cos \alpha} + \ddelta{s-\sin \alpha}$
+In the Fourier space, it is easy to proof that it is equivalent to a filter in fourier space with the term $1 + \textrm{sgn}(\nu)$.
+% Where one just needs to take into account that, in the sense of a distribution, the sign function Fourier transform is the Hilbert transform function, and that products turn into convolutions.
 
-% modifying example from p.345 from the Tikz & PGF Manual for Version 3.1.8b
-\begin{tikzpicture}[domain=0:2*pi, samples=40, y=2 cm, x =0.63cm]
-\draw[very thin,color=gray] (-0.1,-1.1) grid ({2*pi},1.1);
-  \draw[->] (0,0) -- (2*pi,0) node[right] {$\alpha$};
-  \draw[->] (0,-1.2) -- (0,1.2) node[above] {$s$};
-\draw[color=red, line width=1pt] plot (\x,{cos(\x r)}) node[right] {};
-\draw[color=blue, line width=1pt] plot (\x,{sin(\x r)}) node[right] {};
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}[x=1cm, y=1cm]
-	\draw[very thin,color=gray] (-2.1,-2.1) grid (2.1,2.1);
-	\draw[->] (-2,0) -- (2,0) node[right] {$x$};
-	\draw[->] (0,-2) -- (0,2) node[above] {$y$};
-    \fill[color=blue] (1, 0) circle [color=blue, radius=2pt]
-    	node[anchor=north west]{$2\textrm{P}_{1}(1, 0)$};
-    \fill[color=red] (0, 1) circle [color=red, radius=2pt]
-    	node[anchor=south east]{$2\textrm{P}_{2}(0,1)$};
-\end{tikzpicture}
+Now, $\cos x = \frac{e^{i x} + e^{-ix}}{2}$, and
+$\sin x = \frac{e^{i x} - e^{-ix}}{2}$. We see how these plane waves have frequencies $\nu=\pm 1$.
 
-If we instead understand it as $R(s, \alpha) = \ddelta{s-\cos \alpha-\sin \alpha} = \ddelta{s-\sqrt{2} \cos(\pi/4-x)}=$
+We can already notice that if we go into fourier space, and remove the negative frequencies, we would get back solely the positive frequencies, which in our case would be the frequency corresponding to $e^{ix}$ in both our examples.
 
-% modifying example from p.345 from the Tikz & PGF Manual for Version 3.1.8b
-\begin{tikzpicture}[domain=0:2*pi, samples=40, y=2 cm, x =0.63cm]
-\draw[very thin,color=gray] (-0.1,-1.42) grid ({2*pi},1.42);
-  \draw[->] (0,0) -- (2*pi,0) node[right] {$\alpha$};
-  \draw[->] (0,-1.42) -- (0,1.42) node[above] {$s$};
-\draw[color=blue, line width=1pt] plot (\x,{1.41*cos(\x r-pi/4 r)}) node[right] {};
-\end{tikzpicture}
-\qquad
-\begin{tikzpicture}[x=1cm, y=1cm]
-	\draw[very thin,color=gray] (-2.4,-2.4) grid (2.4,2.4);
-	\draw[->] (-2,0) -- (2,0) node[right] {$x$};
-	\draw[->] (0,-2) -- (0,2) node[above] {$y$};
-    \fill[color=blue] (45:1.41) circle [color=red, radius=2pt]
-    	node[anchor=south east]{$2\textrm{P}_{2}(r=\sqrt{2},\theta=\pi/4)$};
-\end{tikzpicture}
+Hence, We will be left with \textbf{twice} the original positive frequency of our original wave. Furthermore, since both $\cos$ and $\sin$ have factors $\frac12$ on their plane wave, both $\sin$ and $\cos$  provide a $2 \cdot \flatfrac{e^{ix}} 2$ factor. And, the combined analytical signal will be
+
+\begin{equation}
+	a(x) = e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\cos x$}}} + e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\sin x$}}} = 2 e^{ix}  \qed
+\end{equation}
+
 
 \subsection*{Problema 2.16}
 
@@ -72,21 +61,21 @@ If we instead understand it as $R(s, \alpha) = \ddelta{s-\cos \alpha-\sin \alpha
 
 Firstly, we can re-write that equation as
 
- \begin{align*}
- 	f(x,y) &=
- 	\sqrt{2}
- 	\ddelta {x - \frac 1 {\sqrt{2}}}
- 	\ddelta {\sqrt{2}\left(y - \frac 1 {\sqrt{2}}\right)}
- 	+ 2
- 	\ddelta{x-1}
- 	\ddelta{y} \\
- 	&=
- 	\ddelta {x - \frac 1 {\sqrt{2}}}
- 	\ddelta {y - \frac 1 {\sqrt{2}}}
- 	+ 2
- 	\ddelta{x-1}
- 	\ddelta{y}.
- \end{align*}
+\begin{align*}
+	f(x,y) & =
+	\sqrt{2}
+	\ddelta {x - \frac 1 {\sqrt{2}}}
+	\ddelta {\sqrt{2}\left(y - \frac 1 {\sqrt{2}}\right)}
+	+ 2
+	\ddelta{x-1}
+	\ddelta{y} \\
+	       & =
+	\ddelta {x - \frac 1 {\sqrt{2}}}
+	\ddelta {y - \frac 1 {\sqrt{2}}}
+	+ 2
+	\ddelta{x-1}
+	\ddelta{y}.
+\end{align*}
 
 Where we have used that $\ddelta {ax} = \frac 1 {\abs{a}} \ddelta{x}$
 Therefore, this 2-D delta function is representing two isolated points. In a sketch, we could say it is somewhat like
@@ -95,27 +84,27 @@ Therefore, this 2-D delta function is representing two isolated points. In a ske
 	f(x,y) = 2 \textrm{P}_{1}(1, 0) + \textrm{P}_{2}\left(\frac 1 {\sqrt{2}}, \frac 1 {\sqrt{2}}\right).
 \end{equation*}
 
-	      \begin{center}
+\begin{center}
 
-		      \begin{tikzpicture}[x=1cm, y=1cm]
-			      % grid
-			      \draw[help lines, dotted] (-2.5,-2.5) grid (2.5, 2.5);
-			      \draw[thin, dotted](-2.5,0)--(2.5,0) node[anchor=south east]{$x$};
-			      \draw[thin, dotted](0,-2.5)--(0,2.5) node[anchor=north west]{$y$};
-			      \fill (1, 0) circle [radius=2pt]
-			      	node[anchor=north west]{$2\textrm{P}_{1}(1, 0)$};
-			      \fill (1/1.414, 1/1.414) circle [radius=2.82pt]
-			      	node[anchor=south east]{$2\textrm{P}_{2}\left(\frac 1 {\sqrt{2}}, \frac 1 {\sqrt{2}}\right)$};
+	\begin{tikzpicture}[x=1cm, y=1cm]
+		% grid
+		\draw[help lines, dotted] (-2.5,-2.5) grid (2.5, 2.5);
+			\draw[thin, dotted](-2.5,0)--(2.5,0) node[anchor=south east]{$x$};
+			\draw[thin, dotted](0,-2.5)--(0,2.5) node[anchor=north west]{$y$};
+			\fill (1, 0) circle [radius=2pt]
+			node[anchor=north west]{$2\textrm{P}_{1}(1, 0)$};
+			\fill (1/1.414, 1/1.414) circle [radius=2.82pt]
+			node[anchor=south east]{$\textrm{P}_{2}\left(\frac 1 {\sqrt{2}}, \frac 1 {\sqrt{2}}\right)$};
 
 
-		      \end{tikzpicture}
-	      \end{center}
+	\end{tikzpicture}
+\end{center}
 
 
 The radon transformation is a linear transformation, and a point gets converted to the curved line
 
 \begin{equation*}
-s(\alpha) = r_{0}\cos(\alpha_{0}- \alpha).
+	s(\alpha) = r_{0}\cos(\alpha_{0}- \alpha).
 \end{equation*}
 
 
@@ -124,10 +113,10 @@ In our formula we get $r_{1} = r_{2}=1$ and $\alpha_{1} = 0$ $\alpha_{2}=\pi/4$ 
 
 % modifying example from p.345 from the Tikz & PGF Manual for Version 3.1.8b
 \begin{tikzpicture}[domain=0:2*pi, samples=40, x=1.5cm, y=3cm]
-\draw[very thin,color=gray] (-0.1,-1.1) grid ({2*pi},1.1);
-  \draw[->] (0,0) -- (2*pi,0) node[right] {$\alpha$};
-  \draw[->] (0,-1.2) -- (0,1.2) node[above] {$s$};
-\draw[color=red, line width=1pt] plot (\x,{cos(pi/4 r-\x r)}) node[right] {$s = \cos(\pi/4 - \alpha)$};
-\draw[color=blue, line width=2pt] plot (\x,{cos(\x r)}) node[right] {$s = \cos \alpha$};
+	\draw[very thin,color=gray] (-0.1,-1.1) grid ({2*pi},1.1);
+	\draw[->] (0,0) -- (2*pi,0) node[right] {$\alpha$};
+	\draw[->] (0,-1.2) -- (0,1.2) node[above] {$s$};
+	\draw[color=red, line width=1pt] plot (\x,{cos(pi/4 r-\x r)}) node[right] {$\ddelta{s - \cos(\pi/4 - \alpha)}$};
+	\draw[color=blue, line width=2pt] plot (\x,{cos(\x r)}) node[right] {$2\ddelta{s - \cos \alpha}$};
 \end{tikzpicture}
 \end{document}
