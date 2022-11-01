@@ -1,6 +1,7 @@
 # diffractio
 
 -e ./diffractio-dev
+py-pol
 ## Difractio peer dependencies
 psutil
 
