@@ -565,4 +565,25 @@ ggplot(df) +
 
 *Una imagen esta corrompido con el ruido ``sal y pimienta''. Usando el programa ImageJ (véanse la diapositiva final de la clase convolución y Correlación) elegir un filtro (entre los filtros Gaussian Blur, Mean o Medium) más adecuado para la reducción del ruido. Presentar las imágenes (original, con el ruido, filtradas) y comentar su elección}*
 
-I haven't had time to solve it yet. My bad. ImageJ seems to be acting up on my machine
+
+Simulation with ImageJ, adding salt-and-pepper noise to a sample image of ImageJ
+
+```{python}
+boat = load_img("images/boat.tif")
+boat_salt_and_pepper = load_img("images/boat-s-and-pepper.bmp")
+plot2img(boat, boat_salt_and_pepper)
+
+```
+
+De-noising the image
+
+```{python}
+boat = load_img("images/boat-s-and-pepper-average-denoising.bmp")
+boat_salt_and_pepper = load_img("images/boat-s-and-pepper-median-denoising.bmp")
+plot2img(boat, boat_salt_and_pepper, title1="Average filter", title2="Median filter")
+
+```
+
+On a salt-and-pepper image, the noise produces pixels that are either 0 or 255 in intensity. Therefore, any kind of average or other statistical measure that is sensitive to extreme values is a bad choice.
+
+A choice of measure that is somewhat insensitive to extreme values is far more valuable to try to reduce noise. It is for that reason that a median denoise is a much better choice of filter for this purpose
