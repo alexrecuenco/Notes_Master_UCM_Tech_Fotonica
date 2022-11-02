@@ -35,14 +35,34 @@ In the Fourier space, it is easy to proof that it is equivalent to a filter in f
 % Where one just needs to take into account that, in the sense of a distribution, the sign function Fourier transform is the Hilbert transform function, and that products turn into convolutions.
 
 Now, $\cos x = \frac{e^{i x} + e^{-ix}}{2}$, and
-$\sin x = \frac{e^{i x} - e^{-ix}}{2}$. We see how these plane waves have frequencies $\nu=\pm 1$.
+$\sin x = \frac{e^{i x} - e^{-ix}}{2 i}$. We see how these plane waves have frequencies $\nu=\pm 1$.
 
 We can already notice that if we go into fourier space, and remove the negative frequencies, we would get back solely the positive frequencies, which in our case would be the frequency corresponding to $e^{ix}$ in both our examples.
 
 Hence, We will be left with \textbf{twice} the original positive frequency of our original wave. Furthermore, since both $\cos$ and $\sin$ have factors $\frac12$ on their plane wave, both $\sin$ and $\cos$  provide a $2 \cdot \flatfrac{e^{ix}} 2$ factor. And, the combined analytical signal will be
 
 \begin{equation}
-	a(x) = e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\cos x$}}} + e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\sin x$}}} = 2 e^{ix}  \qed
+	a(x) =
+	e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\cos x$}}}
+	+ \frac{1}{i} e^{ix}_{\textrm{\tiny \scalebox{.5}{from $\sin x$}}}
+	= (1-i)e^{ix}
+	= \sqrt{2}e^{i(x - \pi / 4)}   \qed
+\end{equation}
+
+Note how we could have obtained this by noticing that $\cos x + \sin x = \sqrt{2} \sin (x + \pi/4)$
+
+Then, we just do the analytical transformation. Noticing that
+
+\begin{equation}
+	\sqrt{2} \sin (x + \pi/4) = \frac{\sqrt{2}}{2i} \left(e^{ix + i\pi/4}-e^{ix + i\pi/4}\right)
+\end{equation}
+
+Which leads directly to
+
+\begin{equation}
+	a(x) = 2 \cdot \frac{\sqrt{2}}{2i} e^{ix + i\pi/4}
+	= \sqrt{2} e^{ix + i\pi/4- i \pi / 2}
+	= \sqrt{2} e^{ix - i\pi/4}
 \end{equation}
 
 
