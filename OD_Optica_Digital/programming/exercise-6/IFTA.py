@@ -1,5 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Copyright Prof. LUIS MIGUEL SANCHEZ BREA with permission (e-mail to ucm.es email on November 3, 2022 at 10:10:58 GMT+1)
 
 from copy import deepcopy
 
