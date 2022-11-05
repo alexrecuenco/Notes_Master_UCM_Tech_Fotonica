@@ -1,0 +1,226 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+
+Slides `Cristales liquidos'
+
+\chapter{Liquid crystals}
+
+\section{Light poralization}
+
+slide 5
+
+In annysotropic media, the field direction is very important.
+
+For example, the amount of light reflected depends a lot on polarization, since the fresnel equation depends on the direction.
+
+To define the poralization we have a 3-vector, however, we can use a O(3) rotation and place the $\vec{k}$ vector in the z axis, which creates a $(E_x, E_y)$ vector.
+
+Each of these look like a $E_i(z,t) = E_{0,\,i}\cos{k z - \omega t + \delta_i}$
+
+Since $k z - \omega t$ is shared between all directions, it does not contribute to polatization and we can study this looking just at the amplitude and dephase
+
+Linear polarization, when the dephase is either 0 or $\pi$. The azimut on that case would be $\tan \alpha = \pm \frac{E_{0y}}{E_{0x}}$ which determines the angle it goes
+
+Circular polarization. The dephase is $\pm \pi/2$ between both. $\delta_y - \delta_x = (2m + 1)\pi/2$
+
+
+The jones vector determines the polarization uniquely in a complex unit vector.
+
+(See equation slide 7)
+
+\section{Polarizers}
+
+There are certain materials that can change the polarization of an incoming beam.
+
+We can describe any linear polarizer as a matrix $M$
+
+Linear polarizer,
+
+
+\begin{align*}
+	\textrm{PL}(\theta = 0)       & = \ket{x}\bra{x} = \\
+	\textrm{PL}(\theta = \pi / 2) & = \ket{y}\bra{y} =
+\end{align*}
+
+However a real one would have a minimum value, since it will be impossible to get zero
+
+(See equation(s) slide 8)
+
+
+\subsection{Rotating polarizers}
+
+\begin{equation}
+	P(\theta) = R(-\theta) P(0) R(\theta)
+\end{equation}
+
+Think of it as ``rotate and apply then unrotate''
+
+Note that for a 45 degree angle the matrix is a 1/2,1/2,1/2,1/2
+
+\subsection{\emph{Retardadores}}
+
+Apply a phase difference between both parts.
+
+\section{Applying multiple polarizers}
+
+Slide 10
+
+When light goes through multiple polarizers, the polarizing state at the end can be understood as one polarizer
+
+\begin{equation}
+	\ket{s}  = L_N \cdots L_2 L_1 \ket{e}
+\end{equation}
+
+Note that the first polarizer in the system goes on the right, and also note that polarizers do not commute in general.
+
+Therefore, we can define it $L_{\textrm{total}} = L_N \cdots L_2 L_1$
+
+
+\section{Anysotropy}
+
+slide 11
+
+An anysotropy matrix is one that behaves differently for different components
+
+For $x$ we use the $n_o$ for $y$ we use $n_e$. The material changes the phase differently for each component.
+
+$\beta = \phu_y - \phi_x = \frac{2 \pi d (n_e - n_0)}{\lambda_0}$ is the dephase applied by the material.
+
+
+\section{Liquid crystal}
+
+\subsection{Types}
+
+slide 12
+
+\subsubsection{Isotropic}
+
+even if each molecule is anysotropic, when everything is perfectly disordered, the media becomes isotropic, since each applies a random phase. A good example is water (polar molecule that is disordered)
+
+A liquid crystal aligns itself when you apply an electric field to it. Therefore we can obtain
+
+Esmectic and nematic depending on whether the voltate is large or low
+
+\subsection{TFT, Thin Film Transistor}
+slide 13
+
+Some explanation of hte material I didn't understand.
+
+You need materials that are both transparent and conductors. That way light can go through it, and you can apply a voltage across to get a polarization
+
+\subsection{LCOS, Liquid crystal on silicon}
+
+slide 14
+
+You have a cover, a liquid crystal, and all the electronics are behind the liquid crystal, creating a reflection.
+
+the main advantage with respect to TFT, the light goes twice through the material, so we get twice the 'whatever we want' with the same width
+
+A very important advantage is that the opaque part is not obstructing our view, so we get a 100\% of light getting used, while on the other case a part of the light is absorved on the electronics.
+
+\section{Matrix model}
+slide 15
+
+Rigurous model with Mueller matrices that are 4-by-4
+
+The study of these liquid cristals is important, we will summarize the papers that are described here for the 90s
+
+
+\subsection{Saleh-Lu mode}
+
+slide 16
+
+Liquid cristal in-between two glass.
+
+Molecules align to the walls
+
+`birrefringencia', see equation at the top.
+
+We will devide these in $N$ layers that each have this `birrefringencia' (we will later make this $N$ tend to infinity)
+
+Each layer will have an angle that is linear from 0 to the final twist angle of the `placas'. $\tau_i =  i \alpha / N$
+
+This angle in eq top slide 16 is the same as the $\delta$
+
+We can describe these with a matrix of the actual media $S(angle I dont know how to type)$. Each of these create a rotation
+
+We therefore can describe the total media with a matrix multiplication
+
+Then, all these angles, since they are linearly different $R(\tau_i)R^-1(\tau_{i-1}) = R(\Delta \tau) = R(\alpha / N)$
+
+\begin{equation}
+	M = R^{-1} \left[S R(\alpha/N)\right]^N
+\end{equation}
+
+slide 18
+
+How do we solve $A^N$? solution at the end using Cayley-Hamilton theorem
+
+Then we take this to infinity
+
+slide 19
+
+Solution of this
+
+At the end $\alpha$ is the total twist we obtain. Note that if the $\alpha = 0$ we recover the starting equation, since there wouldn't be any change.
+
+
+We initially used $\Psi = 0$, which is the angle of the entry layer. The entry layer is not necessarily aligned with the polarized entry light. So we also include the $\Psi$ rotation
+
+This is what happens without a voltage
+
+slide 20
+
+What happens when you apply a voltage? With a large enough voltage, the molecules are directed on a certain direction, with enough voltage it will align with the field and not disrupt it.
+
+Slide 21, you can see how when you apply a voltage the molecules start aligning and "lifting". The $\xi$ angle changes, and the effective index of refraction changes.
+
+The `birrefringencia' is proportional to the index of refraction,
+
+slide 23
+
+When we don't have a voltage
+
+Models
+
+Berreman physical model
+
+Saleh-Lu
+
+Simplify to a linear model for twist angle,
+
+Create a linear model between high and low model across the entire
+
+Coy model
+
+Create a linear but with a zero threshold.
+
+Create a depth of diffrengigasg of width $m$ on 2 parts, so the matrices of those stages are different
+
+Marquez model, a better model.
+
+Slide 24 TODO: READ on your own time
+
+Slide 25--26 models with pretty euqations.
+
+Slide 27
+
+When you calculate it experimentally, you can calculate the $\beta$ and $\delta$, these depend on voltage and that determines your system.
+
+Slide 28
+
+Fit these models to the theoretical model
+
+Slide 29
+
+you have a liquid crystal and two polarizers. In the middle you have electrodes. You will be able to graduate with voltage in ``amplitude'' mode.
+
+When it passes by a $\lambda/4$ polarizer it becomes circular. It will dephase the light. We will modulate the change of phase of the light that is outgoing.
+
+We will obtain therefore masks of amplitude or masks of phase
+
+\end{document}
