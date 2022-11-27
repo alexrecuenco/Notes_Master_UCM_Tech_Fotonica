@@ -1,0 +1,181 @@
+---
+title: "Homework"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 4
+    fig_caption: true
+    toc: yes
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+subtitle: '**Entrega de problemas 2.8, 2.11 y 2.19 antes del 14 de Octubre: **'
+---
+
+
+```{r setup, echo=FALSE,  }
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("env/bin/python")
+
+```
+
+
+```{python, include=FALSE}
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+
+def clean():
+  plt.close()
+```
+
+\begin{equation*}
+g(r)=\FT{f(\r)}^{-1}\left[F(u)H(u)\right]
+\end{equation*}
+
+
+We will use the following image as our example in which we will apply all filters
+
+```{python img, out.width="75%"}
+import cv2 as cv
+import numpy as np
+from numpy import fft
+import matplotlib
+from matplotlib import rcParams, get_backend, pyplot as plt, use
+clean()
+image_file="images/lines.png"
+
+def load_img(file):
+  img = cv.imread(file, cv.IMREAD_GRAYSCALE)
+  # if (img.shape[0] % 2 == 0):
+  #   # make it odd
+  #   img = np.pad(img, pad_width=1, mode='constant')
+  #   img = img[1:, 1:]
+  return img
+
+img = load_img(image_file)
+
+def plt_two(plot1, plot2, postshow=None):
+  plt.subplot(121)
+  plot1()
+  plt.subplot(122)
+  plot2()
+  plt.show()
+  if postshow:
+    postshow()
+  plt.close()
+
+
+
+def plot2img(img1, img2, title1="Input", title2="Output", cmap='gray'):
+  def plot1():
+    plt.imshow(img1, cmap = cmap)
+    plt.title(title1)
+    plt.xticks([]), plt.yticks([])
+  def plot2():
+    plt.imshow(img2, cmap = cmap)
+    plt.title(title2)
+    plt.xticks([]), plt.yticks([])
+    plt.tight_layout()
+  plt_two(plot1, plot2)
+
+
+f = fft.fft2(img)
+fcentered = np.fft.fftshift(f)
+
+magnitude_spectrum = np.log(np.abs(fcentered)+1)
+
+plot2img(img, magnitude_spectrum, "Sample image", "FT of sample image")
+
+# How to do everything reverse
+# reverse = fft.ifftshift(fcentered)
+# reverse_f = np.abs(fft.ifft2(reverse))
+#
+# plot2img(np.log(np.abs(reverse)), np.abs(reverse_f))
+
+```
+
+# Practica 1
+```{python}
+from numpy.random import normal
+from matplotlib import pyplot as plt
+
+N = [100, 500, 1000, 5000]
+mu=0
+sigma = 1
+help(normal)
+for n in N:
+  data = normal(mu, sigma, n)
+  plt.hist(data)
+  plt.title(f"Normal: {n=}, {mu=}, {sigma=}")
+  plt.show()
+  plt.close()
+```
+
+
+```{python}
+n = 1000
+mu_sigma = [
+  (-2, 1),
+  (0, 3),
+  (4, 0.5)
+]
+for (mu, sigma) in mu_sigma:
+  data = normal(mu, sigma, n)
+  plt.hist(data)
+  plt.title(f"Normal: {n=}, {mu=}, {sigma=}")
+  plt.show()
+  plt.close()
+
+
+```
+## Ejercicio 2
+
+```{python}
+
+import numpy as np
+from scipy.stats import lognorm
+
+N=100000
+sigma =1
+mu = 0
+s = sigma
+scale = np.exp(0)
+
+data = lognorm.rvs(s, scale=scale, size=N)
+
+help(plt.hist)
+plt.hist(data, 100)
+plt.show()
+plt.close()
+
+```
+
+# Practica 3
+```{python}
+
+#import scipy.signal as s
+
+# cutoff_freq = 50
+# n = 50
+# # hannin is hann
+# windows = "
+# s.firwin(n, cutoff_freq, window=)
+
+
+```

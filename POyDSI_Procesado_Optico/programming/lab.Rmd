@@ -1,0 +1,255 @@
+---
+title: "Lab draft pictures"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 4
+    fig_caption: true
+    toc: yes
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+subtitle: '**First part**'
+---
+
+
+```{r setup, echo=FALSE,  }
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("env/bin/python")
+
+```
+
+
+```{python, include=FALSE}
+import cv2 as cv
+import numpy as np
+from numpy import fft
+from matplotlib import rcParams, get_backend, pyplot as plt, use
+import matplotlib.pyplot as plt
+
+def clean():
+  plt.close()
+
+clean()
+
+def load_img(file):
+  img = cv.imread(file, cv.IMREAD_GRAYSCALE)
+  # if (img.shape[0] % 2 == 0):
+  #   # make it odd
+  #   img = np.pad(img, pad_width=1, mode='constant')
+  #   img = img[1:, 1:]
+  return img
+
+def plt_two(plot1, plot2, postshow=None):
+  fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 9))
+  print(plot1, plot2, ax1, ax2)
+  plot1(ax1)
+  plot2(ax2)
+  plt.show()
+  if postshow:
+    postshow()
+  plt.close()
+
+
+
+def plot2img(img1, img2, title1="Input", title2="Output", cmap='gray'):
+  def plot1(ax):
+    ax.imshow(img1, cmap = cmap)
+    ax.set_title(title1)
+    ax.set_xticks([]), ax.set_yticks([])
+  def plot2(ax):
+    ax.imshow(img2, cmap = cmap)
+    ax.set_title(title2)
+    ax.set_xticks([]), ax.set_yticks([])
+  plt_two(plot1, plot2)
+
+
+```
+
+```{python}
+
+image_file="images/lines.png"
+
+img = load_img(image_file)
+
+f = fft.fft2(img)
+fcentered = np.fft.fftshift(f)
+
+magnitude_spectrum = np.log(np.abs(fcentered)+1)
+
+plot2img(img, magnitude_spectrum, "Sample image", "FT of sample image")
+
+# How to do everything reverse
+# reverse = fft.ifftshift(fcentered)
+# reverse_f = np.abs(fft.ifft2(reverse))
+#
+# plot2img(np.log(np.abs(reverse)), np.abs(reverse_f))
+
+```
+
+```{python}
+import numpy as np
+from scipy.signal import argrelextrema
+
+from skimage.measure import profile_line
+from matplotlib import pyplot as plt
+
+
+
+def plot_prof(img, P1, P2, prof, *, post=None):
+  y, x = img.shape
+  def plot1(ax):
+    points=list(zip(P1, P2))
+    ax.imshow(img, cmap = 'gray')
+    ax.plot(*reversed(points))
+    for (y, x) in (P1, P2):
+      ax.scatter(x=x, y=y)
+    ax.set_title("Point selection")
+  def plot2(ax):
+    ax.plot(prof)
+    ix = argrelextrema(prof, np.greater, order=20)
+    ixlow = argrelextrema(prof, np.less, order=20)
+    for x in ix:
+      ax.scatter(x, prof[x], color="red")
+    for x in ixlow:
+      ax.scatter(x, prof[x], color="blue")
+    ax.set_xlabel("pixel")
+    ax.set_title("Profile")
+  plt_two(plot1, plot2, post)
+
+```
+
+```{python}
+
+y, x = img.shape
+P1 = (y//4, 0)
+P2 = (y//4, x)
+prof = profile_line(img, P1, P2)
+plot_prof(img, P1, P2, prof, post=lambda: plt.savefig("profile-lines.pdf"))
+
+```
+
+```{python}
+p1 = (682, 1282)
+p2 = (645, 26)
+
+fourier_img = load_img("./fourier-lab-2.png")
+fourier_prof = profile_line(fourier_img, p1, p2)
+
+where = np.argwhere(fourier_prof>250)
+
+where = np.array(where.flat)
+
+dd = np.diff(where) != 1
+dd = np.insert(dd, 0, 0)
+where[dd]
+
+plot_prof(fourier_img, p1, p2, fourier_prof)
+
+np.
+
+
+```
+
+```{python}
+from PIL import Image
+edge_image_path="edge_large_line.bmp"
+
+img = np.array(Image.open(edge_image_path))
+
+y, x = img.shape
+P01 = (y//4, x//4)
+P02 = (y//4, 4*x//5)
+prof = profile_line(img, P1, P2)
+
+R = y//8
+profiles = np.zeros((R, len(prof)))
+
+for i in range(R):
+  P1 = (y//4 + i, x//4)
+  P2 = (y//4 + i, 4*x//5)
+  prof = profile_line(img, P1, P2)
+  profiles[i, :] = prof
+
+avr_prof = np.mean(profiles, axis=0)
+
+plot_prof(img, P1, P2,avr_prof, post=lambda: plt.savefig("edge_profile.png"));
+
+gradient = np.gradient(avr_prof, 2)
+
+n = len(gradient)
+plt.plot(list(range(-n//2, n//2)), gradient)
+plt.xlabel("pixel")
+plt.title("LSF")
+plt.show()
+
+```
+
+```{python}
+import csv
+help(csv)
+
+with open("Profiles.csv") as f:
+  c = csv.reader(f)
+  header, *rows = [row for row in c]
+  rows=[row for row in rows if row[0] != "G"]
+
+
+contraste = [float(row[3]) for row in rows]
+u = [float(row[-1]) for row in rows]
+labels = [row[0] for row in rows]
+
+MTF = np.array(contraste)
+print(labels)
+plt.plot(u, MTF)
+plt.scatter(u, MTF)
+plt.xlabel("f 1/pixel")
+plt.ylabel("MTF")
+#for x,y,label in zip(u, contraste, labels):
+#  plt.annotate(label, (x+1,y+0.02))
+plt.show()
+plt.savefig("MTF.png")
+plt.close()
+```
+
+
+
+```{python}
+import numpy as np
+with open("MTF.csv") as f:
+  c = csv.reader(f)
+  y, x = zip(*c)
+  x = np.array(list(map(float, x)))
+  y = np.array(list(map(float, y)))
+
+plt.plot(x,y)
+plt.show()
+plt.close()
+```
+
+
+```{python}
+fft_y = (np.fft.fft(y))
+mtf = np.abs(fft_y)/np.abs(fft_y[0])
+mtf = mtf[:len(fft_y)//2]
+x_mtf = x[:len(fft_y)//2]
+plt.plot(mtf)
+plt.show()
+
+plt.close()
+```
