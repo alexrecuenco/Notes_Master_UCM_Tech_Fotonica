@@ -1,0 +1,11 @@
+{
+  "search.exclude": {
+    "labs": false
+  },
+  "files.exclude": {
+    "labs": true
+  },
+  "files.watcherExclude": {
+    "labs": true
+  }
+}

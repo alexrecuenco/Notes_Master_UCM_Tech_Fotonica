@@ -1,11 +1,11 @@
 {
   "folders": [
     {
-      "name": "OD",
-      "path": "../OD_Optica_Digital"
+      "name": "Docs OD",
+      "path": "../OD_Optica_Digital/docs"
     },
     {
-      "name": "OD programming",
+      "name": "Py OD",
       "path": "../OD_Optica_Digital/programming/"
     },
     {
@@ -13,14 +13,17 @@
       "path": "../OD_Optica_Digital/programming/diffractio-dev/"
     },
     {
-      "name": "POyDSI",
-      "path": "../POyDSI_Procesado_Optico"
+      "name": "Docs POyDSI",
+      "path": "../POyDSI_Procesado_Optico/docs"
+    },
+    {
+      "name": "Labs POyDSI",
+      "path": "../POyDSI_Procesado_Optico/docs/labs"
     },
     {
       "name": "POyDSI programming",
       "path": "../POyDSI_Procesado_Optico/programming/"
     },
-
     {
       "name": "workspace settings",
       "path": "../workspace"
@@ -37,6 +40,8 @@
     "files.exclude": {
       "**/env": true,
       "**/*.aux": true,
+      "**/*.bbl": true,
+      "**/*.blg": true,
       "**/*.out": true,
       "**/*.fls": true,
       "**/*.listing": true,
@@ -49,7 +54,8 @@
       "*.pdf": true,
       "*_checkpoints/": true,
       "*_cache/": true,
-      "*_files/": true
+      "*_files/": true,
+      "**/*.log": true
     },
     "search.exclude": {
       "**/env": false
@@ -59,10 +65,13 @@
       "**/bower_components/**": true,
       "**/*.code-search": true,
       "**/*.aux": true,
+      "**/*.bbl": true,
+      "**/*.blg": true,
       "**/*.fls": true,
       "**/*.listing": true,
       "**/*.fdb_latexmk": true,
       "**/*.synctex*": true,
+      "**/*.log": true,
       "**/*.maf": true,
       "**/_minted*": true,
       "**/*.toc": true,
@@ -71,6 +80,7 @@
       "*_checkpoints/**": true,
       "**/*_cache/**": true,
       "**/*_files/**": true
-    }
+    },
+    "workbench.list.openMode": "doubleClick"
   }
 }

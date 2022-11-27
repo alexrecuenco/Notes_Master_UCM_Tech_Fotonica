@@ -1,15 +1,20 @@
 {
-  # These settings are just for the overall project settings, they don't apply for each of the workspaces
   "search.exclude": {
-    "OD_Optica_Digital": true,
-    "POyDSI_Procesado_Optico": true
+    "OD_Optica_Digital/docs": true,
+    "OD_Optica_Digital/programming": true,
+    "POyDSI_Procesado_Optico/docs": true,
+    "POyDSI_Procesado_Optico/programming": true
   },
   "files.exclude": {
-    "OD_Optica_Digital": true,
-    "POyDSI_Procesado_Optico": true
+    "OD_Optica_Digital/docs": true,
+    "OD_Optica_Digital/programming": true,
+    "POyDSI_Procesado_Optico/docs": true,
+    "POyDSI_Procesado_Optico/programming": true
   },
   "files.watcherExclude": {
-    "OD_Optica_Digital": true,
-    "POyDSI_Procesado_Optico": true
+    "OD_Optica_Digital/docs": true,
+    "OD_Optica_Digital/programming": true,
+    "POyDSI_Procesado_Optico/docs": true,
+    "POyDSI_Procesado_Optico/programming": true
   }
 }
