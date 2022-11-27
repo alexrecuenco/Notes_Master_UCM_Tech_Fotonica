@@ -7,6 +7,16 @@
 
 \usepackage{microtype}
 
+
+\usepackage{xparse}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% Cancel command \cancel{x}
+\usepackage{cancel}
+
+% \dd command and a myriad other commands$
+\usepackage{physics}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -14,16 +24,17 @@
 \usepackage{minitoc}
 \usepackage{subfiles}
 
+% Create graphs
+\usepackage{pgfplots}
 \usepackage{tcolorbox}
 	\tcbuselibrary{most}
 	\tcbuselibrary{minted}
 
-\usepackage[numbers,sectionbib]{natbib}  %% <-- note this change
-\usepackage{chapterbib}
-
-
-\usetikzlibrary{shapes.symbols} % For the cloud symbol
 \usetikzlibrary{calc} % To calculate coordinates
+
+
+\graphicspath{{../images}{../tikzfigures}}
+
 
 \newcommand\chapterreferences{%
 \bibliographystyle{plainnat}%
@@ -38,6 +49,14 @@
 %\tikzexternalize
 %\tikzsetexternalprefix{tikzfigures/}
 %\tcbset{shield externalize}
+
+\newtcolorbox{equations}[1][]{%
+	breakable, enhanced jigsaw,
+	colback=blue!5!white,
+	colframe=blue!75!black,
+	title = {#1},
+	listing only
+	}
 
 \newtcblisting{javacode}[1][]{%
 	listing engine=minted,minted style=trac,
@@ -184,7 +203,10 @@ bashcode/.style={
 \newcommand{\inlinecode}[1]{\texttt{\detokenize{#1}}}
 
 
-
+\newcommand\xieta{\xi, \eta}
+\newcommand{\Eo}[1][(\xieta)]{E_{\textrm{out}}#1}
+\newcommand{\Ei}[1][(\xieta)]{E_{\textrm{in}}#1}
+\newcommand\sinc{\textrm{sinc}}
 
 
 \begin{document}

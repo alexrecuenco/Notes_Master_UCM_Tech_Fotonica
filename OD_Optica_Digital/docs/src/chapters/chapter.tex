@@ -1,0 +1,104 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatexshell
+
+\documentclass[../main/main.tex]{subfiles}
+
+\begin{document}
+
+Slides `SLM'
+
+\chapter{SLM??}
+
+
+Why hexagonal pixels? They are more similar to circles, so when you want circles the hexagonal pixels are better.
+
+
+We obtain phase and amplitude modulation by working with apolarizing SLM
+
+\section{Types of SLM}
+
+
+\subsection{MEMS}
+
+\subsubsection{Pivotantes DMD}
+
+They are formed by small mirrors.
+
+They work in reflection and modulation
+
+They work at high frequencies, $\approx 100 kHz$
+
+They are cheap due to mass manufacturing.
+
+Projectors and similar have inside of them elemenets similar to these. That is why the industry has wrong and reduced the price
+
+Even though they only have two levels of gray, either they have or not.
+
+Another way to have more levels of gray is by controlling how much light you get, you can do that by rotating the mirrors so that it is only aiming at the right place at the right time.
+If you do that you have to work at a smaller frequency
+
+
+\subsubsection{Pistons}
+
+Slide 12
+
+Similar to mirrors, but they only displace themselves up and down.
+Through an electric  field you control the position of the thing.
+
+Pixels can be circular, but the fill factor will therefore be smaller
+
+
+How do they work? They work through phase modulation. By manipualting the distance of each mirror it will have more or less light coming through.
+
+$\varphi(x,y) = 4 \pi \Delta z / \lambda$
+
+You can also use them with amplitude modulation, instead of phase.
+
+How?
+
+You set the pixels as a configuration of diffraction grating, you have the order+1 and you can get light or no light in that order1.
+
+As a disadvantage, to simulate that grating you will need a lot of pixels, so you will reduce the resolution of the SLM
+
+Frequencies of 10--100Hz
+
+\subsubsection{Ribbon mirror}
+
+Similar to piston SLMs. (Diffraction with many pixels to achieve a 1st order, phase with up-down)
+
+Frequency of 100kHs. Fill factor es small, there is some space between the different ones
+
+\subsection{Crystal liquid based SLM}
+
+LCD and LCoS
+
+They work through reflection. Light goes through the liquid crystal
+
+Low frequency, $\approx$10Hz, since reordering the molecules takes some time
+
+Now this is not the case but at first instead of working creating a voltage at the top and botton being controlled electronically, it would instead be controlled by an optical beam that would reorder the crystal liquid ``control óptico''
+
+
+Slide 17
+\subsubsection{LCD screens.}
+Two orthogonal glass plates, and liquid crystal in-between.
+
+We control how much light goes through the liquid crystal by putting a voltage that makes the crystal molecules reorder
+
+$\approx$10Hz
+
+Very cheap (they are everywhere)
+
+\section{ SLM vs Masks}
+
+\subsection{Advantages}
+Dynamic, flexible.
+
+\subsection{Disadvantages}
+Disadvantages, price, reoslution, efficiency, size, digital.
+
+Once you have ma machine with a good mask, creating thousands in scale is cheaper.
+
+Analog system has infinite graduation, while SLM's only have two levels.
+
+\end{document}

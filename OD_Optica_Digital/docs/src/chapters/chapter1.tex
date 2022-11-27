@@ -6,9 +6,248 @@
 \begin{document}
 \chapter{Optics reminder}
 
+\section{Equations}
 
-\section{Fraunhoffer approximation}
+\begin{align}
+\Eo &= t (\xieta) \Ei \label{eq:in-out}\\
+t (\xieta) &=e^{i k (n - 1 ) h (\xieta)}  \label{eq:t:phase} \\
+t (\xieta) &= P(\xieta) e^{i k \frac{\eta^{2} + \xi^{2}}{2 f'}}  \label{eq:t:lens} \\
+\vec{E}(\vec{r}, t) &= ik e ^{iwt} \iint \Eo \cos \theta \frac {e ^{i k R}} {R}\ \dd  \xi \dd \eta  \label{eq:prop}
+\end{align}
 
+\begin{itemize}
+	\item Thin lens approximation, Eq.~\ref{eq:in-out}, defines the field right before and right after.
+	\item For that, what is the shape of $t$ for the approximation to work?
+	\begin{itemize}
+		\item On a ``phase-element'' the equation is~\ref{eq:t:phase}
+		\item On a transmission lens, we obtain a transmitance \ref{eq:t:lens}
+	\end{itemize}
+	\item The filed propagates with Eq.~\ref{eq:prop} using a simple green's function propagator, where the $\xieta$ variables span the boundary of the propagation solution on empty space, with field conditions defined with Eq.~\ref{eq:in-out}
+
+\end{itemize}
+
+
+
+Also, we will use the different light solutions, for transmission on a material with neutral charges and currents on it, the equations would look like
+
+\begin{align}
+\div {\vec{E}} &= 0\\
+\div {\vec{B}} &= 0\\
+\curl {\vec{E}} &= -\pdv{\vec{B}}{t}\\
+\curl {\vec{B}} &= \mu_{0} \epsilon(x,y,z)\pdv{\vec{E}}{t}
+\end{align}
+
+Notice how we are modefling our entire medium entirely through $\epsilon(x,y,z)$, which is already a simplification.
+
+This requires simplifying for transmission
+
+\begin{enumerate}
+	\item [FFT-BPM] Fast Fourier transform, Beam Propagation Method. Method of transmission where you do a FFT, transmit all plane waves one step, do reverse FFT,  then calculate the material effect on the fields, then do FFT again  % do ref to  https://www.youtube.com/watch?v=4VlCk94cU1A
+	\item[FFT] On empty field, the far-field approximation using a Fourier Transform is quite useful.
+	\item[WPM] Wave Propagation Method
+	\item[FDTD] Finite-difference time-domain method
+\end{enumerate}
+
+
+\section{Thin-element Approximation}
+
+When our medium is discrete and thin, we can simulate the evolution through vacuum evolution on the boundary problem before and after the thin elements. This transmission can then be modeled on the boundary surface, $\xieta$, and we are free to use some
+
+\begin{equations}
+We are free to model it as
+
+\begin{equation}
+t(\xieta) = T(\xieta) e ^{i \phi (\xieta)}
+\end{equation}
+
+Where $T$ defines the amplitude change and $\phi$ the phase change.
+
+\end{equations}
+
+
+\subsection{Amplitude modulation}
+
+Transmission through a slit can therefore be modeled with the equations
+
+\begin{align*}
+E(z=0-\delta) &= \Ei \\
+t(z=0) &= \begin{cases}
+1 &\textrm{in A}\\
+0 &\textrm{in B}
+\end{cases}\\
+E(z=0) &= \begin{cases}
+\Ei &\textrm{in A}\\
+0 &\textrm{in B}
+\end{cases}
+\end{align*}
+
+Note that there would be a reflected field as well
+\begin{align*}
+t(z=0) &= \begin{cases}
+0 &\textrm{in A}\\
+r &\textrm{in B}
+\end{cases}\\
+E(z=0) &= \begin{cases}
+0 &\textrm{in A}\\
+r \Ei &\textrm{in B}
+\end{cases}
+\end{align*}
+
+
+
+
+This is call \emph{amplitude modulation}, and we will be using most of our digital optics modeling.
+
+
+\subsection{Phase modulation}
+
+Transmission through a transparent slit will prove to create a phase difference. We assume a constant medium permeability that is modeled with the refractive index $n$. (A complex value of $n$ would imply the medium is absorving). If we assume a width $h$ of our material \footnote{Note how we don't actually do a propagation through the distance $h$, we assume it is a negligible ammount and it becomes simply a parameter, this is a good enough approximation for what we need}
+
+\begin{align*}
+E(z=0-\delta) &= \Ei \\
+t(z=0) &= \begin{cases}
+e^{ikh} &\textrm{in A}\\
+e^{iknh} &\textrm{in B}
+\end{cases}\\
+E(z=0) &= \begin{cases}
+\Ei e^{ikh} &\textrm{in A}\\
+\Ei e^{ikmh} &\textrm{in B}
+\end{cases}
+\end{align*}
+
+Note that the reflected field would be harder to approximate. In this approximation we are assuming perfect transmittance and no reflectance of the field.
+
+
+
+This is call \emph{phase modulation}.
+
+\subsubsection{Optical paths modeling}
+
+Given a non-homogeneous transparent surface of a material, we can therefore model the entire surface of the material through our simple thin model, using the $h$ and $n$ parameters locally for every slide.
+
+This is what we will do when modeling our phase. We will define a $\phi (\xieta) = k L(\xieta)$. Where $L$ is the \emph{optical path} (i.e., the equivalent length the field would have traveled in vacuum to get the same total phase shift).
+
+\begin{align*}
+L(\xieta) = \int_{0}^{l}n(\xieta, z) \dd z.
+\end{align*}
+
+Generally, if we understand the maximum width of our material as $l$, and the field outside of our material as $n=1$, we can divide that equation into
+
+
+\begin{align}
+L(\xieta) &= \int_{0}^{h(\xieta)}n(\xieta, z) \dd z +  \int_{h(\xieta)}^{l}1 \dd z \\
+ &= n h(\xieta) +  l -h(\xieta) \\
+ &= l + (n - 1) h(\xieta)\\
+ t(\xieta) &= e^{i\phi(\xieta)} = e^{ikl}e^{ik(n - 1) h(\xieta)}
+\end{align}
+
+Notice how the global phase change $e^{ikl}$ can be ignored in general
+
+
+\subsubsection{Modeling a lens}
+
+We will use the lens equation
+
+\begin{equation}
+\frac{n-1}{f} = \frac{1}{f'}
+\end{equation}
+
+If we have a semi-circular lens, of radius $R$,
+\begin{align}
+h &= d_{0} - R + \sqrt{R^{2}- \xi^{2} - \eta^{2}} \approx d_{0} -\frac{\xi^{2} + \eta^{2}}{2R}  \\
+t(\xieta) &= P(\xieta) e^{-ik \frac{n-1}{2R} \xi^{2} + \eta^{2}}\\
+t(\xieta) &= P(\xieta) e^{-ik \frac{ \xi^{2} + \eta^{2}}{2 f '}}
+\end{align}
+
+Where $P$ represents the geometry of the lens. Generally we will model it as a compact function of constant value $1$ on some border region
+
+\section{Light sources}
+
+\begin{enumerate}
+	\item Gauss beams,
+	\item Spherical waves,
+	\item Plane wave,
+	\item Vortices (Amplitud is a compact ring, phase changes linearly in circles around it)
+	\item Zernike polynomials
+
+\end{enumerate}
+
+\subsection{Propagating light sources}
+
+\subsubsection{Plane waves}
+Plane waves have a exact solution. With a $\vec{k}$, $\vec{E_{0}}$ and $\vec{B_{0}}$ all being orthonormal, and
+\begin{equation}
+\vec{k}^{2} = \frac{w^{2}}{c^{2}} = \qty(\frac{2\pi}{\lambda})^{2}
+\end{equation}
+
+
+\subsubsection{Huygens--Fresnel principle}
+
+We can divide into plane waves, propagate through vacuum, and add these sources back again. This can be formalize more with Green propagators, characterized on plane waves through a Fourier transform, after making it static.
+
+Basically, our boundary condition is understood as a series of spherical waves that we add up linearly at our focal.
+
+
+\begin{equation}
+\vec{E}(\vec{r}, t) = ik e ^{iwt} \iint \Ei t(\xieta) \cos \theta \frac {e ^{i k R}} {R}\ \dd  \xi \dd \eta
+\end{equation}
+Where $\cos\theta = \frac z R$ and $R^{2} = (x-\xi)^{2}+ (y-\eta)^{2} + z^{2}$
+
+If the source was a point source, ($t = \delta(\eta)\delta(\xi)$), we get a spherical equation
+\begin{equation*}
+\vec{E} =  i k  \cos \theta \frac {e ^{i (k r - wt)}} {r}
+\end{equation*}
+
+\section{Approximations}
+For $\lambda = 850 \textrm{nm}$ and aperture of with $50 \mu\textrm{m}$
+\begin{itemize}
+	\item[$\approx$0um] $z \leq \lambda$ Near enough, we would need a full solution
+	\item[$\approx$1$\mu$m] $z > \lambda$ Rayleigh-Sommerfeld approximation at $z > \lambda$ (Spherical waves)
+	\item[$\approx$1mm] Fresnel, (near field) with a crazy equation (Parabolic waves)
+	\item[$\approx$5mm] $z>> \frac{\pi}{\lambda} (\eta^{2} + \xi^{2})$ Fraunhoffer appoximation (Plane waves)
+
+\end{itemize}
+
+\subsection{Small aperture}
+
+
+We start with $k >> \flatfrac 1 R$.
+
+\begin{equation}
+R = z \sqrt{1 + \frac{(x-\xi)^{2}}{z^{2}}+\frac{(y-\eta)^{2}}{z^{2}}}
+\end{equation}
+Expanding under the assumption that the maximum aperture $w$ is much smaller than $z^{2}$,
+we obtain that
+
+\begin{equation}
+R \approx z \qty(1 + \frac 1 2 \frac{(x-\xi)^{2}}{z^{2}}+\frac{(y-\eta)^{2}}{z^{2}} + O((\flatfrac w R)^{4}) )
+\end{equation}
+
+If we consider that $\cos \theta = z/R$
+
+And some magic here TODO
+
+\begin{equation}
+E = \frac{1}{i \lambda z} e^{ikz} \iint \Ei e^{e \frac k {2z} \qty[(x-\xi)^{2}(y-\eta)^{2}]} \dd \eta \dd \xi
+\end{equation}
+
+
+\subsubsection{Lens, on focal plane}
+
+Plugging the equations, you get cancelation of the focal planes at $z = f'$. Obtaining the equivalent of a fourier transform of the variables $\xieta$ with $(x,y)$, with a contraction/expansion marked by $f'$. (the larger f', the mode dilated the image will be on the sources).
+
+We obtain therefore a Fourier transform of the sources (Far-field approximation) within the Fresnel approximation
+
+TODO: Equations
+
+\subsection{Fraunhofer approximation, Far field}
+
+For $z$ large enough, the quadratic terms end up being too small and can be extracted, leaving what amounts to a fourier transform. But instead of having $f'$ as the contracting factor, you have $z$
+
+
+
+
+% fraunhoffer
 It is a small angle approximation\cite{wiki:Fraunhofer_diffraction}.
 
 \chapterreferences

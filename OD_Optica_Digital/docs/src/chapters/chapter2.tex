@@ -5,14 +5,217 @@
 
 \begin{document}
 \chapter{Diffraction fundamentals}
-\section{Diffraction grading}
+
+\section{Equations}
+
+Diffractive physics depends strongly on wavelength
+
+\begin{align*}
+p (\sin \theta_{n}' - \sin \theta) = n \lambda
+t(\xi) = \sum_{n} a_{n} e ^{2 \pi i \frac {n \xi} p }\\
+a_{n} = \frac 1 p \int_{-p/2}^{p/2} t (\xi) e ^{-2 \pi i \frac {n \xi} p } \dd \xi
+\end{align*}
+
+Given the effective optical path, eliminating global phase effects $L = (n - 1) h(\xieta)$, we can reduce the width of an element using modular arithmetics,  given that $\phi = k L = k(n - 1) h(\xieta)$
+
+We get
+
+\begin{equation}
+h(\xieta) = \frac{\lambda}{2\pi (n-1)} \qty(\phi \mod 2 \pi)
+\end{equation}
+
+Since any phase difference of two pi is equivalent, on our thin layers approximation.
+
+
+
+\section{Diffraction grating}
+
+Diffraction gratings split light into different values of $n$, according to the previously seen equation $p (\sin \theta_{n}' - \sin \theta) = n \lambda$. We call $n=0$ the ``zero-th order''. Note how this zero-th order reflects the normal path of light through a smooth material, all other orders represent diffraction and splitting. Our goal would be to split them for a lot of the different settings.
+\begin{itemize}
+	\item Splits lights, heavily influenced  by wavelength, which cases any split to be non-zero.
+	\item Thin element approximation modeling, $t$
+	\begin{enumerate}
+		\item[Amplitude] We will represent $0 \leq t \leq 1$
+		\item[Phase] We will represent in terms of the optical path in that case, and we assume that the amplitude doesn't change, we have two cases
+		\begin{enumerate}
+			\item Transmitance, in which the optical path will be $t = e^{i k (n-1) h }$
+			\item Reflectance, in which the material will just reverse the light and provide an extra path $t = e^{-2i k  h }$. Note how it does not depend on the material refractive index
+
+		\end{enumerate}
+	\end{enumerate}
+\end{itemize}
+
+\subsection{Ronchi grating}
+
+A ronchi grating is a  period square wave.
+
+\subsubsection{Transmission}
+In terms of a transmission one ($t$ is 1 or 0, alternating over a period $p$)
+
+\begin{equation}
+a_{n} = \begin{cases}
+\frac 1 2 & \textrm{when $n = 0$}\\
+0 & \textrm{when $n$ is even}\\
+\frac {(-1)^{m}}{\pi n} & \textrm{when $n = 2m + 1$, is odd}
+\end{cases}
+\end{equation}
+
+
+\begin{equation}
+a_{n} = \frac 1 2 \sinc \frac {n \pi } 2 =
+\end{equation}
+
+\subsubsection{Phase}
+
+Note how we can also have a square wave periodic grating of phase.
+
+TODO: Slide 10 graph.
+
+We will have a width difference between the top and bottom of $h$. We can also assume that the period is only partially covered by the top, not having half/half fill factor. We can represent that with a $\alpha$. Where $\alpha = 0.5$ would mean all the net is at the bottom
+
+In that case, we would get
+
+\begin{equation}
+a_{n}=\begin{cases}
+\alpha (e^{-i \delta} - 1) + 1\\
+\alpha (e^{-i \delta} - 1) \sinc (n \pi \alpha)\\
+\end{cases}
+\end{equation}•
+
+Where  $\delta$ is for transmission and reflecting gratings respectively $\delta = \frac{2 \pi}{\lambda} (n - 1) h $ or  $\delta = \frac{4 \pi}{\lambda} (N - 1) h $ . Where $n$ is the refractive index
+
+Note that for the zero-th order, if we have $\alpha  = 0.5 $ (half and half), we can cancel the zero-th order by obtaining a $\delta = \pi$ phase difference.
+
+\subsection{Blazed}
+Rather than a binary, we can have edges drawn in triangles, drawing a sawtooth shape. Where we have the angle of the slant with the horizontal represented with $\alpha$ and the height of the slant depends on the period of the net $p$, $h = \tan(\alpha \xi)$ (Not sure about that equation)
+
+\begin{equation}
+a_{n} = \sinc \qty(\pi \qty[p(n-1) \frac {\tan \alpha} { \lambda} - n])
+\end{equation}
+
+Note that for
+
+\begin{equation}
+p(n-1) \frac {\tan \alpha} { \lambda} = 1,
+\end{equation}
+
+We obtain
+\begin{equation}
+a_{n} = \sinc(\pi (1-n)) = \frac{\sin(n \pi)}{\pi (1-n)}
+\end{equation}
+And we therefore get that any integer order that is not 1 is zero. And for $n=1$ it approaches a transmitance of 1. $a_{n} = \delta_{1,\,n}$
+
+% Wikipedia
+
+% Diffraction angles at the grating are not influenced by the step structure. They are determined by the line spacing, $d (\sin \alpha + \sin \beta) = m \lambda$, where $\alpha$ and $\beta$ are measured respective to the normal.
+
+\section{Beam splitting}
+
+We have a complex fourier series equation on far field propagation that can be solved exactly relative these orders. It returns an equation where each beam is split into multiple beams relative to the $a_{n}$. When the condition
+
+\begin{equation}
+p (\sin \theta_{n}' - \sin \theta) = n \lambda
+\end{equation}
+is met, then $only$ one parameter survives. Therefore, those orders contain only information of those specific fourier coefficients. Note that $\theta_{n}' \in [-\pi/2, \pi/2]$
+
+\subsection{Beam efficiency}
+
+In each of the orders, the beam strength is controlled only by the coefficient of that order, $I_{n} \propto \abs{a_{n}}^{2}$.
+
+The total energy is $I(\theta) \approx \sum_{n} I_{n}$.
+
+\subsubsection{Gratings as a prism}
+
+A blazed net acts as a prism. (It IS a prism under the thin lens approximation, due to optical path modulated phase $2\pi$).
+
+ We can try to approximate a blazed net with a binary one as an approximation of this one. Even thought we can add more levels trying to create a higher efficiency, the maximum efficiency of $\eta = 1$ can't be achieved.
+
+ We consider the efficiency of a grating as the proportion of intensity that is given to the first order, since our observations will occur usually there
+
+ \begin{equation}
+ \eta = \frac{P_{1}} {\sum_{n} P_{n}}
+ \end{equation}
+
+ We can therefore see binary gratings as less efficient prisms.
+
+ \subsubsection*{Efficiency relative to $\lambda$}
+
+ Blazed gratings behave best for exactly one $\lambda$ and the efficiency of transmission reduces for others (The optical path modulation of height trick above depends strongly on $\lambda$).
+
+ Using this, we can say that a blazed grating is a maximally efficient prism when the refractive and diffractive angles coincide.
+
+ \begin{equation}
+ p (n - 1) \tan \alpha = \lambda \iff p (\sin \theta_{n}' - \sin \theta) = n \lambda
+ \end{equation}
+
+
+ \section{Lenses}
+
+ Lenses can be represented on diffraction gratings using both amplitude and phase
+
+\subsection{Fresnel lens}
+
+Flat diffractive elements similar to an actual lens for a certain target wavelength
+
+\subsubsection{Phase fresnel lens}
+
+We separate the lens into sections of $2\pi$ phase for our target wavelength and cut our lens accordingly to that.
+
+
+They are hard to fabricate, only valid for monochromatic light,
+
+\subsubsection{Amplitud fresnel lens, binary lens}
+
+We just have obstructions and let-through
+
+We use Huygens principle, and remove the parts that would have reached our focal with a negative phase, $r_{n} \approx \sqrt{n \lambda f}$
+
+The number of zones is the closest integer to $F = \flatfrac{D^{2}}{8\lambda g}$
+
+Note that due to the diffraction, there are secondary focal points that are closer to the center, that represent the inefficiency of the net.
+
+\subsubsection{Binary fresnel lens}
+
+Take the principles of the amplitude fresnel lens, and simply apply a $\pi$ phase to those we were previously making dark spots of zero transmitance. (Under the ``principle'' that our amplitud binary image plus the obstructed image would be the normal light coming through. Thereby subtracting that obstructed image, we will obtain a more efficient transmission of light)
+
+
+\section{Cromatic disperssion}
+
+The abbe number is a measure of dispersion for three spectral lines, $\lambda_{3}=656.3 nm$, $\lambda_{2}=587.56 nm$, and $\lambda_{1}=486.1 nm.$
+
+On normal refractive lenses,
+\begin{equation}
+\nu_{\textrm{refractive}} = \frac{n_{lambda_{2}} - 1} {n_{lambda_{1}}-n_{lambda_{3}}}
+\end{equation}
+
+On diffractive lenses, we need to take into account that the focal of the lens is $f = \flatfrac{\lambda_{0} f_{0}}{\lambda}$. It therefore has much higher aberration
+
+\begin{equation}
+\nu_{\textrm{diffractive}} = \frac{{lambda_{2}} } {{lambda_{1}}-{lambda_{3}}} = -3.452
+\end{equation}
+
+For refractive lenses this number changes, while for diffractive the aberration is fixed.
+
+This difference in behavior can be used to complement each other and reduce aberrations.
+
+You can put diffractive lenses and couple them with glass lenses to remove aberrations, and it is commonly used in cameras.
+
+Similarly it can be used to create multifocal lenses. (Changing the position of transitions as you move)
+\section{Summary}
+
+There is a duality
 
 \begin{itemize}
-	\item Splits lights
-	\item Some are continuous, other are discrete
-	\item Thin element approximation
-	\item Some just reflect light (In reflextion, index of refraction, $n$, is equivalent to $-1$)
-	\item $t(\eta)$
+	\item Prism --- Diffraction grating
+	\item Lens --- Fresnel lens
+
+\end{itemize}
+
+
+
+TODO: FIX THIS MESS DOWN HERE
+\section{WHUT}
+\begin{itemize}
 	\item $t(\eta) = \sum_{n=-\infty}^{\infty} a_{n}e^{\frac{2\pi i n \eta}{p}}$
 	$a_{n}$ are the fourier coefficients. $a_{n} = \frac{1}{p}\int_{-p/2}^{p/2} t(\eta)e^{\frac{2\pi i n \eta}{p}}$
 	\item \emph{Red de amplitud (transmisión)} $a_{n} =  \frac{1}{p}\int_{-p/4}^{p/4} t(\eta)e^{\frac{2\pi i n \eta}{p}}$
