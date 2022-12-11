@@ -81,6 +81,6 @@
       "**/*_cache/**": true,
       "**/*_files/**": true
     },
-    "workbench.list.openMode": "doubleClick"
+    "workbench.list.openMode": "singleClick",
   }
 }
