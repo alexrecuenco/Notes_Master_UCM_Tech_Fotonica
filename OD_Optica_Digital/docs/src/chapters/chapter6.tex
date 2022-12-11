@@ -5,19 +5,42 @@
 
 \begin{document}
 
-Slides `Cristales liquidos'
 
 \chapter{Liquid crystals}
+Slides `Cristales liquidos'
 
-\section{Light poralization}
+\section{Light polarization}
 
-slide 5
+Light is actually a vector field.
 
-In annysotropic media, the field direction is very important.
+\begin{align*}
+\vec{E} &= \vec{E}_{0} e ^{i \vec{k}\cdot \vec{r} - wt }\\
+\vec{B} &= \vec{B}_{0} e ^{i \vec{k}\cdot \vec{r} - wt }
+\end{align*}
+
+\begin{align*}
+\vec{k}\cdot \vec{E_{0}} &= 0 \\
+\vec{k}\cdot \vec{B_{0}} &= 0 \\
+\vec{B_{0}} &= \frac 1 \omega \vec{k} \cross \vec{E_{0}} \\
+\vec{E_{0}} &= \frac 1 \omega \vec{k} \cross \vec{B_{0}}
+\end{align*}
+
+We can assume without loss of generality $\vec{k} = (0,0,1)$, so that the only relevant components is $x$, and $y$. $E_{x}, E_{y}$. In that way we can check that, assuming that
+
+\begin{align*}
+E_{x} &= \mqty( \abs{E_{0x}} e ^{i \delta_{x}} \\ \abs{E_{0y}} e ^{i \delta_{y}} ) \\
+ &  =e^{i \delta_{x}} \mqty( \abs{E_{0x}}  \\ \abs{E_{0y}} e ^{i ( \delta_{x} - \delta_{y})} ) \\
+\end{align*}
+
+
+
+\subsection{Anisotropic media}
+
+Media in which the reaction to the .
 
 For example, the amount of light reflected depends a lot on polarization, since the fresnel equation depends on the direction.
 
-To define the poralization we have a 3-vector, however, we can use a O(3) rotation and place the $\vec{k}$ vector in the z axis, which creates a $(E_x, E_y)$ vector.
+To define the polarization we have a 3-vector, however, we can use a O(3) rotation and place the $\vec{k}$ vector in the z axis, which creates a $(E_x, E_y)$ vector.
 
 Each of these look like a $E_i(z,t) = E_{0,\,i}\cos{k z - \omega t + \delta_i}$
 
@@ -88,7 +111,7 @@ An anysotropy matrix is one that behaves differently for different components
 
 For $x$ we use the $n_o$ for $y$ we use $n_e$. The material changes the phase differently for each component.
 
-$\beta = \phu_y - \phi_x = \frac{2 \pi d (n_e - n_0)}{\lambda_0}$ is the dephase applied by the material.
+$\beta = \phi_y - \phi_x = \frac{2 \pi d (n_e - n_0)}{\lambda_0}$ is the dephase applied by the material.
 
 
 \section{Liquid crystal}
@@ -140,7 +163,7 @@ Molecules align to the walls
 
 `birrefringencia', see equation at the top.
 
-We will devide these in $N$ layers that each have this `birrefringencia' (we will later make this $N$ tend to infinity)
+We will divide these in $N$ layers that each have this `birrefringencia' (we will later make this $N$ tend to infinity)
 
 Each layer will have an angle that is linear from 0 to the final twist angle of the `placas'. $\tau_i =  i \alpha / N$
 
