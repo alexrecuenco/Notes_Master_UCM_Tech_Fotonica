@@ -9,7 +9,6 @@ from diffractio.scalar_masks_XY import Scalar_mask_XY
 from diffractio.scalar_sources_XY import Scalar_source_XY
 
 
-
 def GS_far_algorithm_deprecated(source, target, num_steps, has_draw=False):
     """Gerbech-Saxton algorithm for the far field.
 
@@ -40,8 +39,7 @@ def GS_far_algorithm_deprecated(source, target, num_steps, has_draw=False):
     far_field = Scalar_mask_XY(x, y, wavelength)
 
     target_abs = np.fft.fftshift(np.abs(target.u))
-    far_field.u = target_abs * np.exp(
-        1j * 2 * np.pi * np.random.rand(num_y, num_x))
+    far_field.u = target_abs * np.exp(1j * 2 * np.pi * np.random.rand(num_y, num_x))
     I_result = target_abs**2
     I_result_mean = I_result.mean()
 
@@ -50,11 +48,11 @@ def GS_far_algorithm_deprecated(source, target, num_steps, has_draw=False):
         mask = np.angle(DOE.u)
         DOE.u = np.exp(1j * mask)
         field_z = DOE.fft(shift=False, matrix=True)
-        I_z = np.abs(field_z)**2
+        I_z = np.abs(field_z) ** 2
         far_field.u = target_abs * np.exp(1j * np.angle(field_z))
 
         error = nmse(I_result, I_z)
-        print("{}/{} - error {:2.6f} %".format(i, num_steps, error), end='\r')
+        print("{}/{} - error {:2.6f} %".format(i, num_steps, error), end="\r")
         errors[i] = error
 
     mask = np.fft.fftshift(mask)
@@ -65,13 +63,14 @@ def GS_far_algorithm_deprecated(source, target, num_steps, has_draw=False):
 
     if has_draw:
         plt.figure()
-        plt.plot(errors, 'k', lw=2)
-        plt.xlabel('# step')
-        plt.ylabel('error')
-        plt.title('optimization')
+        plt.plot(errors, "k", lw=2)
+        plt.xlabel("# step")
+        plt.ylabel("error")
+        plt.title("optimization")
         plt.ylim(ymin=0)
 
     return DOE, mask_final, errors
+
 
 def insert_pupil(self, pos=None, radius=None):
     """Place a circle around the mask. It is useful for circular targets.
@@ -136,23 +135,22 @@ def GS_far_algorithm(source, target, num_steps, has_draw=False):
     far_field = Scalar_mask_XY(x, y, wavelength)
 
     target_abs = np.fft.fftshift(np.abs(target.u))
-    far_field.u = target_abs * np.exp(
-        1j * 2 * np.pi * np.random.rand(num_y, num_x))
+    far_field.u = target_abs * np.exp(1j * 2 * np.pi * np.random.rand(num_y, num_x))
     I_result = target_abs**2
     I_result_mean = I_result.mean()
 
     for i in range(num_steps):
-        print("{}/{}".format(i, num_steps), end='\r')
+        print("{}/{}".format(i, num_steps), end="\r")
         DOE = far_field.ifft(z=z, shift=False, new_field=True)
         mask = np.angle(DOE.u)
         DOE.u = np.exp(1j * mask)
         field_z = DOE.fft(z=z, shift=False, matrix=True)
-        I_z = np.abs(field_z)**2
+        I_z = np.abs(field_z) ** 2
         I_z = I_z * I_result_mean / I_z.mean()
         far_field.u = target_abs * np.exp(1j * np.angle(field_z))
 
         error = nmse(I_result, I_z)
-        print("{}/{} - error {:2.6f}".format(i, num_steps, error), end='\r')
+        print("{}/{} - error {:2.6f}".format(i, num_steps, error), end="\r")
         errors[i] = error
 
     if has_draw:
@@ -163,10 +161,10 @@ def GS_far_algorithm(source, target, num_steps, has_draw=False):
         plt.imshow(I_z)
         plt.colorbar()
     if has_draw:
-        plt.plot(errors, 'k', lw=2)
-        plt.xlabel('# step')
-        plt.ylabel('error')
-        plt.title('optimization')
+        plt.plot(errors, "k", lw=2)
+        plt.xlabel("# step")
+        plt.ylabel("error")
+        plt.title("optimization")
         plt.ylim(ymin=0)
 
     mask = np.fft.fftshift(mask)
@@ -217,18 +215,18 @@ def GS_Fresnel_algorithm(source, target, z, num_steps, has_draw=False):
     # DOE.u=np.abs(target.u)*np.exp(1j*2*np.pi*np.random.rand(num_x,num_y))
 
     u_target = np.abs(target.u)
-    I_result = np.abs(target.u)**2
+    I_result = np.abs(target.u) ** 2
     I_result_mean = I_result.mean()
 
     field_z.u = u_target * np.exp(2j * np.pi * np.random.rand(num_y, num_x))
 
     for i in range(num_steps):
-        print("{}/{}".format(i, num_steps), end='\r')
+        print("{}/{}".format(i, num_steps), end="\r")
         DOE = field_z.RS(z=-z, new_field=True)
         mask = np.angle(DOE.u)
         DOE.u = np.exp(1j * mask)
         field_z = (source * DOE).RS(z=z, new_field=True)
-        I_z = np.abs(field_z.u)**2
+        I_z = np.abs(field_z.u) ** 2
         I_z = I_z * I_result_mean / I_z.mean()
 
         field_z.u = u_target * np.exp(1j * np.angle(field_z.u))
@@ -237,16 +235,14 @@ def GS_Fresnel_algorithm(source, target, z, num_steps, has_draw=False):
         #     DOE.u=np.exp(1j*np.pi*mask)*circle.u
 
         error = nmse(I_result, I_z)
-        print("{}/{} -  error {:2.6f}".format(
-            i, num_steps,  error),
-            end='\r')
+        print("{}/{} -  error {:2.6f}".format(i, num_steps, error), end="\r")
         errors[i] = error
     mask = (mask + np.pi) / (2 * np.pi)
     print(mask.max(), mask.min())
 
     if has_draw:
-        plt.plot(errors, 'k', lw=2)
-        plt.title('errors')
+        plt.plot(errors, "k", lw=2)
+        plt.title("errors")
 
     mask_final = Scalar_mask_XY(x, y, wavelength)
     mask_final.u = mask
@@ -254,14 +250,16 @@ def GS_Fresnel_algorithm(source, target, z, num_steps, has_draw=False):
     return mask_final, errors
 
 
-def verify_mask(mask,
-                z,
-                has_mask,
-                is_phase,
-                is_binary,
-                has_draw=False,
-                has_axis=False,
-                is_logarithm=True):
+def verify_mask(
+    mask,
+    z,
+    has_mask,
+    is_phase,
+    is_binary,
+    has_draw=False,
+    has_axis=False,
+    is_logarithm=True,
+):
 
     """Computes the result of the algorithm in the far or near field. The mask is an amplitude mask.
     The mask can be one defined or one obtained from a
@@ -281,7 +279,7 @@ def verify_mask(mask,
         result (np.array): propagation of the mask
     """
 
-    DOE_new=deepcopy(mask)
+    DOE_new = deepcopy(mask)
 
     radius_x = (DOE_new.x.max() - DOE_new.x.min()) / 2
     radius_y = (DOE_new.y.max() - DOE_new.y.min()) / 2
@@ -299,7 +297,6 @@ def verify_mask(mask,
         circle.circle(r0=(x_mean, y_mean), radius=(radius_x, radius_y))
         DOE_new = DOE_new * circle
 
-
     if z is None or z == 0:
         result = DOE_new.fft(new_field=True, shift=True, remove0=True)
 
@@ -307,24 +304,21 @@ def verify_mask(mask,
         result = DOE_new.RS(z=z, new_field=True)
 
     if is_phase:
-        code = 'p'
+        code = "p"
     else:
-        code = 'a'
+        code = "a"
 
     if has_draw:
         result.draw(logarithm=is_logarithm)
-        plt.axis('off')
+        plt.axis("off")
         if has_axis is True:
             plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
         else:
-            intensity = np.abs(result.u)**2
+            intensity = np.abs(result.u) ** 2
             if is_logarithm:
                 intensity = np.log(intensity + is_logarithm)
 
     return DOE_new, result
-
-
-
 
 
 def nmse(I_result, I_target):
@@ -346,10 +340,10 @@ def nmse(I_result, I_target):
     """
 
     error = np.sqrt(
-        ((I_result / I_result.mean() - I_target / I_target.mean())**2).mean())
+        ((I_result / I_result.mean() - I_target / I_target.mean()) ** 2).mean()
+    )
 
     return error
-
 
 
 def binarize(mask, level=0.5):
@@ -357,6 +351,6 @@ def binarize(mask, level=0.5):
     Binarizes a (0,1), mask:
     """
     mask_new = np.zeros_like(mask, dtype=complex)
-    mask_new[mask > level] = 1.
-    mask_new[mask <= level] = 0.
+    mask_new[mask > level] = 1.0
+    mask_new[mask <= level] = 0.0
     return mask_new

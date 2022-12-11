@@ -1,11 +1,22 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+# Frozen: pre-commit autoupdate --freeze
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
+    rev: f71fa2c1f9cf5cb705f73dffe4b21f7c61470ba9 # frozen: v4.4.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
       - id: mixed-line-ending
       - id: check-added-large-files
+  - repo: https://github.com/psf/black
+    rev: 2ddea293a88919650266472186620a98a4a8bb37 # frozen: 22.12.0
+    hooks:
+      - id: black-jupyter
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: 7ae9389351f4090e3993de28015a05a18ca6b8a7 # frozen: v1.12.1
+    hooks:
+      - id: blacken-docs
+        exclude: (\.py|\.ipynb)$
+        include: \.Rmd|\.rmd
