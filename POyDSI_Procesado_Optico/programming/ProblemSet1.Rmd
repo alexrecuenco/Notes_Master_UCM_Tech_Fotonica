@@ -1,0 +1,217 @@
+---
+title: "Ejercicio 1 — Marcación"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 4
+    fig_caption: true
+    toc: no
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+---
+
+
+```{r setup, echo=FALSE,  }
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("env/bin/python")
+
+```
+
+
+```{python, include=FALSE}
+from scipy.io.wavfile import read
+fs, sound = read("./sound-files/marcacion.wav");
+# print(sound.shape);
+nsamples = sound.shape[0];
+length = nsamples / fs;
+# print(f"{length=:.2f}s");
+```
+
+# Oye la señal y represéntala en el dominio temporal.
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+def plot_sound(sound, fs):
+  nsamples = sound.shape[0];
+  length = nsamples / fs;
+  time = np.linspace(0., length, nsamples);
+  plt.plot(time, sound, label="Sound");
+  plt.legend();
+  plt.xlabel("Time [s]");
+  plt.ylabel("Amplitude");
+  return time, sound
+plot_sound(sound, fs);
+plt.show();
+plt.close();
+```
+
+
+
+# Representa la señal completa en el dominio de la frecuencia
+
+```{python}
+import matplotlib.pyplot as plt
+from numpy import fft
+
+sound_fft = fft.fft(sound);
+
+#  less refined version, frequencies = np.linspace(0., fs, nsamples)
+f = fft.fftfreq(nsamples, 1/fs);
+
+plt.plot(f[f>0], np.abs(sound_fft)[f>0], label="Sound FFT")
+plt.legend()
+plt.xlabel("Frequency (s)")
+plt.ylabel("abs(FT{sound})")
+plt.show()
+plt.close()
+
+```
+
+## Determina, si es posible, las teclas pulsadas en cada instante.
+
+Al no tener resolución temporala en una FFT, podemos ver qué frequencias han sonado, pero no podríamos identificar cuando con una FT.
+
+# División manual en pulsos
+
+Encontramos los picos para determinar donde cortar, (cortaremos en el punto medio entre ellos)
+
+```{python}
+from scipy import signal
+peaks, properties = signal.find_peaks(sound, distance=nsamples/10)
+
+time, sound = plot_sound(sound, fs)
+plt.scatter(x=time[peaks], y=sound[peaks], label="peaks")
+
+plt.legend();
+plt.show();
+plt.close();
+
+
+cuts = np.convolve(peaks, [0.5, 0.5], 'valid')
+
+```
+
+```{python}
+from itertools import chain, count
+
+result = []
+for idx, before, after in zip(count(), chain([0.], cuts), chain(cuts, [len(sound)])):
+  before = round(before)
+  after = round(after)
+  pulse = sound[before:after]
+  pulse_fft = fft.fft(pulse)
+  f = fft.fftfreq(len(pulse), 1/fs)
+  pulse_fft=pulse_fft[f>0]
+  f=f[f>0]
+  abs_pulse_fft = np.abs(pulse_fft)
+  plt.plot(f, abs_pulse_fft, label=f"Pulse {idx} fft")
+  min_freq_distance=200 # Hz
+  freq_min_distance = fs/len(pulse)
+  peaks, properties = signal.find_peaks(abs_pulse_fft, height=0.25e7, distance=round(min_freq_distance/freq_min_distance))
+  plt.scatter(x=f[peaks], y=abs_pulse_fft[peaks], label="peaks")
+  assert len(peaks) == 2, "We are detecting noise"
+  result.append(f[peaks])
+
+
+
+plt.show()
+
+
+plt.close()
+
+
+
+```
+
+```{python}
+map = [
+  ["1","2","3"],
+  ["4","5","6"],
+  ["7","8","9"],
+  ["*","0","#"],
+]
+
+rows = np.array([697, 770, 852, 941])
+cols = np.array([1209, 1336, 1477])
+
+def decoder(f1, f2):
+  f1, f2 = (f1, f2) if f1 < f2 else (f2, f1)
+  row=np.argmin(np.abs(rows-f1))
+  col=np.argmin(np.abs(cols-f2))
+  return map[row][col]
+
+```
+
+```{python}
+
+output = ', '.join(decoder(f1, f2) for f1, f2 in result)
+
+
+```
+
+Por lo tanto, dividendo la señal en segmentos obtenemos automáticamente `r reticulate::py$output`. Donde solo hemos supuesto una distancia mínima entre picos de 200Hz, y una distancia espacial entre picos mínima de 0.6 segundos
+
+
+```{python, include=FALSE}
+# DELETE
+# plt.plot(time, sound, label="Sound")
+# plt.plot(time, smoothed_sound, label="Smoothed sound")
+# below = smoothed_sound < np.mean(smoothed_sound)
+# plt.plot(time[below], smoothed_sound[below], label="Potential cuts")
+# plt.legend()
+# plt.xlabel("Time [s]")
+# plt.ylabel("Amplitude")
+# plt.show()
+#
+# plt.close()
+
+```
+
+
+# Uso del espectrograma
+
+
+```{python}
+from scipy import signal
+f, t, Sxx = signal.spectrogram(sound, fs);
+
+plt.pcolormesh(t, f, Sxx, shading='gouraud');
+plt.ylabel('Frequency [Hz]');
+plt.xlabel('Time [sec]');
+plt.hlines(rows, t[0], t[-1], label="row", linestyles='dotted', linewidth=0.2, colors='y')
+plt.hlines(cols, t[0], t[-1], label="col", linestyles='dotted', linewidth=0.2, colors='r')
+plt.legend()
+plt.show();
+
+plt.close();
+```
+
+Por falta de tiempo, simplemente observamos visualmente que teclas se han tocado con el diagrama de arriba.
+
+Y vemos que obtenemos "1, 5, 0, 8, 6, 4, 7, 7", que coincide milagrosamente con el algoritmo automático.
+
+\pagebreak
+## NOTE
+
+Por algún motivo, el generador de grafico no esta generando en PDF la grráfica correctamente, añado aquí un screenshot de cómo se ve la grafica antes de compilarlo a PDF
+
+```{r, out.width="90%"}
+knitr::include_graphics('./images/Screenshot-waves.png')
+```
