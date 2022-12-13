@@ -29,7 +29,7 @@ library(reticulate)
 knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
 knitr::knit_engines$set(python = reticulate::eng_python)
 
-use_python("env/bin/python")
+use_python("../env/bin/python")
 
 ```
 

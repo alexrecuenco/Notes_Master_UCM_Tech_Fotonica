@@ -1,0 +1,35 @@
+---
+title: "Ejercicio 2 — Wavelets"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 3.3
+    fig_caption: true
+    toc: no
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+---
+
+
+\pagebreak
+```{r setup, echo=FALSE,  }
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE,fig.align= 'center')
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("../env/bin/python")
+
+```

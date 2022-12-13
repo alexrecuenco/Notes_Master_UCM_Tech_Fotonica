@@ -30,7 +30,7 @@ library(reticulate)
 knitr::opts_chunk$set(cache = FALSE, echo = FALSE,fig.align= 'center')
 knitr::knit_engines$set(python = reticulate::eng_python)
 
-use_python("env/bin/python")
+use_python("../env/bin/python")
 
 ```
 
@@ -108,7 +108,7 @@ title('db4 Wavelet');
 
 ```{r, fig.cap="Ejemplo calculado con la ayuda de Matlab's help page", out.width="70%"}
 # (https://www.mathworks.com/help/wavelet/ug/wavelet-families-additional-discussion.html)
-knitr::include_graphics('./wavelet-db4.png')
+knitr::include_graphics('./images/wavelet-db4.png')
 ```
 
 ## Wavelet contínuo
@@ -211,7 +211,7 @@ plt.show();
 plt.close();
 ```
 ```{r, out.width="50%",fig.cap="Nivel 5 de detalle de db4 en nuestra señal de origen. El eje $x$ enumera los samples del nivel 5."}
-knitr::include_graphics('./signal-db4-lvl-5-detail.png');
+knitr::include_graphics('./images/signal-db4-lvl-5-detail.png');
 
 ```
 

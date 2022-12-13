@@ -30,7 +30,7 @@ library(reticulate)
 knitr::opts_chunk$set(cache = FALSE, echo = FALSE)
 knitr::knit_engines$set(python = reticulate::eng_python)
 
-use_python("env/bin/python")
+use_python("../env/bin/python")
 
 ```
 
@@ -148,7 +148,7 @@ plot_prof(img, P1, P2, prof, post=lambda: plt.savefig("profile-lines.pdf"))
 p1 = (682, 1282)
 p2 = (645, 26)
 
-fourier_img = load_img("./fourier-lab-2.png")
+fourier_img = load_img("./images/fourier-lab-2.png")
 fourier_prof = profile_line(fourier_img, p1, p2)
 
 where = np.argwhere(fourier_prof>250)
