@@ -25,11 +25,269 @@ output:
 
 
 \pagebreak
-```{r setup, echo=FALSE,  }
+```{r setup, echo=FALSE}
 library(reticulate)
 knitr::opts_chunk$set(cache = FALSE, echo = FALSE,fig.align= 'center')
 knitr::knit_engines$set(python = reticulate::eng_python)
 
 use_python("../env/bin/python")
+
+```
+
+
+# Cargar imagen X-ray
+
+## Añadir ruido sinusiodal
+
+Sonido añadido en la direccion $v=(0.01, 0.05)$.
+
+- Representa imagen y ruido sinusoidal.
+
+\begin{align*}
+K &= 0.01 u + 0.05v  \\
+noise &= 50 \sin \left(2 \pi \left( 0.01 u + 0.05v\right)\right)
+\end{align*}
+
+```{python, echo=FALSE, include=FALSE}
+import cv2 as cv
+import numpy as np
+from numpy import fft
+import matplotlib
+from matplotlib import rcParams, get_backend, pyplot as plt, use
+
+def load_img(file):
+  img = cv.imread(file, cv.IMREAD_GRAYSCALE)
+  if (img.shape[0] % 2 == 0):
+    # make it odd
+    img = np.pad(img, pad_width=1, mode='constant')
+    img = img[1:, 1:]
+  return img
+
+
+
+
+def plot2img(img1, img2, title1="Input", title2="Output", cmap='gray'):
+  plt.subplot(121)
+  plt.imshow(img1, cmap = cmap)
+  plt.title(title1)
+  plt.xticks([]), plt.yticks([])
+  plt.subplot(122)
+  plt.imshow(img2, cmap = cmap)
+  plt.title(title2)
+  plt.xticks([]), plt.yticks([])
+  plt.tight_layout()
+  plt.show()
+
+```
+
+Imágen
+
+```{python}
+xray_image= "./images/xray.jpg"
+img = load_img(xray_image)
+
+def fft_magnitud(img):
+  f = fft.fft2(img)
+  fcentered = np.fft.fftshift(f)
+  magnitude_spectrum = np.log(np.abs(fcentered)+1)
+  return magnitude_spectrum
+
+plot2img(img, fft_magnitud(img), "Sample image", "FT of sample image")
+
+```
+
+
+Imágen con ruido
+
+```{python}
+vsize, usize = img.shape;
+
+u = np.arange(usize);
+v = np.arange(vsize);
+
+u_grid, v_grid = np.meshgrid(u, v)
+
+f_u = 0.01
+f_v= 0.05
+img_2 = img + 50 * np.sin(2 * np.pi * ( f_u* u_grid + f_v*v_grid))
+
+plot2img(img_2, fft_magnitud(img_2), "Image with noise", "FT")
+
+
+```
+
+# Diseña un filtro que elimine este ruido.
+
+## Filtro secuencial
+
+Utilizamos dos filtros, uno que primero filtre en el eje X y luego otro en el eje Y con frequencias del ruido... Esto es incorrecto si queremos cortar una region cuadrada. Sin embargo, se puede ver en la Fourier Transform como el ruido sinusoidal generado genera dos cruces. (Seguramente devido al tamaño de pixel)
+
+Usamos un `irrnotch` con una calidad baja a proposito, para compensar por el pequeño número de píxeles en cada dirección para el muestreo.
+
+
+```{python}
+import scipy.signal as s
+# filtfilt is zero-phase filtering, which doesn't shift the signal as it filters.  Filtering backwards in time requires you to predict the future, so it can't be used in "online" real-life applications, only for offline processing of recordings of signals.
+# lfilter is causal forward-in-time filtering only,
+# https://dsp.stackexchange.com/a/19086
+
+
+import scipy.signal as s
+
+
+bu,au = s.iirnotch(w0=f_u, fs=1, Q=6);
+
+bv,av = s.iirnotch(w0=f_v, fs=1, Q=12);
+
+wu, hu = s.freqz(bu, au);
+wv, hv = s.freqz(bv, av);
+
+fig, (ax1, ax2) = plt.subplots(ncols=2, sharex=True, sharey=True);
+ax1.set_title("U filter");
+ax2.set_title("V filter");
+ax1.set_xlabel("normalized frequency");
+ax2.set_xlabel("normalized frequency");
+ax1.plot(wu, np.abs(hu));
+ax2.plot(wv, np.abs(hv));
+plt.show();
+plt.close();
+```
+### Filtra la imagen
+
+Respuesta y FFT
+
+
+```{python}
+import scipy.signal as s
+
+img_vfiltered = s.filtfilt(bv, av, img_2, axis=0);
+img_filtered = s.filtfilt(bu, au, img_vfiltered, axis=1);
+
+plot2img(img_filtered, fft_magnitud(img_filtered), "Image filtered", "FT");
+
+```
+
+
+Y podemos comparar esta con el ruido original
+
+```{python}
+
+plot2img(img_2, img_filtered, "Imagen con ruido", "Imagen filtrada")
+
+```
+
+
+
+
+Tambien se puede ver como el filtro genera una sombra de frecuencia de banda en la imágen original que no había ahí
+
+```{python}
+
+plot2img(img, img_filtered, "Imagen original", "Imagen filtrada")
+
+```
+
+
+Esto se ve claramente como proviene de los cortes de banda al mirar a la transformada de Fourier, donde se ve que existe dos cruces gordas.
+
+```{python}
+
+plot2img(fft_magnitud(img), fft_magnitud(img_filtered), "FT Imagen original", "FT Imagen filtrada")
+
+```
+
+
+
+
+## Filtro por convolucion 2D de un cuadrado
+
+
+Podemos entender que lo que estamos haciendo es un filtro en 2D haciendo una convolucion (Producto en el espacio de Fourier).
+
+```{python}
+from numpy import fft
+img_fft = fft.fft2(img)
+vsize, usize = img.shape;
+vfreq = fft.fftfreq(vsize)
+idv = np.argmin(np.abs(vfreq-f_v))
+
+
+ufreq = fft.fftfreq(usize)
+idu = np.argmin(np.abs(ufreq-f_u))
+
+filter = np.ones((7,7))
+v_filter_shape, u_filter_shape = filter.shape
+def padding_range(size:int, idx:int, filter_size:int):
+  # idx: index on the main
+  # size: total size of the main
+  half = filter_size // 2
+  other_half = filter_size - half
+
+  return (idx-half, size-idx-other_half)
+
+H1 = np.pad(
+  filter,
+  (
+    padding_range(vsize, idv, v_filter_shape),
+    padding_range(usize, idu, u_filter_shape),
+  )
+  );
+
+H = H1 + np.rot90(np.rot90(H1))
+H = 1-H
+```
+
+
+Para ello, diseñamos un filtro de convolución "ideal" que filtre exactamente un rango de 7 pixeles en el cuadrado y su imágen polar (simetría de la transformada de fourier en una serie de valores reales).
+
+
+```{python}
+filtered_2d = fft.fft2(img_2) * H
+plot2img(fft.fftshift(H), fft.fftshift(np.log(np.abs(filtered_2d) + 1)), "H", "FTT Convolution")
+
+```
+
+
+
+## Resultado de filtrar la imagen con convolucion 2D
+
+La imagen tiene una FFT que es menos llamativa. Aunque se ven algunos artefactos.
+
+```{python}
+import scipy.signal as s
+
+img_filtered_2d = np.round(np.abs(fft.ifft2(filtered_2d)))
+
+plot2img(img_filtered_2d, fft_magnitud(img_filtered_2d), "Image filtered", "FT")
+
+```
+
+
+Este filtro nos da una imagen mas limpia. Tambien hay que notar que este filtro tiene complejidad O(N^2 log(N)), que es mayor que en caso anterior. Aunque no por mucho.
+
+```{python}
+
+plot2img(img_2, img_filtered_2d, "Imagen con ruido", "Imagen filtrada")
+
+```
+
+
+
+Se puede ver como recuperamos la imagen original parcialmente, y aún queda cierto error. Esto seguramente se puede mejorar con un mejor estudio de los filtros, y realizando alguna discretizacion de la convolución usando algun método de ventana u otro método similar.
+
+```{python}
+
+plot2img(img, img_filtered_2d, "Imagen original", "Imagen filtrada")
+
+```
+
+
+# Comparación entre la imagen filtrada con filtrox2 y la filtrada con convolucion.
+
+Para finalizar, se puede ver como un filtro 2D es más edecuado para reducir el ruido en general, aunque tiene una mayor complejidad tecnica y computacional.
+
+```{python}
+
+plot2img(img_filtered, img_filtered_2d, "Imagen Filtrada con IIR x 2", "Imagen filtrada con convolucion 2D")
 
 ```

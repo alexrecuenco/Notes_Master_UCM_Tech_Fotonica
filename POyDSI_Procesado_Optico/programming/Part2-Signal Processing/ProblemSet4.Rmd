@@ -1,0 +1,155 @@
+---
+title: "Ejercicio 4 — PCA analysis"
+author: "Alejandro Gonzalez Recuenco"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+geometry: a4paper
+output:
+  pdf_document:
+    fig_height: 3.3
+    fig_caption: true
+    toc: no
+    toc_depth: 1
+    number_sections: yes
+    extra_dependencies:
+      microtype: null
+      xparse: null
+      amssymb: null
+      amsmath: null
+      cancel: null
+      physics: null
+      longtable: null
+      booktabs: null
+      hyperref: null
+      tikz: null
+---
+
+
+\pagebreak
+```{r setup, echo=FALSE}
+library(reticulate)
+knitr::opts_chunk$set(cache = FALSE, echo = FALSE,fig.align= 'center')
+knitr::knit_engines$set(python = reticulate::eng_python)
+
+use_python("../env/bin/python")
+
+```
+
+
+
+# Obtención del componente principal en los datos formados por dos variables.
+
+
+##  Se han tomado numerosas muestras de un proceso, y para cada muestra se ha medido el valor de dos variables. Los valores de las muestras para cada una de las variables están contenidos en var1.mat y var2.mat. Carga y representa los datos.
+
+```{python}
+from scipy.io import loadmat
+import numpy as np
+
+vars = loadmat('./pca/var1.mat');
+var1 = vars['var1'][0,:];
+var2 = vars['var2'][0,:];
+# d = vars['D']
+```
+
+```{python}
+import matplotlib.pyplot as plt
+
+fig, (ax1, ax2) = plt.subplots(ncols=2);
+x = np.arange(len(var1));
+ax1.plot(x, var1, label= 'var1');
+ax1.plot(x, var2, label= 'var2');
+ax1.legend();
+ax1.set_title("var1 & var2 sequences");
+ax2.set_title("var1 v var2 scatter plot");
+
+ax2.scatter(var1, var2, s=1);
+plt.show();
+plt.close();
+
+```
+
+
+
+## Obtén los componentes principales por el procedimiento PCA y represéntalos sobre los datos anteriores. Representa el primer y segundo componente principal en rojo y verde respectivamente.
+
+Lo haremos manualmente calculando los eigenvalues y eigenvectors, aunque por motivos de estabilidad numerica es normalmente mejor usar un algoritmo preconfigurado.
+
+```{python}
+import numpy as np
+from scipy import linalg as LA
+mu1=np.mean(var1);
+mu2=np.mean(var2);
+x = np.array([var1-mu1, var2-mu2]).T;
+
+cov = np.cov(x, rowvar = False);
+
+eigenvalues, eigenvectors = LA.eigh(cov);
+
+
+# descending order
+sort_indices=np.argsort(-eigenvalues);
+eigenvalues=eigenvalues[sort_indices];
+
+# The - because it is returning eigenvectors in (-1, -1) direction
+eigenvectors = -eigenvectors[sort_indices, :];
+
+
+```
+
+
+```{python}
+mu = np.array((mu1, mu2));
+plt.scatter(var1, var2, s=1);
+plt.axline(mu, mu+eigenvectors[0,:], label=f"$\lambda={eigenvalues[0]:.2f}$", color='r');
+plt.axline(mu, mu+eigenvectors[1,:], label=f"$\lambda={eigenvalues[1]:.2f}$");
+plt.scatter([mu1], [mu2], label="center of mass");
+plt.legend();
+plt.show();
+plt.close();
+
+```
+## Realiza el cambio de coordenadas de los datos para representarlos según sus componentes principales.
+
+
+```{python}
+plt.axis('equal');
+plt.title("Transformacion a componentes de PCA");
+c=np.array([var1, var2]).T @ eigenvectors.T;
+c1, c2 = c.T;
+
+fig, (ax1, ax2) = plt.subplots(ncols=2);
+fig.tight_layout();
+
+dummy_var = np.arange(len(var1));
+ax1.plot(dummy_var, c1, label= 'component 1');
+ax1.plot(dummy_var, c2, label= 'component 2');
+ax1.legend();
+ax1.set_title("Component sequences");
+ax2.set_title("Component scatter plot");
+ax2.set_xlabel(f"$\lambda={eigenvalues[0]:.2f}$");
+ax2.set_ylabel(f"$\lambda={eigenvalues[1]:.2f}$");
+ax2.axis('equal');
+fig.tight_layout();
+
+ax2.scatter(c1, c2, s=1);
+plt.show();
+plt.close();
+```
+
+
+## Reduce la dimensionalidad de los datos, usando un único componente principal.
+
+
+Usamos la componente principal, podemos reducir la dimensionalidad de los datos a una dimensión usando la componente principal con varianza más alta.
+
+
+\newpage
+
+## Apendice
+
+Componente principal. Se añade la componente principal como apendice para comprobar
+
+```{R}
+print(reticulate::py$c[,1])
+
+```
